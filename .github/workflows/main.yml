@@ -16,12 +16,14 @@ jobs:
               with:
                   node-version: "14"
                   cache: yarn
+            - run: yarn install
+            - run: yarn build
             - name: Deploy
               uses: burnett01/rsync-deployments@5.1
               with:
                   switches: -avzr --delete
-                  path: main.js
-                  remote_path: main.js
+                  path: build/
+                  remote_path: ./
                   remote_host: ${{ secrets.HOST }}
                   remote_port: ${{ secrets.PORT }}
                   remote_user: ${{ secrets.USER }}
