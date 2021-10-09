@@ -30,5 +30,5 @@ jobs:
             #       remote_key: ${{ secrets.SSHKEY }}
             - run: echo "${{ secrets.SSHKEY }}" > key.pem
             - run: chmod 600 key.pem
-            - run: rsync -Pav -e "ssh -i key.pem" build/ ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.DIR }}/build/
-            - run: rsync -Pav -e "ssh -i key.pem" node_modules/ ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.DIR }}/node_modules/
+            - run: rsync -Pav -e "ssh -i key.pem -o StrictHostKeyChecking=no" build/ ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.DIR }}/build/
+            - run: rsync -Pav -e "ssh -i key.pem -o StrictHostKeyChecking=no" node_modules/ ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.DIR }}/node_modules/
