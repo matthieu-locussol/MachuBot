@@ -1,12 +1,24 @@
-import express from "express";
+import * as dotenv from "dotenv";
+import { resolve } from "path";
 
-const PORT = 3000;
-const HOST = "0.0.0.0";
+dotenv.config({ path: resolve(__dirname, "../.env") });
 
-const app = express();
-app.get("/", (_req, res) => {
-    res.send("Server healthy!");
+import { Client, Intents } from "discord.js";
+import { _assert } from "./utils/_assert";
+
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+
+client.on("ready", () => {
+    _assert(client.user);
+    console.log(`Logged in as ${client.user.tag}!`);
 });
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+client.on("interactionCreate", async (interaction) => {
+    if (!interaction.isCommand()) return;
+
+    if (interaction.commandName === "ping") {
+        await interaction.reply("Pong!");
+    }
+});
+
+client.login(process.env.DISCORD_TOKEN_PRODUCTION);
