@@ -23,7 +23,7 @@ jobs:
               with:
                   switches: -avzr --delete
                   path: build/
-                  remote_path: ./
+                  remote_path: ${{ secrets.DIR }}
                   remote_host: ${{ secrets.HOST }}
                   remote_port: ${{ secrets.PORT }}
                   remote_user: ${{ secrets.USER }}

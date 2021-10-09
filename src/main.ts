@@ -1,13 +1,11 @@
 import express from "express";
 
-// Constants
 const PORT = 80;
 const HOST = "0.0.0.0";
 
-// App
 const app = express();
 app.get("/", (_req, res) => {
-    res.send("Hello World");
+    res.send("Server healthy!");
 });
 
 app.listen(PORT, HOST);
