@@ -28,7 +28,7 @@ jobs:
             #       remote_port: ${{ secrets.PORT }}
             #       remote_user: ${{ secrets.USER }}
             #       remote_key: ${{ secrets.SSHKEY }}
-            - run: echo ${{ secrets.SSHKEY }} > key.pem
+            - run: echo "${{ secrets.SSHKEY }}" > key.pem
             - run: chmod 600 key.pem
             - run: rsync -Pav -e "ssh -i key.pem" build/ ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.DIR }}/build/
             - run: rsync -Pav -e "ssh -i key.pem" node_modules/ ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.DIR }}/node_modules/
