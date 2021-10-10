@@ -1,33 +1,45 @@
 {
-    "name": "machubot",
-    "version": "0.1.0",
-    "description": "Yet another discord bot.",
-    "repository": "git@github.com:matthieu-locussol/MachuBot.git",
-    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com>",
-    "license": "MIT",
-    "scripts": {
-        "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only src/main.ts",
-        "build": "tsc",
-        "start": "node build/main.js",
-        "check:prettier": "prettier --list-different --config ./.prettierrc.json --ignore-path .gitignore --write \"**/*.{js,jsx,ts,tsx}\"",
-        "check:eslint": "eslint --ignore-path .gitignore .",
-        "check:typescript": "tsc --project ./tsconfig.json --noEmit",
-        "tests": "jest",
-        "tests:ci": "jest --ci"
-    },
-    "dependencies": {
-        "discord.js": "^13.2.0"
-    },
-    "devDependencies": {
-        "@types/jest": "^27.0.2",
-        "@types/node": "^16.10.3",
-        "cross-env": "^7.0.3",
-        "dotenv": "^10.0.0",
-        "eslint": "^8.0.0",
-        "jest": "^27.2.5",
-        "prettier": "^2.4.1",
-        "ts-jest": "^27.0.5",
-        "ts-node-dev": "^1.1.8",
-        "typescript": "^4.4.3"
-    }
+   "name": "machubot",
+   "version": "0.1.0",
+   "description": "Yet another discord bot.",
+   "repository": "git@github.com:matthieu-locussol/MachuBot.git",
+   "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com>",
+   "license": "MIT",
+   "scripts": {
+      "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only src/main.ts",
+      "build": "tsc",
+      "start": "node build/main.js",
+      "check:prettier": "prettier --list-different --config ./.prettierrc.json --ignore-path .gitignore --write \"**/*.{js,jsx,ts,tsx}\"",
+      "check:eslint": "eslint --ignore-path .gitignore src/**/*",
+      "check:typescript": "tsc --project ./tsconfig.json --noEmit",
+      "tests": "jest",
+      "tests:ci": "jest --ci"
+   },
+   "pre-commit": [
+      "check:typescript",
+      "check:eslint",
+      "check:prettier"
+   ],
+   "dependencies": {
+      "discord.js": "^13.2.0",
+      "dotenv": "^10.0.0"
+   },
+   "devDependencies": {
+      "@types/jest": "^27.0.2",
+      "@types/node": "^16.10.3",
+      "@typescript-eslint/eslint-plugin": "^4.33.0",
+      "@typescript-eslint/parser": "^4.33.0",
+      "cross-env": "^7.0.3",
+      "eslint": "^7.2.0",
+      "eslint-config-airbnb-base": "^14.2.1",
+      "eslint-config-airbnb-typescript": "^14.0.1",
+      "eslint-config-prettier": "^8.3.0",
+      "eslint-plugin-import": "^2.22.1",
+      "jest": "^27.2.5",
+      "pre-commit": "^1.2.2",
+      "prettier": "^2.4.1",
+      "ts-jest": "^27.0.5",
+      "ts-node-dev": "^1.1.8",
+      "typescript": "^4.4.3"
+   }
 }

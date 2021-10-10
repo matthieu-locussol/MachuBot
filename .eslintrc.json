@@ -1,0 +1,31 @@
+{
+   "root": true,
+   "plugins": ["@typescript-eslint"],
+   "extends": ["airbnb-base", "airbnb-typescript/base", "prettier"],
+   "parser": "@typescript-eslint/parser",
+   "parserOptions": {
+      "project": ["./tsconfig.json"]
+   },
+   "rules": {
+      "no-underscore-dangle": "off",
+      "@typescript-eslint/naming-convention": [
+         "error",
+         {
+            "selector": "function",
+            "format": ["camelCase"],
+            "leadingUnderscore": "allow"
+         }
+      ],
+      "@typescript-eslint/no-unused-vars": [
+         "error",
+         {
+            "vars": "all",
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
+         }
+      ]
+   },
+   "env": {
+      "jest": true
+   }
+}
