@@ -10,12 +10,11 @@ export function _assert<T>(
     message?: string | Error
 ): asserts value is NonNullable<T> {
     if (typeof value === "boolean") {
-        console.error("Use _assertTrue for boolean instead.");
+        throw new Error("Use _assertTrue for boolean instead.");
     }
 
     if (typeof value === "boolean" || value === undefined || value === null) {
         const err = typeof message === "object" ? message : new Error(message);
-        console.error(err);
         throw err;
     }
 }
@@ -31,7 +30,6 @@ export function _assertTrue(
 ): asserts value is true {
     if (value !== true) {
         const err = typeof message === "object" ? message : new Error(message);
-        console.error(err);
         throw err;
     }
 }
