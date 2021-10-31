@@ -1,0 +1,43 @@
+{
+   "folders": [
+      {
+         "name": "Root",
+         "path": "."
+      }
+   ],
+   "settings": {
+      "editor.guides.bracketPairs": true,
+      "editor.bracketPairColorization.enabled": true,
+      "editor.codeActionsOnSave": {
+         "source.fixAll": true,
+         "source.organizeImports": true
+      },
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true,
+      "restoreTerminals.terminals": [
+         {
+            "splitTerminals": [
+               {
+                  "name": "Server",
+                  "commands": ["yarn dev"]
+               }
+            ]
+         },
+         {
+            "splitTerminals": [
+               {
+                  "name": "Shell",
+                  "commands": [""]
+               }
+            ]
+         }
+      ]
+   },
+   "extensions": {
+      "recommendations": [
+         "dbaeumer.vscode-eslint",
+         "esbenp.prettier-vscode",
+         "ethansk.restore-terminals"
+      ]
+   }
+}
