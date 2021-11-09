@@ -9,8 +9,7 @@
       "editor.guides.bracketPairs": true,
       "editor.bracketPairColorization.enabled": true,
       "editor.codeActionsOnSave": {
-         "source.fixAll": true,
-         "source.organizeImports": true
+         "source.fixAll": true
       },
       "editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.formatOnSave": true,
