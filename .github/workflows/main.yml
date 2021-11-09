@@ -81,6 +81,9 @@ jobs:
          - run:
               echo "DISCORD_TOKEN_PRODUCTION=${{
               secrets.DISCORD_TOKEN_PRODUCTION }}" >> .env
+         - run:
+              echo "DISCORD_DEVELOPMENT_SERVER_ID=${{
+              secrets.DISCORD_DEVELOPMENT_SERVER_ID }}" >> .env
          - run: echo "${{ secrets.SSHKEY }}" > key.pem
          - run: chmod 600 key.pem
          - run:
