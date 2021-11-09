@@ -38,23 +38,23 @@ export class Bot {
    private initializeModules = (modules: Module[]): void => {
       for (const module of modules) {
          for (const command of module.commands) {
-            this.client.on('interactionCreate', (interaction) =>
-               command.execute(interaction),
-            );
+            this.client.on('interactionCreate', async (interaction) => {
+               await command.execute(interaction);
+            });
          }
       }
    };
 
    private initializeDevelopment = async (): Promise<void> => {
-      if ((() => 1)() === 2) {
-         await this.rest.put(
-            Routes.applicationGuildCommands(
-               this.getClientId(),
-               '850789853658611742',
-            ),
-            { body: this.commands },
-         );
-      }
+      _assert(process.env.DISCORD_DEVELOPMENT_SERVER_ID);
+
+      await this.rest.put(
+         Routes.applicationGuildCommands(
+            this.getClientId(),
+            process.env.DISCORD_DEVELOPMENT_SERVER_ID,
+         ),
+         { body: this.commands.map((command) => command.toJSON()) },
+      );
 
       this.client.on('ready', () => {
          _assert(this.client.user);
