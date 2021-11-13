@@ -5,10 +5,7 @@ import assert from 'assert';
  * @param value
  * @param message
  */
-export function _assert<T>(
-   value: T,
-   message?: string | Error,
-): asserts value is NonNullable<T> {
+export function _assert<T>(value: T, message?: string | Error): asserts value is NonNullable<T> {
    if (typeof value === 'boolean') {
       throw new Error('Use _assertTrue for boolean instead.');
    }
@@ -24,10 +21,7 @@ export function _assert<T>(
  * @param value
  * @param message
  */
-export function _assertTrue(
-   value: boolean,
-   message?: string | Error,
-): asserts value is true {
+export function _assertTrue(value: boolean, message?: string | Error): asserts value is true {
    if (value !== true) {
       const err = typeof message === 'object' ? message : new Error(message);
       throw err;

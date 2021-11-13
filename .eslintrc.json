@@ -30,23 +30,6 @@
          }
       ],
       "import/prefer-default-export": "off",
-      "import/order": [
-         "error",
-         {
-            "groups": [
-               "external",
-               "builtin",
-               "index",
-               "sibling",
-               "parent",
-               "internal",
-               "object",
-               "type"
-            ],
-            "newlines-between": "never",
-            "alphabetize": { "order": "asc", "caseInsensitive": false }
-         }
-      ],
       "@typescript-eslint/explicit-module-boundary-types": "error",
       "@typescript-eslint/naming-convention": [
          "error",
