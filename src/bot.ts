@@ -4,10 +4,12 @@ import { RESTPostAPIApplicationCommandsJSONBody, Routes } from 'discord-api-type
 import { Client, Intents } from 'discord.js';
 import { resolve } from 'path';
 import { log } from './logger';
-import type { Module } from './types';
+import type { Component, Module } from './types';
 import { accessEnvironmentVariable } from './utils/accessEnvironmentVariable';
 import { shouldPersistCommandsPayload } from './utils/shouldPersistCommandsPayload';
-import { _assert } from './utils/_assert';
+import { _assert, _assertTrue } from './utils/_assert';
+
+type SerializableInteraction = Pick<SlashCommandBuilder, 'toJSON'>;
 
 export class Bot {
    private token: string;
@@ -20,9 +22,11 @@ export class Bot {
 
    private modules: Module[];
 
-   private commands: SlashCommandBuilder[] = [];
+   private components: Component[];
 
-   constructor(modules: Module[]) {
+   private commands: SerializableInteraction[] = [];
+
+   constructor(params: { modules: Module[]; components: Component[] }) {
       this.token = accessEnvironmentVariable(
          'DISCORD_TOKEN_PRODUCTION',
          'DISCORD_TOKEN_DEVELOPMENT',
@@ -34,10 +38,12 @@ export class Bot {
 
       this.rest = new REST({ version: '9' }).setToken(this.token);
       this.client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-      this.modules = modules;
+      this.modules = params.modules;
+      this.components = params.components;
 
-      this.initializeCommands();
       this.initializeModules();
+      this.initializeComponents();
+      this.initializeCommands();
    }
 
    public start = async (): Promise<void> => {
@@ -54,16 +60,40 @@ export class Bot {
       this.commands = this.modules.flatMap((module) =>
          module.commands.map((command) => command.data),
       );
+
+      const commandsCount = this.commands.length;
+      _assertTrue(commandsCount <= 100);
+      log(`${commandsCount}/100 commands registered!`);
    };
 
    private initializeModules = (): void => {
       for (const module of this.modules) {
          for (const command of module.commands) {
             this.client.on('interactionCreate', async (interaction) => {
-               await command.execute(interaction);
+               if (interaction.isCommand() && interaction.commandName === command.data.name) {
+                  await command.execute(interaction);
+               }
             });
          }
       }
+
+      const modulesCount = this.modules.length;
+      log(`${modulesCount} modules registered!`);
+   };
+
+   private initializeComponents = (): void => {
+      for (const component of this.components) {
+         this.client.on('interactionCreate', async (interaction) => {
+            if (component.type === 'BUTTON' && interaction.isButton()) {
+               await component.execute(interaction);
+            } else if (component.type === 'SELECT_MENU' && interaction.isSelectMenu()) {
+               await component.execute(interaction);
+            }
+         });
+      }
+
+      const componentsCount = this.components.length;
+      log(`${componentsCount} components registered!`);
    };
 
    private persistSlashCommands = async (
