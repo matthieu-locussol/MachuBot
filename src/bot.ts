@@ -7,7 +7,7 @@ import { log } from './logger';
 import { Component } from './types/components';
 import type { Module } from './types/modules';
 import { accessEnvironmentVariable } from './utils/environment';
-import { shouldPersistCommandsPayload } from './utils/file';
+import { shouldPersistPayload } from './utils/file';
 import {
    chatInputCommandsGuard,
    commandsUnicityGuard,
@@ -122,12 +122,12 @@ export class Bot {
       log(`${componentsCount} Components registered!`);
    };
 
-   private persistSlashCommands = async (
+   private persistCommands = async (
       filePath: string,
       callback: (payload: RESTPostAPIApplicationCommandsJSONBody[]) => Promise<void>,
    ): Promise<void> => {
       const payload = this.commands.map((command) => command.toJSON());
-      const shouldPersist = await shouldPersistCommandsPayload(filePath, payload);
+      const shouldPersist = await shouldPersistPayload(filePath, payload);
 
       if (shouldPersist) {
          log('Persisting slash commands...');
@@ -137,7 +137,7 @@ export class Bot {
    };
 
    private initializeDevelopment = async (): Promise<void> => {
-      await this.persistSlashCommands(
+      await this.persistCommands(
          resolve(__dirname, '../logs/commandsPayload_development.log'),
          async (payload) => {
             _assert(process.env.DISCORD_DEVELOPMENT_SERVER_ID);
@@ -159,7 +159,7 @@ export class Bot {
    };
 
    private initializeProduction = async (): Promise<void> => {
-      await this.persistSlashCommands(
+      await this.persistCommands(
          resolve(__dirname, '../logs/commandsPayload_production.log'),
          async (payload) => {
             await this.rest.put(Routes.applicationCommands(this.clientId), {

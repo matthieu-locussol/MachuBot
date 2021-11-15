@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 
-export const shouldPersistCommandsPayload = async (
+export const shouldPersistPayload = async (
    filePath: string,
    payload: unknown,
 ): Promise<boolean> => {
