@@ -1,6 +1,6 @@
 import { ContextMenuCommandBuilder } from '@discordjs/builders';
 import { ApplicationCommandType } from 'discord-api-types/v9';
-import type { ContextMenuCommand } from '../../../types';
+import { ContextMenuCommand } from '../../../types/commands';
 import { _assert, _assertTrue } from '../../../utils/_assert';
 
 export const sampleContextMessageCommand: ContextMenuCommand = {

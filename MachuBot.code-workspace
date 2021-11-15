@@ -14,6 +14,7 @@
       },
       "editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.formatOnSave": true,
+      "restoreTerminals.keepExistingTerminalsOpen": false,
       "restoreTerminals.terminals": [
          {
             "splitTerminals": [

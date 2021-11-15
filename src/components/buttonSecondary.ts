@@ -1,5 +1,5 @@
 import { MessageButton } from 'discord.js';
-import type { ButtonComponent } from '../types';
+import { ButtonComponent } from '../types/components';
 
 export const buttonSecondaryComponent: ButtonComponent = {
    type: 'BUTTON',

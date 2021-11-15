@@ -1,4 +1,4 @@
-import { accessEnvironmentVariable } from './accessEnvironmentVariable';
+import { accessEnvironmentVariable } from './environment';
 
 describe(__filename, () => {
    describe('accessEnvironmentVariable', () => {

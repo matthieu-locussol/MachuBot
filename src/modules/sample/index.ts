@@ -1,4 +1,4 @@
-import type { Module } from '../../types';
+import type { Module } from '../../types/modules';
 import { sampleCommand } from './commands/sample';
 import { sampleContextMessageCommand } from './commands/sampleContextMessage';
 import { sampleContextUserCommand } from './commands/sampleContextUser';

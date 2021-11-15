@@ -1,4 +1,4 @@
-import type { Module } from '../../types';
+import type { Module } from '../../types/modules';
 import { pingCommand } from './commands/ping';
 
 export const pingModule: Module = {

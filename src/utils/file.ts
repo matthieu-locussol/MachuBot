@@ -1,9 +1,8 @@
-import { RESTPostAPIApplicationCommandsJSONBody } from 'discord-api-types/rest/v9';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 
 export const shouldPersistCommandsPayload = async (
    filePath: string,
-   payload: RESTPostAPIApplicationCommandsJSONBody[],
+   payload: unknown,
 ): Promise<boolean> => {
    const stringifiedPayload = JSON.stringify(payload);
 

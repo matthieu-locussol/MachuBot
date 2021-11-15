@@ -1,18 +1,20 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { REST } from '@discordjs/rest';
-import {
-   ApplicationCommandType,
-   RESTPostAPIApplicationCommandsJSONBody,
-   Routes,
-} from 'discord-api-types/v9';
+import { RESTPostAPIApplicationCommandsJSONBody, Routes } from 'discord-api-types/v9';
 import { Client, Intents } from 'discord.js';
 import { resolve } from 'path';
 import { log } from './logger';
-import type { Component, Module } from './types';
-import { accessEnvironmentVariable } from './utils/accessEnvironmentVariable';
-import { isUnique } from './utils/array';
-import { shouldPersistCommandsPayload } from './utils/shouldPersistCommandsPayload';
-import { _assert, _assertTrue } from './utils/_assert';
+import { Component } from './types/components';
+import type { Module } from './types/modules';
+import { accessEnvironmentVariable } from './utils/environment';
+import { shouldPersistCommandsPayload } from './utils/file';
+import {
+   chatInputCommandsGuard,
+   commandsUnicityGuard,
+   contextMenuMessageCommandsGuard,
+   contextMenuUserCommandsGuard,
+} from './utils/guards';
+import { _assert } from './utils/_assert';
 
 type SerializableInteraction = Pick<SlashCommandBuilder, 'toJSON'>;
 
@@ -64,41 +66,10 @@ export class Bot {
    private initializeCommands = (): void => {
       const commands = this.modules.flatMap((module) => module.commands.map((command) => command));
 
-      _assertTrue(
-         isUnique(commands.map((entry) => entry.data.name)),
-         'Commands names are not unique!',
-      );
-
-      const chatInputCommandsCount = commands.filter(
-         (entry) => entry.type === 'APPLICATION_COMMAND',
-      ).length;
-      _assertTrue(
-         chatInputCommandsCount <= 100,
-         'Impossible to register more than 100 slash commands!',
-      );
-      log(`${chatInputCommandsCount}/100 chat input commands registered!`);
-
-      const contextMenuMessageCommandsCount = commands.filter(
-         (entry) =>
-            entry.type === 'CONTEXT_MENU_COMMAND' &&
-            entry.data.type === ApplicationCommandType.Message,
-      ).length;
-      _assertTrue(
-         contextMenuMessageCommandsCount <= 5,
-         'Impossible to register more than 5 context menu (message) commands!',
-      );
-      log(`${contextMenuMessageCommandsCount}/5 context menu (message) commands registered!`);
-
-      const contextMenuUserCommandsCount = commands.filter(
-         (entry) =>
-            entry.type === 'CONTEXT_MENU_COMMAND' &&
-            entry.data.type === ApplicationCommandType.User,
-      ).length;
-      _assertTrue(
-         contextMenuUserCommandsCount <= 5,
-         'Impossible to register more than 5 context menu (user) commands!',
-      );
-      log(`${contextMenuUserCommandsCount}/5 context menu (user) commands registered!`);
+      commandsUnicityGuard(commands);
+      chatInputCommandsGuard(commands);
+      contextMenuUserCommandsGuard(commands);
+      contextMenuMessageCommandsGuard(commands);
 
       this.commands = commands.map((entry) => entry.data);
    };
@@ -125,7 +96,7 @@ export class Bot {
       }
 
       const modulesCount = this.modules.length;
-      log(`${modulesCount} modules registered!`);
+      log(`${modulesCount} Modules registered!`);
    };
 
    private initializeComponents = (): void => {
@@ -148,7 +119,7 @@ export class Bot {
       }
 
       const componentsCount = this.components.length;
-      log(`${componentsCount} components registered!`);
+      log(`${componentsCount} Components registered!`);
    };
 
    private persistSlashCommands = async (
