@@ -1,0 +1,17 @@
+import { MessageButton } from 'discord.js';
+import type { ButtonComponent } from '../types';
+
+export const buttonSecondaryComponent: ButtonComponent = {
+   type: 'BUTTON',
+   component: new MessageButton({
+      customId: 'buttonSecondary',
+      style: 'SECONDARY',
+      label: 'Secondary',
+   }),
+   execute: async (interaction) => {
+      await interaction.update({
+         content: 'Secondary clicked!',
+         components: [],
+      });
+   },
+};

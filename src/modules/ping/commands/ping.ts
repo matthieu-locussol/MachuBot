@@ -1,7 +1,8 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import type { Command } from '../../../types';
+import type { ChatInputCommand } from '../../../types';
 
-export const pingCommand: Command = {
+export const pingCommand: ChatInputCommand = {
+   type: 'APPLICATION_COMMAND',
    data: new SlashCommandBuilder().setName('ping').setDescription('Ping the bot'),
    execute: async (interaction) => {
       interaction.reply(`Delay: ${interaction.client.ws.ping}ms`);

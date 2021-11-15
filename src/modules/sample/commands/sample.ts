@@ -5,10 +5,12 @@ import {
 } from '@discordjs/builders';
 import { MessageActionRow } from 'discord.js';
 import { buttonComponent } from '../../../components/button';
+import { buttonSecondaryComponent } from '../../../components/buttonSecondary';
 import { selectComponent } from '../../../components/select';
-import type { Command } from '../../../types';
+import type { ChatInputCommand } from '../../../types';
 
-export const sampleCommand: Command = {
+export const sampleCommand: ChatInputCommand = {
+   type: 'APPLICATION_COMMAND',
    data: new SlashCommandBuilder()
       .setName('sample')
       .setDescription('Sample command with interactions')
@@ -36,7 +38,7 @@ export const sampleCommand: Command = {
 
          if (chosenInteraction === 'button') {
             const row = new MessageActionRow({
-               components: [buttonComponent.component],
+               components: [buttonComponent.component, buttonSecondaryComponent.component],
             });
 
             interaction.reply({

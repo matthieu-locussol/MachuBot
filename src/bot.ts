@@ -1,11 +1,16 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { REST } from '@discordjs/rest';
-import { RESTPostAPIApplicationCommandsJSONBody, Routes } from 'discord-api-types/v9';
+import {
+   ApplicationCommandType,
+   RESTPostAPIApplicationCommandsJSONBody,
+   Routes,
+} from 'discord-api-types/v9';
 import { Client, Intents } from 'discord.js';
 import { resolve } from 'path';
 import { log } from './logger';
 import type { Component, Module } from './types';
 import { accessEnvironmentVariable } from './utils/accessEnvironmentVariable';
+import { isUnique } from './utils/array';
 import { shouldPersistCommandsPayload } from './utils/shouldPersistCommandsPayload';
 import { _assert, _assertTrue } from './utils/_assert';
 
@@ -57,20 +62,62 @@ export class Bot {
    };
 
    private initializeCommands = (): void => {
-      this.commands = this.modules.flatMap((module) =>
-         module.commands.map((command) => command.data),
+      const commands = this.modules.flatMap((module) => module.commands.map((command) => command));
+
+      _assertTrue(
+         isUnique(commands.map((entry) => entry.data.name)),
+         'Commands names are not unique!',
       );
 
-      const commandsCount = this.commands.length;
-      _assertTrue(commandsCount <= 100);
-      log(`${commandsCount}/100 commands registered!`);
+      const chatInputCommandsCount = commands.filter(
+         (entry) => entry.type === 'APPLICATION_COMMAND',
+      ).length;
+      _assertTrue(
+         chatInputCommandsCount <= 100,
+         'Impossible to register more than 100 slash commands!',
+      );
+      log(`${chatInputCommandsCount}/100 chat input commands registered!`);
+
+      const contextMenuMessageCommandsCount = commands.filter(
+         (entry) =>
+            entry.type === 'CONTEXT_MENU_COMMAND' &&
+            entry.data.type === ApplicationCommandType.Message,
+      ).length;
+      _assertTrue(
+         contextMenuMessageCommandsCount <= 5,
+         'Impossible to register more than 5 context menu (message) commands!',
+      );
+      log(`${contextMenuMessageCommandsCount}/5 context menu (message) commands registered!`);
+
+      const contextMenuUserCommandsCount = commands.filter(
+         (entry) =>
+            entry.type === 'CONTEXT_MENU_COMMAND' &&
+            entry.data.type === ApplicationCommandType.User,
+      ).length;
+      _assertTrue(
+         contextMenuUserCommandsCount <= 5,
+         'Impossible to register more than 5 context menu (user) commands!',
+      );
+      log(`${contextMenuUserCommandsCount}/5 context menu (user) commands registered!`);
+
+      this.commands = commands.map((entry) => entry.data);
    };
 
    private initializeModules = (): void => {
       for (const module of this.modules) {
          for (const command of module.commands) {
             this.client.on('interactionCreate', async (interaction) => {
-               if (interaction.isCommand() && interaction.commandName === command.data.name) {
+               if (
+                  command.type === 'APPLICATION_COMMAND' &&
+                  interaction.isCommand() &&
+                  interaction.commandName === command.data.name
+               ) {
+                  await command.execute(interaction);
+               } else if (
+                  command.type === 'CONTEXT_MENU_COMMAND' &&
+                  interaction.isContextMenu() &&
+                  interaction.commandName === command.data.name
+               ) {
                   await command.execute(interaction);
                }
             });
@@ -84,9 +131,17 @@ export class Bot {
    private initializeComponents = (): void => {
       for (const component of this.components) {
          this.client.on('interactionCreate', async (interaction) => {
-            if (component.type === 'BUTTON' && interaction.isButton()) {
+            if (
+               component.type === 'BUTTON' &&
+               interaction.isButton() &&
+               component.component.customId === interaction.customId
+            ) {
                await component.execute(interaction);
-            } else if (component.type === 'SELECT_MENU' && interaction.isSelectMenu()) {
+            } else if (
+               component.type === 'SELECT_MENU' &&
+               interaction.isSelectMenu() &&
+               component.component.customId === interaction.customId
+            ) {
                await component.execute(interaction);
             }
          });
