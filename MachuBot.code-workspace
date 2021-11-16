@@ -32,7 +32,17 @@
                }
             ]
          }
-      ]
+      ],
+      "jest.autoRun": {
+         "watch": false,
+         "onSave": "test-src-file",
+         "onStartup": ["all-tests"]
+      },
+      "jest.jestCommandLine": "yarn tests",
+      "jest.testExplorer": {
+         "enabled": true,
+         "showClassicStatus": true
+      }
    },
    "extensions": {
       "recommendations": [
