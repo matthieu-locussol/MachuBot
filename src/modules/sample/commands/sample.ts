@@ -4,10 +4,10 @@ import {
    SlashCommandSubcommandBuilder,
 } from '@discordjs/builders';
 import { MessageActionRow } from 'discord.js';
-import { buttonComponent } from '../../../components/button';
-import { buttonSecondaryComponent } from '../../../components/buttonSecondary';
-import { selectComponent } from '../../../components/select';
 import { ChatInputCommand } from '../../../types/commands';
+import { buttonComponent } from '../components/button';
+import { buttonSecondaryComponent } from '../components/buttonSecondary';
+import { selectComponent } from '../components/select';
 
 export const sampleCommand: ChatInputCommand = {
    type: 'APPLICATION_COMMAND',

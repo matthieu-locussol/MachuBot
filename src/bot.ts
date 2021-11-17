@@ -11,6 +11,7 @@ import { shouldPersistPayload } from './utils/file';
 import {
    chatInputCommandsGuard,
    commandsUnicityGuard,
+   componentsUnicityGuard,
    contextMenuMessageCommandsGuard,
    contextMenuUserCommandsGuard,
 } from './utils/guards';
@@ -67,6 +68,7 @@ export class Bot {
       const commands = this.modules.flatMap((module) => module.commands.map((command) => command));
 
       commandsUnicityGuard(commands);
+
       chatInputCommandsGuard(commands);
       contextMenuUserCommandsGuard(commands);
       contextMenuMessageCommandsGuard(commands);
@@ -100,6 +102,8 @@ export class Bot {
    };
 
    private initializeComponents = (): void => {
+      componentsUnicityGuard(this.components);
+
       for (const component of this.components) {
          this.client.on('interactionCreate', async (interaction) => {
             if (
