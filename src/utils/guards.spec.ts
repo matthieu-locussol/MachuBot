@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { MessageButton } from 'discord.js';
-import { log } from '../logger';
 import { Command } from '../types/commands';
 import { Component } from '../types/components';
 import { commandsUnicityGuard, componentsUnicityGuard } from './guards';
@@ -12,13 +11,13 @@ const mockComponent = (customId: string): Component => ({
       style: 'PRIMARY',
       label: 'Button',
    }),
-   execute: async () => log('test'),
+   execute: async () => undefined,
 });
 
 const mockCommand = (name: string): Command => ({
    type: 'APPLICATION_COMMAND',
    data: new SlashCommandBuilder().setName(name),
-   execute: async () => log('test'),
+   execute: async () => undefined,
 });
 
 describe(__filename, () => {

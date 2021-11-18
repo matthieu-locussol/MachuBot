@@ -1,17 +1,32 @@
-/* eslint-disable no-console */
+import { resolve } from 'path';
+import winston, { format } from 'winston';
+import 'winston-daily-rotate-file';
 
-export const log = (message: string): void => {
-   console.log(`[LOG] ${message}`);
-};
+export const logger = winston.createLogger({
+   level: 'info',
+   format: format.combine(
+      format.timestamp({
+         format: 'DD/MM/YY HH:mm:ss',
+      }),
+      format.json(),
+   ),
+   transports: [
+      new winston.transports.DailyRotateFile({
+         filename: resolve(__dirname, '../logs/MachuBot-%DATE%.log'),
+         datePattern: 'DD-MM-YYYY-HH',
+         zippedArchive: true,
+         maxSize: '20m',
+         maxFiles: '14d',
+      }),
+   ],
+});
 
-export const debug = (message: string): void => {
-   console.log(`[DBG] ${message}`);
-};
-
-export const warning = (message: string): void => {
-   console.warn(`[WRN] ${message}`);
-};
-
-export const error = (message: string): void => {
-   console.error(`[ERR] ${message}`);
-};
+if (process.env.NODE_ENV !== 'production') {
+   logger.add(
+      new winston.transports.Console({
+         format: winston.format.prettyPrint({
+            colorize: true,
+         }),
+      }),
+   );
+}

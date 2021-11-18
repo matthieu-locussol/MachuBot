@@ -3,7 +3,7 @@ import { REST } from '@discordjs/rest';
 import { RESTPostAPIApplicationCommandsJSONBody, Routes } from 'discord-api-types/v9';
 import { Client, Intents } from 'discord.js';
 import { resolve } from 'path';
-import { log } from './logger';
+import { logger } from './logger';
 import { Component } from './types/components';
 import type { Module } from './types/modules';
 import { accessEnvironmentVariable } from './utils/environment';
@@ -98,7 +98,7 @@ export class Bot {
       }
 
       const modulesCount = this.modules.length;
-      log(`${modulesCount} Modules registered!`);
+      logger.info(`${modulesCount} Modules registered!`);
    };
 
    private initializeComponents = (): void => {
@@ -123,7 +123,7 @@ export class Bot {
       }
 
       const componentsCount = this.components.length;
-      log(`${componentsCount} Components registered!`);
+      logger.info(`${componentsCount} Components registered!`);
    };
 
    private persistCommands = async (
@@ -134,9 +134,9 @@ export class Bot {
       const shouldPersist = await shouldPersistPayload(filePath, payload);
 
       if (shouldPersist) {
-         log('Persisting slash commands...');
+         logger.info('Persisting slash commands...');
          await callback(payload);
-         log('Done!');
+         logger.info('Done!');
       }
    };
 
@@ -158,7 +158,7 @@ export class Bot {
 
       this.client.on('ready', () => {
          _assert(this.client.user);
-         log(`Development bot started as ${this.client.user.tag}`);
+         logger.info(`Development bot started as ${this.client.user.tag}`);
       });
    };
 
@@ -174,7 +174,7 @@ export class Bot {
 
       this.client.on('ready', () => {
          _assert(this.client.user);
-         log(`Production bot started as ${this.client.user.tag}`);
+         logger.info(`Production bot started as ${this.client.user.tag}`);
       });
    };
 }

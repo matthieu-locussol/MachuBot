@@ -1,5 +1,5 @@
 import { ApplicationCommandType } from 'discord-api-types/payloads/v9';
-import { log } from '../logger';
+import { logger } from '../logger';
 import { Command } from '../types/commands';
 import { Component } from '../types/components';
 import { isUnique } from './array';
@@ -35,7 +35,9 @@ export const chatInputCommandsGuard = (commands: Command[]): void => {
       `Impossible to register more than ${MAX_CHAT_INPUT_COMMANDS} ChatInput commands!`,
    );
 
-   log(`${chatInputCommandsCount}/${MAX_CHAT_INPUT_COMMANDS} ChatInput commands registered!`);
+   logger.info(
+      `${chatInputCommandsCount}/${MAX_CHAT_INPUT_COMMANDS} ChatInput commands registered!`,
+   );
 };
 
 export const contextMenuUserCommandsGuard = (commands: Command[]): void => {
@@ -49,7 +51,7 @@ export const contextMenuUserCommandsGuard = (commands: Command[]): void => {
       `Impossible to register more than ${MAX_CONTEXT_MENU_USER_COMMANDS} ContextMenu (User) commands!`,
    );
 
-   log(
+   logger.info(
       `${contextMenuUserCommandsCount}/${MAX_CONTEXT_MENU_USER_COMMANDS} ContextMenu (User) commands registered!`,
    );
 };
@@ -66,7 +68,7 @@ export const contextMenuMessageCommandsGuard = (commands: Command[]): void => {
       `Impossible to register more than ${MAX_CONTEXT_MENU_MESSAGE_COMMANDS} ContextMenu (Message) commands!`,
    );
 
-   log(
+   logger.info(
       `${contextMenuMessageCommandsCount}/${MAX_CONTEXT_MENU_MESSAGE_COMMANDS} ContextMenu (Message) commands registered!`,
    );
 };
