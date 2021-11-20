@@ -30,11 +30,11 @@ export class Bot {
 
    private modules: Module[];
 
-   private components: Component[];
+   private components: Component[] = [];
 
    private commands: SerializableInteraction[] = [];
 
-   constructor(params: { modules: Module[]; components: Component[] }) {
+   constructor(modules: Module[]) {
       this.token = accessEnvironmentVariable(
          'DISCORD_TOKEN_PRODUCTION',
          'DISCORD_TOKEN_DEVELOPMENT',
@@ -46,8 +46,7 @@ export class Bot {
 
       this.rest = new REST({ version: '9' }).setToken(this.token);
       this.client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-      this.modules = params.modules;
-      this.components = params.components;
+      this.modules = modules;
 
       this.initializeModules();
       this.initializeComponents();
@@ -102,6 +101,8 @@ export class Bot {
    };
 
    private initializeComponents = (): void => {
+      this.components = this.modules.flatMap((module) => module.components);
+
       componentsUnicityGuard(this.components);
 
       for (const component of this.components) {
