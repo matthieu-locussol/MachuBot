@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { ChatInputCommand } from '../../../types/commands';
+import type { ChatInputCommand } from '../../../types/commands';
 
 export const pingCommand: ChatInputCommand = {
    type: 'APPLICATION_COMMAND',

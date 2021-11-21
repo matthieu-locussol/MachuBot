@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { MessageButton } from 'discord.js';
-import { Command } from '../types/commands';
-import { Component } from '../types/components';
+import type { Command } from '../types/commands';
+import type { Component } from '../types/components';
 import { commandsUnicityGuard, componentsUnicityGuard } from './guards';
 
 const mockComponent = (customId: string): Component => ({

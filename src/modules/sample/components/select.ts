@@ -1,5 +1,5 @@
 import { MessageSelectMenu } from 'discord.js';
-import { SelectMenuComponent } from '../../../types/components';
+import type { SelectMenuComponent } from '../../../types/components';
 
 export const selectComponent: SelectMenuComponent = {
    type: 'SELECT_MENU',
