@@ -69,25 +69,22 @@ jobs:
          - run: yarn install
          - run: yarn build
          - run:
-              echo "DISCORD_CLIENT_ID_DEVELOPMENT=${{
-              secrets.DISCORD_CLIENT_ID_DEVELOPMENT }}" >> .env
+              echo "DISCORD_CLIENT_ID_DEVELOPMENT=${{ secrets.DISCORD_CLIENT_ID_DEVELOPMENT }}" >>
+              .env
          - run:
-              echo "DISCORD_CLIENT_ID_PRODUCTION=${{
-              secrets.DISCORD_CLIENT_ID_PRODUCTION }}" >> .env
+              echo "DISCORD_CLIENT_ID_PRODUCTION=${{ secrets.DISCORD_CLIENT_ID_PRODUCTION }}" >>
+              .env
+         - run: echo "DISCORD_TOKEN_DEVELOPMENT=${{ secrets.DISCORD_TOKEN_DEVELOPMENT }}" >> .env
+         - run: echo "DISCORD_TOKEN_PRODUCTION=${{ secrets.DISCORD_TOKEN_PRODUCTION }}" >> .env
          - run:
-              echo "DISCORD_TOKEN_DEVELOPMENT=${{
-              secrets.DISCORD_TOKEN_DEVELOPMENT }}" >> .env
-         - run:
-              echo "DISCORD_TOKEN_PRODUCTION=${{
-              secrets.DISCORD_TOKEN_PRODUCTION }}" >> .env
-         - run:
-              echo "DISCORD_DEVELOPMENT_SERVER_ID=${{
-              secrets.DISCORD_DEVELOPMENT_SERVER_ID }}" >> .env
+              echo "DISCORD_DEVELOPMENT_SERVER_ID=${{ secrets.DISCORD_DEVELOPMENT_SERVER_ID }}" >>
+              .env
+         - run: echo "DISCORD_EMOJIS_SERVER_ID=${{ secrets.DISCORD_EMOJIS_SERVER_ID }}" >> .env
          - run: echo "${{ secrets.SSHKEY }}" > key.pem
          - run: chmod 600 key.pem
          - run:
-              rsync -av -e "ssh -i key.pem -o StrictHostKeyChecking=no" . ${{
-              secrets.USER }}@${{ secrets.HOST }}:${{ secrets.DIR }}/
+              rsync -av -e "ssh -i key.pem -o StrictHostKeyChecking=no" . ${{ secrets.USER }}@${{
+              secrets.HOST }}:${{ secrets.DIR }}/
          - run:
-              ssh -i key.pem ${{ secrets.USER }}@${{ secrets.HOST }} "cd ${{
-              secrets.DIR }} && pm2 startOrRestart pm2.config.json"
+              ssh -i key.pem ${{ secrets.USER }}@${{ secrets.HOST }} "cd ${{ secrets.DIR }} && pm2
+              startOrRestart pm2.config.json"
