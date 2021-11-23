@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { CommandInteraction, MessageActionRow, MessageButton } from 'discord.js';
+import { getEmoji } from '../../../../utils/emoji';
+import { makeCoinChart } from '../../utils/embeds/CryptoCoinChart';
 import { makeCryptoCoinEmbed } from '../../utils/embeds/CryptoCoinEmbed';
 
 interface CoinGeckoCoinsResponse {
@@ -33,31 +35,35 @@ export const cryptoCoin = async (
    await interaction.deferReply();
 
    try {
-      const response = await axios.get<CoinGeckoCoinsResponse>(
-         `https://api.coingecko.com/api/v3/coins/${id}`,
+      const coinId = encodeURIComponent(id);
+      const coinResponse = await axios.get<CoinGeckoCoinsResponse>(
+         `https://api.coingecko.com/api/v3/coins/${coinId}`,
       );
-      const results = response.data;
+      const coinResults = coinResponse.data;
+      const chartAttachment = await makeCoinChart(coinId, currency, 'chart.png');
 
       await interaction.editReply({
+         files: [chartAttachment],
          embeds: [
             makeCryptoCoinEmbed({
-               rank: results.market_cap_rank,
-               name: results.name,
-               symbol: results.symbol.toUpperCase(),
+               rank: coinResults.market_cap_rank,
+               name: coinResults.name,
+               symbol: coinResults.symbol.toUpperCase(),
                currency,
-               thumbnail: results.image.thumb,
-               image: results.image.large,
-               homepage: results.links.homepage[0],
+               thumbnail: coinResults.image.thumb,
+               image: coinResults.image.large,
+               homepage: coinResults.links.homepage[0],
                priceChanges: {
-                  '1d': results.market_data.price_change_percentage_24h,
-                  '7d': results.market_data.price_change_percentage_7d,
-                  '30d': results.market_data.price_change_percentage_30d,
-                  '60d': results.market_data.price_change_percentage_60d,
-                  '1y': results.market_data.price_change_percentage_1y,
+                  '1d': coinResults.market_data.price_change_percentage_24h,
+                  '7d': coinResults.market_data.price_change_percentage_7d,
+                  '30d': coinResults.market_data.price_change_percentage_30d,
+                  '60d': coinResults.market_data.price_change_percentage_60d,
+                  '1y': coinResults.market_data.price_change_percentage_1y,
                },
-               marketCap: results.market_data.market_cap[currency],
-               currentPrice: results.market_data.current_price[currency],
-               ath: results.market_data.ath[currency],
+               marketCap: coinResults.market_data.market_cap[currency],
+               currentPrice: coinResults.market_data.current_price[currency],
+               ath: coinResults.market_data.ath[currency],
+               chart: 'attachment://chart.png',
             }),
          ],
          components: [
@@ -65,8 +71,9 @@ export const cryptoCoin = async (
                components: [
                   new MessageButton()
                      .setLabel('View on CoinGecko')
+                     .setEmoji(getEmoji(interaction.client.guilds, 'CoinGecko'))
                      .setStyle('LINK')
-                     .setURL(`https://www.coingecko.com/en/coins/${results.name.toLowerCase()}`),
+                     .setURL(`https://www.coingecko.com/en/coins/${coinId}`),
                ],
             }),
          ],

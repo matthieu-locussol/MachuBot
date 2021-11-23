@@ -20,6 +20,7 @@ export interface CryptoCoinEmbedPayload {
    marketCap: number;
    currentPrice: number;
    ath: number;
+   chart: string;
 }
 
 export const makeCryptoCoinEmbed = (payload: CryptoCoinEmbedPayload): MessageEmbed =>
@@ -28,6 +29,7 @@ export const makeCryptoCoinEmbed = (payload: CryptoCoinEmbedPayload): MessageEmb
       .setURL(payload.homepage)
       .setColor(payload.priceChanges['1d'] >= 0 ? 'GREEN' : 'RED')
       .setThumbnail(payload.image)
+      .setImage(payload.chart)
       .setFooter(
          `Infos about the ${payload.name} (${payload.symbol}) - MachuBot`,
          payload.thumbnail,
