@@ -1,3 +1,4 @@
+import { ChartPoint } from '../../../utils/chart';
 import type { CryptoMarketEmbedPayload } from './embeds/CryptoMarketEmbed';
 
 const currencySymbols: Record<string, string> = {
@@ -20,4 +21,13 @@ export const getCryptoDominationMarkdown = (
    );
    const markdown = `\`\`\`${elements.join('\n')}\`\`\``;
    return markdown;
+};
+
+export const getChartPoint = (entry: [number, number]): ChartPoint => {
+   const [timestamp, value] = entry;
+
+   const date = new Date(timestamp);
+   const label = `${date.getDate()}/${date.getMonth() + 1}`;
+
+   return { label, value };
 };

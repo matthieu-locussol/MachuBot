@@ -1,4 +1,10 @@
-import { getColoredValue, getCryptoDominationMarkdown, getPriceValue } from './formatters';
+import { ChartPoint } from '../../../utils/chart';
+import {
+   getChartPoint,
+   getColoredValue,
+   getCryptoDominationMarkdown,
+   getPriceValue,
+} from './formatters';
 
 describe(__filename, () => {
    test('getColoredValue', () => {
@@ -41,5 +47,16 @@ describe(__filename, () => {
             { name: 'sample2', percentage: 52 },
          ]),
       ).toBe('```1. sample 25.00%\n2. sample2 52.00%```');
+   });
+
+   test('getChartPoint', () => {
+      const samples: [[number, number], ChartPoint][] = [
+         [[0, 65.25], { label: '1/1', value: 65.25 }],
+         [[1637685541000, 25], { label: '23/11', value: 25 }],
+      ];
+
+      for (const [input, output] of samples) {
+         expect(getChartPoint(input)).toStrictEqual(output);
+      }
    });
 });
