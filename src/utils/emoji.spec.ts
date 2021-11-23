@@ -1,5 +1,6 @@
-import { GuildManager } from 'discord.js';
-import { Emoji, getEmoji } from './emoji';
+import type { GuildManager } from 'discord.js';
+import type { Emoji } from './emoji';
+import { getEmoji } from './emoji';
 
 describe(__filename, () => {
    const mockedGuildManager = {

@@ -1,9 +1,13 @@
-import {
+import type {
    ContextMenuCommandBuilder,
    SlashCommandBuilder,
    SlashCommandSubcommandsOnlyBuilder,
 } from '@discordjs/builders';
-import { BaseCommandInteraction, CommandInteraction, ContextMenuInteraction } from 'discord.js';
+import type {
+   BaseCommandInteraction,
+   CommandInteraction,
+   ContextMenuInteraction,
+} from 'discord.js';
 
 type PartialCommand<T extends BaseCommandInteraction> = {
    type: 'APPLICATION_COMMAND' | 'CONTEXT_MENU_COMMAND';

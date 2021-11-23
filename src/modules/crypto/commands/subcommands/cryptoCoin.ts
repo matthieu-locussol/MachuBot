@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { CommandInteraction, MessageActionRow, MessageButton } from 'discord.js';
+import type { CommandInteraction } from 'discord.js';
+import { MessageActionRow, MessageButton } from 'discord.js';
 import { getEmoji } from '../../../../utils/emoji';
 import { makeCoinChart } from '../../utils/embeds/CryptoCoinChart';
 import { makeCryptoCoinEmbed } from '../../utils/embeds/CryptoCoinEmbed';

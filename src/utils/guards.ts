@@ -1,7 +1,7 @@
 import { ApplicationCommandType } from 'discord-api-types/payloads/v9';
 import { logger } from '../logger';
-import { Command } from '../types/commands';
-import { Component } from '../types/components';
+import type { Command } from '../types/commands';
+import type { Component } from '../types/components';
 import { isUnique } from './array';
 import { _assertTrue } from './_assert';
 

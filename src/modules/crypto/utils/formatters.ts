@@ -1,4 +1,4 @@
-import { ChartPoint } from '../../../utils/chart';
+import type { ChartPoint } from '../../../utils/chart';
 import type { CryptoMarketEmbedPayload } from './embeds/CryptoMarketEmbed';
 
 const currencySymbols: Record<string, string> = {

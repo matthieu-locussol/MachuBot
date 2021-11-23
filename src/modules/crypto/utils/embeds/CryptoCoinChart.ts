@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { MessageAttachment } from 'discord.js';
-import { ChartOptions, makeChart } from '../../../../utils/chart';
+import type { ChartOptions } from '../../../../utils/chart';
+import { makeChart } from '../../../../utils/chart';
 import { getChartPoint } from '../formatters';
 
 interface CoinGeckoChartResponse {
@@ -17,10 +18,9 @@ export const makeCoinChart = async (
    );
    const results = response.data;
 
-   const chartOptions: ChartOptions = {
+   const chartOptions: Partial<ChartOptions> = {
       width: 400,
       height: 160,
-      title: 'Price ($)',
       color: 'GREEN',
       radius: 2,
       showScales: true,

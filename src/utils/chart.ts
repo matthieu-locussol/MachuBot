@@ -1,4 +1,4 @@
-import { Chart, ChartConfiguration } from 'chart.js';
+import type { ChartConfiguration } from 'chart.js';
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 
 export interface ChartPoint {
@@ -56,8 +56,6 @@ export const makeChart = async (
       ...options,
    };
 
-   Chart.defaults.plugins.legend.display = !!title;
-
    const configuration: ChartConfiguration = {
       type: 'line',
       data: {
@@ -87,6 +85,11 @@ export const makeChart = async (
          elements: {
             point: {
                radius,
+            },
+         },
+         plugins: {
+            legend: {
+               display: !!title,
             },
          },
       },

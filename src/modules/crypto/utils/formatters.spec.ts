@@ -1,4 +1,4 @@
-import { ChartPoint } from '../../../utils/chart';
+import type { ChartPoint } from '../../../utils/chart';
 import {
    getChartPoint,
    getColoredValue,
