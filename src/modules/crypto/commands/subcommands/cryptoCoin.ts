@@ -80,6 +80,8 @@ export const cryptoCoin = async (
          ],
       });
    } catch (e) {
-      await interaction.editReply(`Could not find the \`${id}\` cryptocurrency!`);
+      await interaction.editReply(
+         `Could not find the \`${id}\` cryptocurrency!\nPlease type a CoinGecko coin id (like \`bitcoin\`), not a symbol (like \`BTC\`).`,
+      );
    }
 };
