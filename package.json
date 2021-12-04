@@ -9,17 +9,18 @@
       "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only src/main.ts",
       "build": "tsc",
       "start": "node build/main.js",
-      "check:prettier": "prettier --list-different --config ./.prettierrc.json --ignore-path .gitignore --write \"**/*.{js,jsx,ts,tsx}\"",
+      "check:prettier": "prettier --list-different --config ./.prettierrc.json --ignore-path .gitignore --write \"**/*.{js,jsx,ts,tsx,json}\"",
       "check:eslint": "eslint --ignore-path .gitignore src/**/*",
-      "check:typescript": "tsc --project ./tsconfig.json --noEmit",
+      "check:typescript": "tsc --noEmit",
       "tests": "jest",
       "tests:ci": "jest --ci"
    },
-   "pre-commit": [
-      "check:typescript",
-      "check:eslint",
-      "check:prettier"
-   ],
+   "lint-staged": {
+      "*.{ts,tsx,d.ts}": [
+         "yarn check:typescript",
+         "yarn check:eslint"
+      ]
+   },
    "dependencies": {
       "@discordjs/builders": "^0.8.2",
       "@discordjs/rest": "^0.1.0-canary.0",
@@ -33,6 +34,8 @@
       "winston-daily-rotate-file": "^4.5.5"
    },
    "devDependencies": {
+      "@commitlint/cli": "^15.0.0",
+      "@commitlint/config-conventional": "^15.0.0",
       "@types/jest": "^27.0.2",
       "@types/node": "^16.11.7",
       "@typescript-eslint/eslint-plugin": "^5.3.1",
@@ -43,10 +46,12 @@
       "eslint-config-airbnb-typescript": "^15.0.0",
       "eslint-config-prettier": "^8.3.0",
       "eslint-plugin-import": "^2.25.3",
+      "husky": "^7.0.4",
       "jest": "^27.3.1",
+      "lint-staged": "^12.1.2",
       "node-fetch": "^3.1.0",
-      "pre-commit": "^1.2.2",
       "prettier": "^2.4.1",
+      "pretty-quick": "^3.1.2",
       "ts-jest": "^27.0.7",
       "ts-node-dev": "^1.1.8",
       "typescript": "^4.4.4"
