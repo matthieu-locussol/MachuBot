@@ -3,6 +3,7 @@ import { REST } from '@discordjs/rest';
 import { RESTPostAPIApplicationCommandsJSONBody, Routes } from 'discord-api-types/v9';
 import { Client, Intents } from 'discord.js';
 import { resolve } from 'path';
+import { version } from '../package.json';
 import { logger } from './logger';
 import { Component } from './types/components';
 import type { Module } from './types/modules';
@@ -45,7 +46,17 @@ export class Bot {
       );
 
       this.rest = new REST({ version: '9' }).setToken(this.token);
-      this.client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+      this.client = new Client({
+         intents: [Intents.FLAGS.GUILDS],
+         presence: {
+            status: 'online',
+            activities: [
+               {
+                  name: `v${version}`,
+               },
+            ],
+         },
+      });
       this.modules = modules;
 
       this.initializeModules();

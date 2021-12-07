@@ -11,14 +11,14 @@
       "start": "node build/main.js",
       "check:prettier": "prettier --list-different --config ./.prettierrc.json --ignore-path .gitignore --write \"**/*.{js,jsx,ts,tsx,json}\"",
       "check:eslint": "eslint --ignore-path .gitignore src/**/*",
-      "check:typescript": "tsc --noEmit",
+      "check:typescript": "tsc --project ./tsconfig.json --noEmit",
       "tests": "jest",
       "tests:ci": "jest --ci",
       "release": "standard-version -a"
    },
    "lint-staged": {
       "*.{ts,tsx,d.ts}": [
-         "yarn check:typescript",
+         "tsc-files --noEmit",
          "yarn check:eslint"
       ]
    },
@@ -56,6 +56,7 @@
       "standard-version": "^9.3.2",
       "ts-jest": "^27.0.7",
       "ts-node-dev": "^1.1.8",
+      "tsc-files": "^1.1.3",
       "typescript": "^4.4.4"
    }
 }
