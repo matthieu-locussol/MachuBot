@@ -8,7 +8,7 @@
    "scripts": {
       "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only src/main.ts",
       "build": "tsc",
-      "start": "node build/main.js",
+      "start": "node build/src/main.js",
       "check:prettier": "prettier --list-different --config ./.prettierrc.json --ignore-path .gitignore --write \"**/*.{js,jsx,ts,tsx,json}\"",
       "check:eslint": "eslint --ignore-path .gitignore src/**/*",
       "check:typescript": "tsc --project ./tsconfig.json --noEmit",
