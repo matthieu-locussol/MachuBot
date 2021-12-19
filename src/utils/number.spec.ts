@@ -1,4 +1,4 @@
-import { formatCommas, formatFloat, formatInt } from './number';
+import { clamp, formatCommas, formatFloat, formatInt } from './number';
 
 describe(__filename, () => {
    test('formatCommas', () => {
@@ -60,6 +60,25 @@ describe(__filename, () => {
 
       for (const [input, digits, output] of samples) {
          expect(formatFloat(input, digits)).toEqual(output);
+      }
+   });
+
+   test('clamp', () => {
+      const samples: [number, number, number, number][] = [
+         [0, 0, 0, 0],
+         [0, 0, 3, 0],
+         [0, -2, 3, 0],
+         [2, 1, 4, 2],
+         [1, 1, 4, 1],
+         [-1, 1, 4, 1],
+         [8, 1, 4, 4],
+         [-2, -4, -1, -2],
+         [-8, -4, -1, -4],
+         [10, -4, -1, -1],
+      ];
+
+      for (const [input, min, max, output] of samples) {
+         expect(clamp(input, min, max)).toEqual(output);
       }
    });
 });

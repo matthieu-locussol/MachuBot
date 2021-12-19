@@ -16,3 +16,6 @@ export const formatFloat = (value: number | string, digits?: number): string => 
    const fixedNumericalValue = parseFloat(fixedValue);
    return formatCommas(fixedNumericalValue);
 };
+
+export const clamp = (n: number, low: number, high: number): number =>
+   Math.max(low, Math.min(n, high));
