@@ -1,8 +1,13 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See
-[standard-version](https://github.com/conventional-changelog/standard-version) for commit
-guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [0.3.0](https://github.com/matthieu-locussol/MachuBot/compare/v0.2.0...v0.3.0) (2021-12-22)
+
+
+### Features
+
+* added osu & osu-tools-api status to the status command ([fd97e49](https://github.com/matthieu-locussol/MachuBot/commit/fd97e494f9c683e64c86bb27c85fd45e8d77dd84))
 
 ## 0.2.0 (2021-12-22)
 
