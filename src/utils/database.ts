@@ -2,7 +2,7 @@ import Keyv from 'keyv';
 
 interface GuildDatabase {
    osu: {
-      usernames: Record<string, string>;
+      usernames: Record<string, number>;
    };
 }
 

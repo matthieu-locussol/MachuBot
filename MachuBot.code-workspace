@@ -42,7 +42,16 @@
       "jest.testExplorer": {
          "enabled": true,
          "showClassicStatus": true
-      }
+      },
+      "sqltools.connections": [
+         {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:Root}/database.sqlite",
+            "name": "MachuBot"
+         }
+      ],
+      "sqltools.useNodeRuntime": true
    },
    "extensions": {
       "recommendations": [

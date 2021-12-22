@@ -1,5 +1,7 @@
-import { CommandInteraction } from 'discord.js';
+import type { CommandInteraction } from 'discord.js';
+import { logger } from '../../../../logger';
 import { loadGuildDatabase } from '../../../../utils/database';
+import { getUser } from '../../utils/api';
 
 export const osuAssociate = async (
    interaction: CommandInteraction,
@@ -9,8 +11,19 @@ export const osuAssociate = async (
 
    const userId = interaction.member.user.id;
    const database = await loadGuildDatabase(interaction.guildId);
-   database.osu.usernames[userId] = username;
-   database.save();
 
-   await interaction.editReply(username);
+   try {
+      const osuUser = await getUser(username);
+      database.osu.usernames[userId] = osuUser.id;
+      database.save();
+
+      await interaction.editReply(
+         `Your discord account has been associated to the nickname \`${username}\` on osu!.`,
+      );
+   } catch (e) {
+      logger.error('osu/associate:', e);
+      await interaction.editReply(
+         `An error occurred, please try again. Make sure the nickname \`${username}\` exists on osu!.`,
+      );
+   }
 };

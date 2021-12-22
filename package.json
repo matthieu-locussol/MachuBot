@@ -32,6 +32,7 @@
       "discord.js": "^13.3.1",
       "dotenv": "^10.0.0",
       "keyv": "^4.0.4",
+      "luxon": "^2.2.0",
       "winston": "^3.3.3",
       "winston-daily-rotate-file": "^4.5.5"
    },
@@ -41,6 +42,7 @@
       "@keyv/sqlite": "^2.0.3",
       "@types/jest": "^27.0.2",
       "@types/keyv": "^3.1.3",
+      "@types/luxon": "^2.0.8",
       "@types/node": "^16.11.7",
       "@typescript-eslint/eslint-plugin": "^5.3.1",
       "@typescript-eslint/parser": "^5.3.1",

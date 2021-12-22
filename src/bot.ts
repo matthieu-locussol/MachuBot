@@ -59,6 +59,8 @@ export class Bot {
       });
       this.modules = modules;
 
+      this.client.setMaxListeners(200);
+
       this.initializeModules();
       this.initializeComponents();
       this.initializeCommands();

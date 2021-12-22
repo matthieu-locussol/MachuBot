@@ -5,9 +5,9 @@ import {
 } from '@discordjs/builders';
 import { MessageActionRow } from 'discord.js';
 import type { ChatInputCommand } from '../../../types/commands';
-import { buttonComponent } from '../components/button';
-import { buttonSecondaryComponent } from '../components/buttonSecondary';
-import { selectComponent } from '../components/select';
+import { buttonComponent } from '../components/ui/buttonComponent';
+import { buttonSecondaryComponent } from '../components/ui/buttonSecondaryComponent';
+import { selectComponent } from '../components/ui/selectComponent';
 
 export const sampleCommand: ChatInputCommand = {
    type: 'APPLICATION_COMMAND',
@@ -38,7 +38,7 @@ export const sampleCommand: ChatInputCommand = {
 
          if (chosenInteraction === 'button') {
             const row = new MessageActionRow({
-               components: [buttonComponent.component, buttonSecondaryComponent.component],
+               components: [buttonComponent, buttonSecondaryComponent],
             });
 
             interaction.reply({
@@ -47,7 +47,7 @@ export const sampleCommand: ChatInputCommand = {
             });
          } else if (chosenInteraction === 'select_menu') {
             const row = new MessageActionRow({
-               components: [selectComponent.component],
+               components: [selectComponent],
             });
 
             interaction.reply({

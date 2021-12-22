@@ -1,17 +1,9 @@
-import { MessageButton } from 'discord.js';
 import type { ButtonComponent } from '../../../types/components';
+import { buttonSecondaryHandler } from './handlers/buttonSecondaryHandler';
+import { buttonSecondaryComponent } from './ui/buttonSecondaryComponent';
 
-export const buttonSecondaryComponent: ButtonComponent = {
+export const buttonSecondary: ButtonComponent = {
    type: 'BUTTON',
-   component: new MessageButton({
-      customId: 'buttonSecondary',
-      style: 'SECONDARY',
-      label: 'Secondary',
-   }),
-   execute: async (interaction) => {
-      await interaction.update({
-         content: 'Secondary clicked!',
-         components: [],
-      });
-   },
+   component: buttonSecondaryComponent,
+   execute: buttonSecondaryHandler,
 };

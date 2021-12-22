@@ -2,6 +2,7 @@ import type { GuildEmoji, GuildManager } from 'discord.js';
 import { _assert } from './_assert';
 
 export type Emoji =
+   | 'loading'
    | 'Correct'
    | 'Incorrect'
    | 'Binance'
