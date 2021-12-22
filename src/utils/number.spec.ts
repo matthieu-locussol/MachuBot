@@ -1,4 +1,11 @@
-import { clamp, formatCommas, formatFloat, formatInt } from './number';
+import {
+   clamp,
+   formatCommas,
+   formatFloat,
+   formatInt,
+   secondsToDuration,
+   twoDigits,
+} from './number';
 
 describe(__filename, () => {
    test('formatCommas', () => {
@@ -79,6 +86,41 @@ describe(__filename, () => {
 
       for (const [input, min, max, output] of samples) {
          expect(clamp(input, min, max)).toEqual(output);
+      }
+   });
+
+   test('twoDigits', () => {
+      const samples: [number, string][] = [
+         [0, '00'],
+         [1, '01'],
+         [9, '09'],
+         [10, '10'],
+         [99, '99'],
+         [-1, '-1'],
+      ];
+
+      for (const [input, output] of samples) {
+         expect(twoDigits(input)).toEqual(output);
+      }
+   });
+
+   test('secondsToDuration', () => {
+      const samples: [number, string][] = [
+         [0, '00:00'],
+         [5, '00:05'],
+         [12, '00:12'],
+         [120, '02:00'],
+         [147, '02:27'],
+         [59, '00:59'],
+         [3599, '59:59'],
+         [3600, '01:00:00'],
+         [3601, '01:00:01'],
+         [7199, '01:59:59'],
+         [7200, '02:00:00'],
+      ];
+
+      for (const [input, output] of samples) {
+         expect(secondsToDuration(input)).toEqual(output);
       }
    });
 });

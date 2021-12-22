@@ -10,10 +10,10 @@ describe(__filename, () => {
 
    test('Save data to database', async () => {
       const databaseInstance1 = await loadGuildDatabase('tests');
-      databaseInstance1.osu.usernames.userId = 'username';
+      databaseInstance1.osu.usernames.userId = 123456;
 
       const databaseInstance2 = await loadGuildDatabase('tests');
-      expect(databaseInstance2.osu.usernames.userId).toStrictEqual('username');
+      expect(databaseInstance2.osu.usernames.userId).toStrictEqual(123456);
    });
 
    test('Save multiple data to database', async () => {
@@ -21,15 +21,15 @@ describe(__filename, () => {
       const databaseVariable2 = await loadGuildDatabase('tests');
       const databaseVariable3 = await loadGuildDatabase('tests');
 
-      databaseVariable1.osu.usernames.userId1 = 'username';
-      databaseVariable2.osu.usernames.userId2 = 'username';
-      databaseVariable3.osu.usernames.userId3 = 'username';
+      databaseVariable1.osu.usernames.userId1 = 123456;
+      databaseVariable2.osu.usernames.userId2 = 234567;
+      databaseVariable3.osu.usernames.userId3 = 345678;
 
       const database = await loadGuildDatabase('tests');
 
-      expect(database.osu.usernames.userId1).toBe('username');
-      expect(database.osu.usernames.userId2).toBe('username');
-      expect(database.osu.usernames.userId3).toBe('username');
+      expect(database.osu.usernames.userId1).toBe(123456);
+      expect(database.osu.usernames.userId2).toBe(234567);
+      expect(database.osu.usernames.userId3).toBe(345678);
    });
 
    afterAll(() => {

@@ -13,6 +13,7 @@
       "project": ["./tsconfig.json"]
    },
    "rules": {
+      "no-await-in-loop": "off",
       "no-underscore-dangle": "off",
       "no-restricted-syntax": [
          "error",

@@ -11,12 +11,16 @@ type PartialComponent<T extends BaseMessageComponent> = {
    component: T;
 };
 
+export type ButtonComponentHandler = (interaction: ButtonInteraction) => Promise<void>;
+
 export type ButtonComponent = PartialComponent<MessageButton> & {
-   execute: (interaction: ButtonInteraction) => Promise<void>;
+   execute: ButtonComponentHandler;
 };
 
+export type SelectMenuComponentHandler = (interaction: SelectMenuInteraction) => Promise<void>;
+
 export type SelectMenuComponent = PartialComponent<MessageSelectMenu> & {
-   execute: (interaction: SelectMenuInteraction) => Promise<void>;
+   execute: SelectMenuComponentHandler;
 };
 
 export type Component = ButtonComponent | SelectMenuComponent;
