@@ -1,4 +1,5 @@
-import { ApplicationCommandType } from 'discord-api-types/payloads/v9';
+import { ContextMenuCommandType } from '@discordjs/builders';
+import { ApplicationCommandType } from 'discord-api-types/v9';
 import { logger } from '../logger';
 import type { Command } from '../types/commands';
 import type { Component } from '../types/components';
@@ -43,7 +44,8 @@ export const chatInputCommandsGuard = (commands: Command[]): void => {
 export const contextMenuUserCommandsGuard = (commands: Command[]): void => {
    const contextMenuUserCommandsCount = commands.filter(
       (entry) =>
-         entry.type === 'CONTEXT_MENU_COMMAND' && entry.data.type === ApplicationCommandType.User,
+         entry.type === 'CONTEXT_MENU_COMMAND' &&
+         entry.data.type === (ApplicationCommandType.User as unknown as ContextMenuCommandType),
    ).length;
 
    _assertTrue(
@@ -60,7 +62,7 @@ export const contextMenuMessageCommandsGuard = (commands: Command[]): void => {
    const contextMenuMessageCommandsCount = commands.filter(
       (entry) =>
          entry.type === 'CONTEXT_MENU_COMMAND' &&
-         entry.data.type === ApplicationCommandType.Message,
+         entry.data.type === (ApplicationCommandType.Message as unknown as ContextMenuCommandType),
    ).length;
 
    _assertTrue(
