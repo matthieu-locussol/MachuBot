@@ -1,4 +1,4 @@
-import type { RESTPostAPIApplicationCommandsJSONBody } from 'discord-api-types/rest/v9';
+import type { RESTPostAPIApplicationCommandsJSONBody } from 'discord-api-types/v9';
 import { existsSync, rmSync } from 'fs';
 import { resolve } from 'path';
 import { shouldPersistPayload } from './file';
