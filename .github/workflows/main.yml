@@ -80,6 +80,9 @@ jobs:
               echo "DISCORD_DEVELOPMENT_SERVER_ID=${{ secrets.DISCORD_DEVELOPMENT_SERVER_ID }}" >>
               .env
          - run: echo "DISCORD_EMOJIS_SERVER_ID=${{ secrets.DISCORD_EMOJIS_SERVER_ID }}" >> .env
+         - run: echo "OSU_OAUTH_CLIENT_ID=${{ secrets.OSU_OAUTH_CLIENT_ID }}" >> .env
+         - run: echo "OSU_OAUTH_CLIENT_SECRET=${{ secrets.OSU_OAUTH_CLIENT_SECRET }}" >> .env
+         - run: echo "OSU_PP_ENDPOINT=${{ secrets.OSU_PP_ENDPOINT }}" >> .env
          - run: echo "${{ secrets.SSHKEY }}" > key.pem
          - run: chmod 600 key.pem
          - run:
