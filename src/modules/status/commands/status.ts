@@ -48,7 +48,7 @@ export const statusCommand: ChatInputCommand = {
       const getOsuVersion = (response: AxiosResponse<OsuStatusResponse>) => {
          if (response.status === 200) {
             const stream = osuStatus.data.streams[0];
-            return `${stream.display_name}(v${stream.latest_build.display_version})`;
+            return `${stream.display_name} (v${stream.latest_build.display_version})`;
          }
 
          return '';
