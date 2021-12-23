@@ -149,7 +149,7 @@ export class Bot {
 
       if (shouldPersist) {
          logger.info('Persisting slash commands...');
-         await callback(payload);
+         await callback(payload as RESTPostAPIApplicationCommandsJSONBody[]);
          logger.info('Done!');
       }
    };
