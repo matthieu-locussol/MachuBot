@@ -1,5 +1,5 @@
-import { ContextMenuCommandBuilder, ContextMenuCommandType } from '@discordjs/builders';
-import { ApplicationCommandType } from 'discord-api-types/v9';
+import { ContextMenuCommandBuilder } from '@discordjs/builders';
+import type { ApplicationCommandType } from 'discord-api-types/v9';
 import type { ContextMenuCommand } from '../../../types/commands';
 import { _assert, _assertTrue } from '../../../utils/_assert';
 
@@ -7,7 +7,8 @@ export const sampleContextUserCommand: ContextMenuCommand = {
    type: 'CONTEXT_MENU_COMMAND',
    data: new ContextMenuCommandBuilder()
       .setName('sampleContextUser')
-      .setType(ApplicationCommandType.User as unknown as ContextMenuCommandType),
+      // @ts-ignore
+      .setType(ApplicationCommandType.User),
    execute: async (interaction) => {
       _assertTrue(interaction.options.data.length > 0);
       _assert(interaction.options.data[0].user);
