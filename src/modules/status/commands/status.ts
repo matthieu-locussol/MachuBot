@@ -17,10 +17,6 @@ interface OsuStatusResponse {
    }[];
 }
 
-interface OsuToolsApiStatusResponse {
-   version: string;
-}
-
 export const statusCommand: ChatInputCommand = {
    type: 'APPLICATION_COMMAND',
    data: new SlashCommandBuilder()
@@ -31,10 +27,9 @@ export const statusCommand: ChatInputCommand = {
 
       const guildManager = interaction.client.guilds;
 
-      const [coinGeckoStatus, osuStatus, osuToolsApiStatus] = await Promise.all([
+      const [coinGeckoStatus, osuStatus] = await Promise.all([
          axios.get<CoinGeckoStatusResponse>('https://api.coingecko.com/api/v3/global'),
          axios.get<OsuStatusResponse>('https://osu.ppy.sh/api/v2/changelog'),
-         axios.get<OsuToolsApiStatusResponse>(String(process.env.OSU_PP_ENDPOINT)),
       ]);
 
       const getStatusEmoji = (response: AxiosResponse) => {
@@ -54,22 +49,11 @@ export const statusCommand: ChatInputCommand = {
          return '';
       };
 
-      const getOsuToolsApiVersion = (response: AxiosResponse<OsuToolsApiStatusResponse>) => {
-         if (response.status === 200) {
-            return `(v${response.data.version})`;
-         }
-
-         return '';
-      };
-
       await interaction.editReply({
          embeds: [
             makeStatusEmbed({
                coinGeckoStatus: `${getStatusEmoji(coinGeckoStatus)}\tCoinGecko status`,
                osuStatus: `${getStatusEmoji(osuStatus)}\tOsu status ${getOsuVersion(osuStatus)}`,
-               osuToolsApiStatus: `${getStatusEmoji(
-                  osuToolsApiStatus,
-               )}\tOsu-tools-api status ${getOsuToolsApiVersion(osuToolsApiStatus)}`,
             }),
          ],
       });

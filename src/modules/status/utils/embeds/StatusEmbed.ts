@@ -4,14 +4,9 @@ import { description, version } from '../../../../../package.json';
 interface StatusEmbedPayload {
    coinGeckoStatus: string;
    osuStatus: string;
-   osuToolsApiStatus: string;
 }
 
-export const makeStatusEmbed = ({
-   coinGeckoStatus,
-   osuStatus,
-   osuToolsApiStatus,
-}: StatusEmbedPayload): MessageEmbed =>
+export const makeStatusEmbed = ({ coinGeckoStatus, osuStatus }: StatusEmbedPayload): MessageEmbed =>
    new MessageEmbed()
       .setTitle(`MachuBot - Version ${version}`)
       .setDescription(
@@ -28,9 +23,5 @@ export const makeStatusEmbed = ({
          {
             name: osuStatus,
             value: '[See the Osu! documentation](https://osu.ppy.sh/docs/index.html)',
-         },
-         {
-            name: osuToolsApiStatus,
-            value: '[See the osu-tools-api documentation](https://github.com/matthieu-locussol/osu-tools-api)',
          },
       ]);
