@@ -57,17 +57,17 @@ export interface OsuRecentEmbedPayload {
 
 export const makeOsuRecentEmbed = (payload: OsuRecentEmbedPayload): MessageEmbed =>
    new MessageEmbed()
-      .setAuthor(
-         recentAuthorFormatter(
+      .setAuthor({
+         name: recentAuthorFormatter(
             payload.player,
             payload.ppUser,
             payload.worldRank,
             payload.country,
             payload.countryRank,
          ),
-         payload.playerAvatarUrl,
-         payload.playerUrl,
-      )
+         iconURL: payload.playerAvatarUrl,
+         url: payload.playerUrl,
+      })
       .setTitle(recentTitleFormatter(payload.artist, payload.title, payload.difficulty))
       .setDescription(recentDescriptionFormatter(payload.bestIndex, payload.worldIndex))
       .setURL(payload.url)
