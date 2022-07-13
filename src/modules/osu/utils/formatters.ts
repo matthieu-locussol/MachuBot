@@ -72,16 +72,15 @@ export const recentDetailsFormatter = (
 
    const realPP = pp !== null ? formatFloat(pp, 2) : loadingEmoji;
    const fcPP = ppInfos !== null ? formatFloat(ppInfos.pp, 2) : loadingEmoji;
-   const fcAccuracy = ppInfos !== null ? formatFloat(ppInfos.Statistics.Accuracy, 2) : loadingEmoji;
 
    if (perfect) {
       fragments[0].push(`**${realPP}pp →** **FC**`);
    } else {
-      fragments[0].push(`**${realPP}pp →** ${fcPP}pp if ${fcAccuracy}% FC`);
+      fragments[0].push(`**${realPP}pp →** ${fcPP}pp if FC`);
    }
 
    if (ppInfos !== null) {
-      fragments[0].push(`**${combo}x**/${ppInfos['Max Combo']}x`);
+      fragments[0].push(`**${combo}x**/${ppInfos.maxCombo}x`);
    } else {
       fragments[0].push(`**${combo}x**/${loadingEmoji}x`);
    }
@@ -101,6 +100,7 @@ export const recentMapInformationsFormatter = (
    od: string | null,
    ar: string | null,
    bpm: number,
+   stars: string | null,
    loadingEmoji: GuildEmoji | string = '(...)',
 ): string => {
    const fragments: string[] = [];
@@ -114,6 +114,12 @@ export const recentMapInformationsFormatter = (
    }
 
    fragments.push(`BPM**${bpm}**`);
+
+   if (stars !== null) {
+      fragments.push(`**${stars}** ★`);
+   } else {
+      fragments.push(`**${loadingEmoji}** ★`);
+   }
 
    return fragments.join(' • ');
 };

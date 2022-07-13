@@ -1,6 +1,11 @@
 import axios from 'axios';
+import download from 'download';
+import { existsSync } from 'fs';
+import { resolve } from 'path';
+import { calculate, OsuData } from 'rosu-pp';
 import { logger } from '../../../logger';
 import { _assert } from '../../../utils/_assert';
+import { getModsBits, Mod } from './mods';
 
 const ENDPOINT_OAUTH = 'https://osu.ppy.sh/oauth/token';
 const ENDPOINT_API_V2 = 'https://osu.ppy.sh/api/v2';
@@ -444,47 +449,83 @@ export interface OsuPPPayload {
    beatmapId: number;
    accuracy?: number;
    combo?: number;
-   mods?: string[];
+   mods: Mod[];
    goods?: number;
    mehs?: number;
    misses?: number;
 }
 
 export interface OsuPP {
-   Beatmap: string;
-   Statistics: {
-      Accuracy: number;
-      Combo: number;
-      Great: number;
-      Ok: number;
-      Meh: number;
-      Miss: number;
-   };
-   Aim: number;
-   Speed: number;
-   Accuracy: number;
-   Flashlight: number;
-   OD: number;
-   AR: number;
-   'Max Combo': number;
-   Mods: string;
+   stars: number;
    pp: number;
+   ar: number;
+   cs: number;
+   hp: number;
+   od: number;
+   bpm: number;
+   mode: 0 | 1 | 2 | 3;
+   ppAcc: number;
+   ppAim: number;
+   ppFlashlight: number;
+   ppSpeed: number;
+   aimStrain: number;
+   speedStrain: number;
+   flashlightRating: number;
+   sliderFactor: number;
+   clockRate: number;
+   nCircles: number;
+   nSliders: number;
+   nSpinners: number;
+   maxCombo: number;
 }
 
-export const getOsuPP = async (payload: OsuPPPayload): Promise<OsuPP> => {
-   const response = await axios.post<OsuPP>(
-      `${process.env.OSU_PP_ENDPOINT}/simulate/osu/one`,
-      payload,
-   );
+export const downloadBeatmaps = async (beatmapsIds: number[]): Promise<void> => {
+   const beatmapsPaths = beatmapsIds.map((id) => ({
+      id,
+      path: resolve(__dirname, `../cache/${id}.osu`),
+   }));
 
-   return response.data;
+   const beatmapUrls = beatmapsPaths
+      .filter(({ path }) => !existsSync(path))
+      .map((infos) => ({ ...infos, url: `https://osu.ppy.sh/osu/${infos.id}` }));
+
+   await Promise.all(
+      beatmapUrls.map(({ url, id }) =>
+         download(url, resolve(__dirname, `../cache`), { filename: `${id}.osu` }),
+      ),
+   );
 };
 
-export const getOsuPPs = async (payload: OsuPPPayload[]): Promise<OsuPP[]> => {
-   const response = await axios.post<OsuPP[]>(
-      `${process.env.OSU_PP_ENDPOINT}/simulate/osu/many`,
-      payload,
-   );
+export const getOsuPP = async ({
+   beatmapId,
+   accuracy,
+   combo,
+   goods,
+   mehs,
+   misses,
+   mods,
+}: OsuPPPayload): Promise<OsuData[]> => {
+   await downloadBeatmaps([beatmapId]);
 
-   return response.data;
+   const results = calculate({
+      path: resolve(__dirname, `../cache/${beatmapId}.osu`),
+      params: [
+         {
+            mode: 0,
+            acc: accuracy,
+            combo: combo || 1500,
+            n100: goods,
+            n50: mehs,
+            nMisses: misses,
+            mods: getModsBits(mods),
+         },
+         {
+            mode: 0,
+            acc: accuracy,
+            mods: getModsBits(mods),
+         },
+      ],
+   }) as OsuData[];
+
+   return results;
 };

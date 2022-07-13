@@ -4,9 +4,10 @@ import type { Emoji } from '../../../../utils/emoji';
 import { getEmoji } from '../../../../utils/emoji';
 import { clamp, formatCommas, formatFloat } from '../../../../utils/number';
 import { recentButtonComponent } from '../../components/ui/recentButtonComponent';
-import { getOsuPPs, getScore, getUser, getUserBests, getUserRecent } from '../../utils/api';
+import { getOsuPP, getScore, getUser, getUserBests, getUserRecent } from '../../utils/api';
 import { makeOsuRecentEmbed } from '../../utils/embeds/OsuRecentEmbed';
 import { formatApprovalDate } from '../../utils/formatters';
+import { Mod } from '../../utils/mods';
 import { computeProgress } from '../../utils/progress';
 import { isBestScore } from '../../utils/score';
 import { getSavedUserId, getUserId } from '../../utils/username';
@@ -73,6 +74,7 @@ export const osuRecent = async (
             od: null,
             ar: null,
             bpm: recent.beatmap.bpm,
+            stars: null,
             date: recent.created_at,
             loadingEmoji: getEmoji(guildManager, 'loading'),
          };
@@ -95,22 +97,15 @@ export const osuRecent = async (
          const bestId = recent.best_id;
 
          const scorePromise = bestId !== null ? getScore(recent.mode, bestId) : null;
-         const ppPromise = getOsuPPs([
-            {
-               beatmapId: recent.beatmap.id,
-               mods: recent.mods,
-               accuracy: recent.accuracy * 100,
-               combo: recent.max_combo,
-               goods: recent.statistics.count_100,
-               mehs: recent.statistics.count_50,
-               misses: recent.statistics.count_miss,
-            },
-            {
-               beatmapId: recent.beatmap.id,
-               mods: recent.mods,
-               accuracy: recent.accuracy * 100,
-            },
-         ]);
+         const ppPromise = getOsuPP({
+            beatmapId: recent.beatmap.id,
+            mods: recent.mods as Mod[],
+            accuracy: recent.accuracy * 100,
+            combo: recent.max_combo,
+            goods: recent.statistics.count_100,
+            mehs: recent.statistics.count_50,
+            misses: recent.statistics.count_miss,
+         });
          const [score, pp] = await Promise.all([scorePromise, ppPromise]);
          const bestScore = isBestScore(score, bests);
 
@@ -122,8 +117,9 @@ export const osuRecent = async (
                   bestIndex: bestScore ? weightToRank(bestScore.weight.percentage) : null,
                   pp: pp[0].pp,
                   ppInfos: pp[1],
-                  od: formatFloat(pp[1].OD, 2),
-                  ar: formatFloat(pp[1].AR, 2),
+                  od: formatFloat(pp[1].od, 2),
+                  ar: formatFloat(pp[1].ar, 2),
+                  stars: formatFloat(pp[0].stars, 2),
                }),
             ],
             components: [row],
