@@ -24,7 +24,10 @@ export const makeCryptoMarketEmbed = (payload: CryptoMarketEmbedPayload): Messag
       .setURL('https://www.coingecko.com/fr')
       .setColor('GOLD')
       .setThumbnail(COINGECKO_LOGO_URL)
-      .setFooter('Infos about the global market - MachuBot', COINGECKO_LOGO_URL)
+      .setFooter({
+         text: 'Infos about the global market - MachuBot',
+         iconURL: COINGECKO_LOGO_URL,
+      })
       .setFields([
          {
             name: 'Market Cap',
