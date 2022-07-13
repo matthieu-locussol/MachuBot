@@ -31,10 +31,16 @@ export const cryptoCommand: ChatInputCommand = {
                new SlashCommandStringOption()
                   .setName('currency')
                   .setDescription('Currency in which the value is displayed (default: USD)')
-                  .addChoices([
-                     ['EUR', 'eur'],
-                     ['USD', 'usd'],
-                  ]),
+                  .addChoices(
+                     {
+                        name: 'EUR',
+                        value: 'eur',
+                     },
+                     {
+                        name: 'USD',
+                        value: 'usd',
+                     },
+                  ),
             ),
       ),
    execute: async (interaction) => {
