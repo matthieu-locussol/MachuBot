@@ -22,10 +22,16 @@ export const sampleCommand: ChatInputCommand = {
                new SlashCommandStringOption()
                   .setName('interaction')
                   .setDescription('Try an interaction')
-                  .addChoices([
-                     ['Button', 'button'],
-                     ['Select menu', 'select_menu'],
-                  ])
+                  .addChoices(
+                     {
+                        name: 'Button',
+                        value: 'button',
+                     },
+                     {
+                        name: 'Select menu',
+                        value: 'select_menu',
+                     },
+                  )
                   .setRequired(true),
             ),
       )
