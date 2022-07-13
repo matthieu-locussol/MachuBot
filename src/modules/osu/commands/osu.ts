@@ -6,6 +6,7 @@ import {
 } from '@discordjs/builders';
 import type { ChatInputCommand } from '../../../types/commands';
 import { osuAssociate } from './subcommands/osuAssociate';
+import { osuBest } from './subcommands/osuBest';
 import { osuRecent } from './subcommands/osuRecent';
 
 export const osuCommand: ChatInputCommand = {
@@ -40,6 +41,16 @@ export const osuCommand: ChatInputCommand = {
                      'Which recent play do you want? The 1st? The 13th? (between 1 and 50 included)',
                   ),
             ),
+      )
+      .addSubcommand(
+         new SlashCommandSubcommandBuilder()
+            .setName('best')
+            .setDescription('Returns the best plays for an osu! user')
+            .addStringOption(
+               new SlashCommandStringOption()
+                  .setName('username')
+                  .setDescription('The osu! username you want to get the best plays'),
+            ),
       ),
    execute: async (interaction) => {
       if (interaction.options.getSubcommand() === 'associate') {
@@ -49,6 +60,9 @@ export const osuCommand: ChatInputCommand = {
          const username = interaction.options.getString('username');
          const index = interaction.options.getInteger('index');
          await osuRecent(interaction, username, index);
+      } else if (interaction.options.getSubcommand() === 'best') {
+         const username = interaction.options.getString('username');
+         await osuBest(interaction, username);
       }
    },
 };
