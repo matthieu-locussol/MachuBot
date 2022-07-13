@@ -1,4 +1,5 @@
-import { ButtonInteraction, CommandInteraction, MessageActionRow, MessageButton } from 'discord.js';
+import type { ButtonInteraction, CommandInteraction } from 'discord.js';
+import { MessageActionRow, MessageButton } from 'discord.js';
 import type { Emoji } from '../../../../utils/emoji';
 import { getEmoji } from '../../../../utils/emoji';
 import { clamp, formatCommas, formatFloat } from '../../../../utils/number';
