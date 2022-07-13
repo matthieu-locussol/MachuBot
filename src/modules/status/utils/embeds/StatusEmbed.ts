@@ -14,7 +14,9 @@ export const makeStatusEmbed = ({ coinGeckoStatus, osuStatus }: StatusEmbedPaylo
       )
       .setURL('https://github.com/matthieu-locussol/MachuBot')
       .setColor('BLUE')
-      .setFooter(`Informations about APIs - MachuBot`)
+      .setFooter({
+         text: `Informations about APIs - MachuBot`,
+      })
       .setFields([
          {
             name: coinGeckoStatus,

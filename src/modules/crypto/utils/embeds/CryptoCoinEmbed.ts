@@ -30,10 +30,10 @@ export const makeCryptoCoinEmbed = (payload: CryptoCoinEmbedPayload): MessageEmb
       .setColor(payload.priceChanges['1d'] >= 0 ? 'GREEN' : 'RED')
       .setThumbnail(payload.image)
       .setImage(payload.chart)
-      .setFooter(
-         `Infos about the ${payload.name} (${payload.symbol}) - MachuBot`,
-         payload.thumbnail,
-      )
+      .setFooter({
+         text: `Infos about the ${payload.name} (${payload.symbol}) - MachuBot`,
+         iconURL: payload.thumbnail,
+      })
       .setFields([
          {
             name: payload.currency.toUpperCase(),

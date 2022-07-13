@@ -73,14 +73,14 @@ export const makeOsuRecentEmbed = (payload: OsuRecentEmbedPayload): MessageEmbed
       .setURL(payload.url)
       .setColor(OSU_COLORS[payload.rank])
       .setThumbnail(payload.thumbnail)
-      .setFooter(
-         recentFooterFormatter(
+      .setFooter({
+         text: recentFooterFormatter(
             payload.beatmapAuthor,
             payload.beatmapApproval,
             payload.approvalDate,
          ),
-         `https://a.ppy.sh/${payload.beatmapAuthorId}`,
-      )
+         iconURL: `https://a.ppy.sh/${payload.beatmapAuthorId}`,
+      })
       .setFields([
          {
             name: recentScoreFormatter(
