@@ -14,7 +14,8 @@
       "check:typescript": "tsc --project ./tsconfig.json --noEmit",
       "tests": "jest",
       "tests:ci": "jest --ci",
-      "release": "standard-version -a"
+      "release": "standard-version -a",
+      "postinstall": "husky install"
    },
    "lint-staged": {
       "*.{ts,tsx,d.ts}": [
