@@ -9,6 +9,14 @@ export const osuAssociate = async (
 ): Promise<void> => {
    await interaction.deferReply();
 
+   if (interaction.member === null || interaction.guildId === null) {
+      await interaction.editReply(
+         `This command is supposed to be used inside a discord server channel by a server member.`,
+      );
+
+      return;
+   }
+
    const userId = interaction.member.user.id;
    const database = await loadGuildDatabase(interaction.guildId);
 

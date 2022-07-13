@@ -6,6 +6,10 @@ import { getUser } from './api';
 export const getSavedUserId = async (
    interaction: CommandInteraction | ButtonInteraction,
 ): Promise<number | undefined> => {
+   if (interaction.member === null || interaction.guildId === null) {
+      return undefined;
+   }
+
    const database = await loadGuildDatabase(interaction.guildId);
    const userId = interaction.member.user.id;
    return database.osu.usernames[userId];
