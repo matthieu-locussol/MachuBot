@@ -8,3 +8,5 @@ logs/
 *.pem
 *.log
 *.sqlite
+
+src/modules/osu/cache/*.osu
