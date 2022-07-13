@@ -49,6 +49,7 @@ export interface OsuRecentEmbedPayload {
    hp: string;
    od: string | null;
    ar: string | null;
+   stars: string | null;
    bpm: number;
    date: string;
    loadingEmoji: GuildEmoji;
@@ -108,6 +109,7 @@ export const makeOsuRecentEmbed = (payload: OsuRecentEmbedPayload): MessageEmbed
                payload.od,
                payload.ar,
                payload.bpm,
+               payload.stars,
                payload.loadingEmoji,
             ),
          },

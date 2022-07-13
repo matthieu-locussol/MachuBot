@@ -134,12 +134,9 @@ describe(__filename, () => {
          count_miss: 1,
       };
 
-      const mockedPP = {
+      const mockedPP: OsuPP = {
          pp: 1127,
-         Statistics: {
-            Accuracy: 99,
-         },
-         'Max Combo': 437,
+         maxCombo: 437,
       } as OsuPP;
 
       const samples: [number, boolean, UserBest['statistics'], number | null, OsuPP, string][] = [
@@ -149,7 +146,7 @@ describe(__filename, () => {
             mockedStatistics,
             678,
             mockedPP,
-            '**678pp →** 1,127pp if 99% FC • **329x**/437x\n**103**x300 • **16**x100 • **1**x50 • **1**xMiss',
+            '**678pp →** 1,127pp if FC • **329x**/437x\n**103**x300 • **16**x100 • **1**x50 • **1**xMiss',
          ],
          [
             437,
@@ -167,7 +164,7 @@ describe(__filename, () => {
    });
 
    test('recentMapInformationsFormatter', () => {
-      const samples: [number, string, string, string, string, number, string][] = [
+      const samples: [number, string, string, string, string, number, string, string][] = [
          [
             127,
             '5',
@@ -175,13 +172,14 @@ describe(__filename, () => {
             '9',
             '10.3',
             222,
+            '5.98',
 
-            '02:07 • CS**5** HP**6** OD**9** AR**10.3** • BPM**222**',
+            '02:07 • CS**5** HP**6** OD**9** AR**10.3** • BPM**222** • **5.98** ★',
          ],
       ];
 
-      for (const [length, cs, hp, od, ar, bpm, output] of samples) {
-         expect(recentMapInformationsFormatter(length, cs, hp, od, ar, bpm)).toEqual(output);
+      for (const [length, cs, hp, od, ar, bpm, stars, output] of samples) {
+         expect(recentMapInformationsFormatter(length, cs, hp, od, ar, bpm, stars)).toEqual(output);
       }
    });
 
