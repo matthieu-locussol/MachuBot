@@ -19,7 +19,7 @@
          {
             "splitTerminals": [
                {
-                  "name": "Server",
+                  "name": "MachuDevbot",
                   "commands": ["yarn dev"]
                }
             ]
@@ -32,26 +32,7 @@
                }
             ]
          }
-      ],
-      "jest.autoRun": {
-         "watch": false,
-         "onSave": "test-src-file",
-         "onStartup": ["all-tests"]
-      },
-      "jest.jestCommandLine": "yarn tests",
-      "jest.testExplorer": {
-         "enabled": true,
-         "showClassicStatus": true
-      },
-      "sqltools.connections": [
-         {
-            "previewLimit": 50,
-            "driver": "SQLite",
-            "database": "${workspaceFolder:Root}/database.sqlite",
-            "name": "MachuBot"
-         }
-      ],
-      "sqltools.useNodeRuntime": true
+      ]
    },
    "extensions": {
       "recommendations": [
