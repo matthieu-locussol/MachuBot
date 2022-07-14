@@ -107,10 +107,23 @@ export class Bot {
                }
             });
          }
+
+         for (const modal of module.modals) {
+            this.client.on('interactionCreate', async (interaction) => {
+               if (
+                  interaction.isModalSubmit() &&
+                  interaction.customId === modal.component.customId
+               ) {
+                  await modal.execute(interaction);
+               }
+            });
+         }
       }
 
       const modulesCount = this.modules.length;
+      const modalsCount = this.modules.reduce((acc, curr) => acc + curr.modals.length, 0);
       logger.info(`${modulesCount} Modules registered!`);
+      logger.info(`${modalsCount} Modals registered!`);
    };
 
    private initializeComponents = (): void => {
