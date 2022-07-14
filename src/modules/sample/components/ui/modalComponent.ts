@@ -1,26 +1,22 @@
 import { MessageActionRow, Modal, TextInputComponent } from 'discord.js';
 
+const shortInput = new TextInputComponent({
+   customId: 'shortInput',
+   label: 'Short input',
+   style: 'SHORT',
+});
+
+const paragraphInput = new TextInputComponent({
+   customId: 'paragraphInput',
+   label: 'Paragraph input',
+   style: 'PARAGRAPH',
+});
+
 export const modalComponent = new Modal({
    customId: 'modal',
    title: 'Sample modal',
    components: [
-      new MessageActionRow({
-         components: [
-            new TextInputComponent({
-               customId: 'textInput',
-               label: 'label',
-               style: 'SHORT',
-            }),
-         ],
-      }),
-      new MessageActionRow({
-         components: [
-            new TextInputComponent({
-               customId: 'textareaInput',
-               label: 'label long',
-               style: 'PARAGRAPH',
-            }),
-         ],
-      }),
+      new MessageActionRow({ components: [shortInput] }),
+      new MessageActionRow({ components: [paragraphInput] }),
    ],
 });
