@@ -6,6 +6,7 @@ import {
 import { MessageActionRow } from 'discord.js';
 import type { ChatInputCommand } from '../../../types/commands';
 import { buttonComponent } from '../components/ui/buttonComponent';
+import { buttonModalComponent } from '../components/ui/buttonModalComponent';
 import { buttonSecondaryComponent } from '../components/ui/buttonSecondaryComponent';
 import { selectComponent } from '../components/ui/selectComponent';
 
@@ -30,6 +31,10 @@ export const sampleCommand: ChatInputCommand = {
                      {
                         name: 'Select menu',
                         value: 'select_menu',
+                     },
+                     {
+                        name: 'Modal',
+                        value: 'modal',
                      },
                   )
                   .setRequired(true),
@@ -58,6 +63,15 @@ export const sampleCommand: ChatInputCommand = {
 
             interaction.reply({
                content: 'Here is a select menu',
+               components: [row],
+            });
+         } else if (chosenInteraction === 'modal') {
+            const row = new MessageActionRow({
+               components: [buttonModalComponent],
+            });
+
+            interaction.reply({
+               content: 'Here is a button opening a modal',
                components: [row],
             });
          }
