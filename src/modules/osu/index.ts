@@ -6,4 +6,5 @@ import { recentButton } from './components/recentButton';
 export const osuModule: Module = {
    commands: [osuCommand],
    components: [recentButton, bestButton],
+   modals: [],
 };
