@@ -15,6 +15,7 @@
       "tests": "jest",
       "tests:ci": "jest --ci",
       "release": "standard-version -a",
+      "postrelease": "git add CHANGELOG.md ; git commit -m\"chore: updated CHANGELOG.md\"",
       "postinstall": "husky install"
    },
    "lint-staged": {
