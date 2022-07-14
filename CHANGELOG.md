@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/matthieu-locussol/MachuBot/compare/v0.4.0...v0.4.1) (2022-07-14)
+
+
+### Bug Fixes
+
+* skipLibCheck is set to true because of wrong typings in @discordjs/builders ([da104e6](https://github.com/matthieu-locussol/MachuBot/commit/da104e6d62323427b107c290a50845f4eeca68bf))
+
 ## 0.4.0 (2022-07-13)
 
 
