@@ -37,18 +37,20 @@ instructions below to learn more about the environment variables and their purpo
 | DISCORD_TOKEN_PRODUCTION      | Your production bot secret token                                            |
 | DISCORD_DEVELOPMENT_SERVER_ID | The discord server ID on which you invited your development bot for testing |
 | DISCORD_EMOJIS_SERVER_ID      | The discord server ID on which you store custom emojis                      |
+| OSU_OAUTH_CLIENT_ID           | Your Osu! application OAuth ID                                              |
+| OSU_OAUTH_CLIENT_SECRET       | Your Osu! application OAuth secret                                          |
 
 Depending on if you want to setup a development and/or a production bot, refer to the variable names
 to know if you need these. For example, if you want to setup a development bot locally, you at least
 need to fill the variables whose name include `DEVELOPMENT` as well as common variables (whose name
 does not include `DEVELOPMENT` nor `PRODUCTION`) such as `DISCORD_EMOJIS_SERVER_ID`.
 
-## Emojis server
+### Emojis server
 
 **Why do I need an emojis server?**
 
-MachuBot is using plenty of emojis inside of rich embeds and components like buttons, select or
-context menus. In order to use these emojis, the bot needs to have access to a discord server that
+MachuBot is using plenty of emojis inside rich embeds and components like buttons, select or context
+menus. In order to use these emojis, the bot needs to have access to a discord server that
 registered these emojis. It can be on your real, main discord server ; or you can decide to create a
 server whose only purpose will be to store these emojis.
 
@@ -58,3 +60,11 @@ Once you decided which server should be your emojis server, register every emoji
 `/assets` directory) in your server parameters under the "Emoji" tab. You can then upload emojis and
 drag-n-drop all the directory content and you're done! Don't forget to set your emojis server ID
 (right-click on the server > Copy server ID) in the `.env` file and you will be done.
+
+### Osu! module
+
+**Do I need the Osu! module?**
+
+No. If you'd like not to have the Osu! module enabled, you can just edit the `main.ts` file and
+remove the `osuModule` from the `modules` array. In that case, you will not need to provide the
+environment variables `OSU_OAUTH_CLIENT_ID` and `OSU_OAUTH_CLIENT_SECRET`.
