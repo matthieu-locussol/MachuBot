@@ -3,6 +3,9 @@ import { DateTime, Settings } from 'luxon';
 import { getEmoji } from '../../../utils/emoji';
 import type { OsuPP, UserBest } from './api';
 import {
+   bestScoreNameFormatter,
+   bestScoreValueFormatter,
+   formatApprovalDate,
    recentAuthorFormatter,
    recentDescriptionFormatter,
    recentDetailsFormatter,
@@ -13,6 +16,24 @@ import {
 } from './formatters';
 
 describe(__filename, () => {
+   process.env.DISCORD_EMOJIS_SERVER_ID = 'emojiServerId';
+
+   const mockedGuildManager = {
+      cache: [
+         {
+            id: 'emojiServerId',
+            emojis: {
+               cache: [
+                  {
+                     name: 'RankA',
+                     toString: () => 'RankA',
+                  },
+               ],
+            },
+         },
+      ],
+   } as unknown as GuildManager;
+
    test('recentAuthorFormatter', () => {
       const samples: [string, string, string, string, string, string][] = [
          ['', '', '', '', '', ': pp | WR • # |  • #'],
@@ -60,23 +81,6 @@ describe(__filename, () => {
    test('recentScoreFormatter', () => {
       const expectedNow = DateTime.fromISO('2021-10-20T23:09:00+00:00');
       Settings.now = () => expectedNow.toMillis();
-      process.env.DISCORD_EMOJIS_SERVER_ID = 'emojiServerId';
-
-      const mockedGuildManager = {
-         cache: [
-            {
-               id: 'emojiServerId',
-               emojis: {
-                  cache: [
-                     {
-                        name: 'RankA',
-                        toString: () => 'RankA',
-                     },
-                  ],
-               },
-            },
-         ],
-      } as unknown as GuildManager;
 
       const samples: [GuildEmoji, string[], number, string, string, string | undefined, string][] =
          [
@@ -191,6 +195,48 @@ describe(__filename, () => {
 
       for (const [author, approval, date, output] of samples) {
          expect(recentFooterFormatter(author, approval, date)).toEqual(output);
+      }
+   });
+
+   test('formatApprovalDate', () => {
+      const samples: [string, string][] = [
+         ['', 'Unknown'],
+         ['2020-07-26', 'Jul 26, 2020'],
+         ['2022-07-16T11:08:51.785Z', 'Jul 16, 2022'],
+      ];
+
+      for (const [input, output] of samples) {
+         expect(formatApprovalDate(input)).toEqual(output);
+      }
+   });
+
+   test('bestScoreNameFormatter', () => {
+      const samples: [GuildEmoji, string[], string, string][] = [
+         [getEmoji(mockedGuildManager, 'RankA'), [], '', 'RankA • '],
+         [getEmoji(mockedGuildManager, 'RankA'), [], 'Map', 'RankA • Map'],
+         [getEmoji(mockedGuildManager, 'RankA'), ['HD', 'DT'], 'Map', 'RankA • +HDDT • Map'],
+      ];
+
+      for (const [emoji, mods, title, output] of samples) {
+         expect(bestScoreNameFormatter(emoji, mods, title)).toEqual(output);
+      }
+   });
+
+   test('bestScoreValueFormatter', () => {
+      const samples: [string, string, string, string, string, string][] = [
+         ['', '', '', '', '', '**pp** • % • [[]]() • '],
+         [
+            '212.54',
+            '99.12',
+            'Extreme',
+            'url',
+            '1 year ago',
+            '**212.54pp** • 99.12% • [[Extreme]](url) • 1 year ago',
+         ],
+      ];
+
+      for (const [pp, accuracy, difficulty, url, date, output] of samples) {
+         expect(bestScoreValueFormatter(pp, accuracy, difficulty, url, date)).toEqual(output);
       }
    });
 });
