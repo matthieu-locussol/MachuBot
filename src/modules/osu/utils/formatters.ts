@@ -140,3 +140,38 @@ export const formatApprovalDate = (approvalDate: string): string => {
 
    return 'Unknown';
 };
+
+export const bestScoreNameFormatter = (
+   emoji: GuildEmoji,
+   mods: string[],
+   title: string,
+): string => {
+   const fragments: string[] = [];
+
+   fragments.push(emoji.toString());
+
+   if (mods.length > 0) {
+      fragments.push(`+${mods.join('')}`);
+   }
+
+   fragments.push(title);
+
+   return fragments.join(' • ');
+};
+
+export const bestScoreValueFormatter = (
+   pp: string,
+   accuracy: string,
+   difficulty: string,
+   url: string,
+   date: string,
+): string => {
+   const fragments: string[] = [];
+
+   fragments.push(`**${pp}pp**`);
+   fragments.push(`${accuracy}%`);
+   fragments.push(`[[${difficulty}]](${url})`);
+   fragments.push(date);
+
+   return fragments.join(' • ');
+};

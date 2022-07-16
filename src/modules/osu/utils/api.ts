@@ -433,12 +433,12 @@ export interface UserBest extends UserRecent {
    };
 }
 
-export const getUserBests = async (userId: number): Promise<UserBest[]> => {
+export const getUserBests = async (userId: number, count = 100): Promise<UserBest[]> => {
    const headers = await generateAuthorizationHeaders();
    const response = await axios.get<UserBest[]>(`${ENDPOINT_API_V2}/users/${userId}/scores/best`, {
       headers,
       params: {
-         limit: 100,
+         limit: count,
       },
    });
 

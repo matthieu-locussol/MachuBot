@@ -50,6 +50,13 @@ export const osuCommand: ChatInputCommand = {
                new SlashCommandStringOption()
                   .setName('username')
                   .setDescription('The osu! username you want to get the best plays'),
+            )
+            .addIntegerOption(
+               new SlashCommandIntegerOption()
+                  .setName('count')
+                  .setDescription(
+                     'How many best scores do you want to retrieve? (between 1 and 25 included)',
+                  ),
             ),
       ),
    execute: async (interaction) => {
@@ -62,7 +69,8 @@ export const osuCommand: ChatInputCommand = {
          await osuRecent(interaction, username, index);
       } else if (interaction.options.getSubcommand() === 'best') {
          const username = interaction.options.getString('username');
-         await osuBest(interaction, username);
+         const count = interaction.options.getInteger('count');
+         await osuBest(interaction, username, count);
       }
    },
 };
