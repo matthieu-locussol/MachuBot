@@ -1,13 +1,15 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See
+[standard-version](https://github.com/conventional-changelog/standard-version) for commit
+guidelines.
 
 ### [0.6.1](https://github.com/matthieu-locussol/MachuBot/compare/v0.6.0...v0.6.1) (2022-07-16)
 
-
 ### Bug Fixes
 
-* bestButtonHandler provides the count arg ([e777ac2](https://github.com/matthieu-locussol/MachuBot/commit/e777ac24b9a80f8dc16e16c82ce18ea3406b5570))
+-  bestButtonHandler provides the count arg
+   ([e777ac2](https://github.com/matthieu-locussol/MachuBot/commit/e777ac24b9a80f8dc16e16c82ce18ea3406b5570))
 
 ## 0.6.0 (2022-07-16)
 
