@@ -1911,7 +1911,7 @@ char-regex@^1.0.2:
   resolved "https://registry.yarnpkg.com/char-regex/-/char-regex-1.0.2.tgz#d744358226217f981ed58f479b1d6bcc29545dcf"
   integrity sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==
 
-chart.js@^3.8.0:
+chart.js@3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-3.8.0.tgz#c6c14c457b9dc3ce7f1514a59e9b262afd6f1a94"
   integrity sha512-cr8xhrXjLIXVLOBZPkBZVF6NDeiVIrPLHcMhnON7UufudL+CNeRrD+wpYanswlm8NpudMdrt3CHoLMQMxJhHRg==
@@ -5932,10 +5932,10 @@ rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
-rosu-pp@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/rosu-pp/-/rosu-pp-0.7.1.tgz#118b177c4ee64bc57f680d2da715a52c5599aa5b"
-  integrity sha512-rCg1sgNjNqpCis6fWkO8Ua9UwzSnnny1TlrLnQmkmghOHi2vK4/4bXpaps7JCAXB2RVsp62qMad2cKvsh8V3sg==
+rosu-pp@^0.9.4:
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/rosu-pp/-/rosu-pp-0.9.4.tgz#0df728382488b4d6b7c94ed1059e035b19eca600"
+  integrity sha512-bRik+el5RrVCQ3Nwcir2AafIr0y615qRMlDx+H/CjvRxtB1mmWgKWQU1QuFA72tehhd/1P8fC77QkJbhDZNMXA==
   dependencies:
     cargo-cp-artifact "^0.1"
 
