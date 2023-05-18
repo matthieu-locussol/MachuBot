@@ -1,7 +1,7 @@
-import { MessageButton } from 'discord.js';
+import { ButtonBuilder, ButtonStyle } from 'discord.js';
 
-export const buttonComponent = new MessageButton({
+export const buttonComponent = new ButtonBuilder({
    customId: 'button',
-   style: 'PRIMARY',
+   style: ButtonStyle.Primary,
    label: 'Button',
 });

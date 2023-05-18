@@ -1,6 +1,5 @@
 import axios from 'axios';
-import type { CommandInteraction } from 'discord.js';
-import { MessageActionRow, MessageButton } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CommandInteraction } from 'discord.js';
 import { getEmoji } from '../../../../utils/emoji';
 import { makeCoinChart } from '../../utils/embeds/CryptoCoinChart';
 import { makeCryptoCoinEmbed } from '../../utils/embeds/CryptoCoinEmbed';
@@ -68,12 +67,12 @@ export const cryptoCoin = async (
             }),
          ],
          components: [
-            new MessageActionRow({
+            new ActionRowBuilder<ButtonBuilder>({
                components: [
-                  new MessageButton()
+                  new ButtonBuilder()
                      .setLabel('View on CoinGecko')
-                     .setEmoji(getEmoji(interaction.client.guilds, 'CoinGecko'))
-                     .setStyle('LINK')
+                     .setEmoji(getEmoji(interaction.client.guilds, 'CoinGecko').toString())
+                     .setStyle(ButtonStyle.Link)
                      .setURL(`https://www.coingecko.com/en/coins/${coinId}`),
                ],
             }),

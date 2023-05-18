@@ -52,7 +52,7 @@ describe(__filename, () => {
    test('getChartPoint', () => {
       const samples: [[number, number], ChartPoint][] = [
          [[0, 65.25], { label: '1/1', value: 65.25 }],
-         [[1637685541000, 25], { label: '23/11', value: 25 }],
+         [[1637685541000, 25], { label: '24/11', value: 25 }],
       ];
 
       for (const [input, output] of samples) {

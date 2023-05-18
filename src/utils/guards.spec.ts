@@ -1,14 +1,13 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageButton } from 'discord.js';
+import { ButtonBuilder, ButtonStyle, ComponentType, SlashCommandBuilder } from 'discord.js';
 import type { Command } from '../types/commands';
 import type { Component } from '../types/components';
 import { commandsUnicityGuard, componentsUnicityGuard } from './guards';
 
 const mockComponent = (customId: string): Component => ({
-   type: 'BUTTON',
-   component: new MessageButton({
+   type: ComponentType.Button,
+   component: new ButtonBuilder({
       customId,
-      style: 'PRIMARY',
+      style: ButtonStyle.Primary,
       label: 'Button',
    }),
    execute: async () => undefined,

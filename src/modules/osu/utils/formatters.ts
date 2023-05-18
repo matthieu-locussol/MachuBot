@@ -1,4 +1,4 @@
-import type { GuildEmoji } from 'discord.js';
+import { GuildEmoji } from 'discord.js';
 import { DateTime } from 'luxon';
 import { formatTimeAgo } from '../../../utils/date';
 import { formatCommas, formatFloat, secondsToDuration } from '../../../utils/number';
@@ -19,7 +19,7 @@ export const recentTitleFormatter = (artist: string, title: string, difficulty: 
 export const recentDescriptionFormatter = (
    bestIndex: number | null,
    worldIndex: number | null,
-): string => {
+): string | null => {
    const fragments: string[] = [];
 
    if (worldIndex !== null) {
@@ -30,7 +30,8 @@ export const recentDescriptionFormatter = (
       fragments.push(`***Personal record #${bestIndex}***`);
    }
 
-   return fragments.join(' • ');
+   const output = fragments.join(' • ');
+   return output.length > 0 ? output : null;
 };
 
 export const recentScoreFormatter = (
@@ -71,7 +72,7 @@ export const recentDetailsFormatter = (
    const fragments: string[][] = [[], []];
 
    const realPP = pp !== null ? formatFloat(pp, 2) : loadingEmoji;
-   const fcPP = ppInfos !== null ? formatFloat(ppInfos.pp, 2) : loadingEmoji;
+   const fcPP = ppInfos !== null ? formatFloat(ppInfos.ppPerfect, 2) : loadingEmoji;
 
    if (perfect) {
       fragments[0].push(`**${realPP}pp →** **FC**`);
@@ -135,7 +136,7 @@ export const formatApprovalDate = (approvalDate: string): string => {
    const date = DateTime.fromISO(dateStr);
 
    if (date.isValid) {
-      return date.toLocaleString(DateTime.DATE_MED);
+      return date.toLocaleString(DateTime.DATE_MED, { locale: 'en' });
    }
 
    return 'Unknown';

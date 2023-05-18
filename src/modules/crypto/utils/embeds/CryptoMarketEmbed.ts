@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { Colors, EmbedBuilder } from 'discord.js';
 import { formatInt } from '../../../../utils/number';
 import { getCryptoDominationMarkdown } from '../formatters';
 
@@ -18,11 +18,11 @@ export interface CryptoMarketEmbedPayload {
    }[];
 }
 
-export const makeCryptoMarketEmbed = (payload: CryptoMarketEmbedPayload): MessageEmbed =>
-   new MessageEmbed()
+export const makeCryptoMarketEmbed = (payload: CryptoMarketEmbedPayload): EmbedBuilder =>
+   new EmbedBuilder()
       .setTitle('Market Capitalization')
       .setURL('https://www.coingecko.com/fr')
-      .setColor('GOLD')
+      .setColor(Colors.Gold)
       .setThumbnail(COINGECKO_LOGO_URL)
       .setFooter({
          text: 'Infos about the global market - MachuBot',

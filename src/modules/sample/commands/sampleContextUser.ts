@@ -1,5 +1,4 @@
-import { ContextMenuCommandBuilder } from '@discordjs/builders';
-import { ApplicationCommandType } from 'discord-api-types/v9';
+import { ApplicationCommandType, ContextMenuCommandBuilder } from 'discord.js';
 import type { ContextMenuCommand } from '../../../types/commands';
 import { _assert, _assertTrue } from '../../../utils/_assert';
 

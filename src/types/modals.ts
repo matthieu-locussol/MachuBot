@@ -1,8 +1,8 @@
-import { Modal, ModalSubmitInteraction } from 'discord.js';
+import { ModalBuilder, ModalSubmitInteraction } from 'discord.js';
 
 export type ModalComponentHandler = (interaction: ModalSubmitInteraction) => Promise<void>;
 
 export type ModalComponent = {
-   component: Modal;
+   component: ModalBuilder;
    execute: ModalComponentHandler;
 };

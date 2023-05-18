@@ -1,7 +1,7 @@
-import { MessageButton } from 'discord.js';
+import { ButtonBuilder, ButtonStyle } from 'discord.js';
 
-export const recentButtonComponent = new MessageButton({
+export const recentButtonComponent = new ButtonBuilder({
    customId: 'RecentButton',
-   style: 'PRIMARY',
+   style: ButtonStyle.Primary,
    label: 'See my recent play',
 });

@@ -1,12 +1,19 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { REST } from '@discordjs/rest';
-import { RESTPostAPIApplicationCommandsJSONBody, Routes } from 'discord-api-types/v9';
-import { Client, Intents } from 'discord.js';
+import {
+   Client,
+   ComponentType,
+   ContextMenuCommandBuilder,
+   GatewayIntentBits,
+   REST,
+   RESTPostAPIApplicationCommandsJSONBody,
+   Routes,
+   SlashCommandBuilder,
+} from 'discord.js';
 import { resolve } from 'path';
 import { version } from '../package.json';
 import { logger } from './logger';
 import { Component } from './types/components';
 import type { Module } from './types/modules';
+import { _assert } from './utils/_assert';
 import { accessEnvironmentVariable } from './utils/environment';
 import { shouldPersistPayload } from './utils/file';
 import {
@@ -16,9 +23,10 @@ import {
    contextMenuMessageCommandsGuard,
    contextMenuUserCommandsGuard,
 } from './utils/guards';
-import { _assert } from './utils/_assert';
 
-type SerializableInteraction = Pick<SlashCommandBuilder, 'toJSON'>;
+type SerializableInteraction =
+   | Pick<SlashCommandBuilder, 'toJSON'>
+   | Pick<ContextMenuCommandBuilder, 'toJSON'>;
 
 export class Bot {
    private token: string;
@@ -47,7 +55,7 @@ export class Bot {
 
       this.rest = new REST({ version: '9' }).setToken(this.token);
       this.client = new Client({
-         intents: [Intents.FLAGS.GUILDS],
+         intents: [GatewayIntentBits.Guilds],
          presence: {
             status: 'online',
             activities: [
@@ -100,7 +108,7 @@ export class Bot {
                   await command.execute(interaction);
                } else if (
                   command.type === 'CONTEXT_MENU_COMMAND' &&
-                  interaction.isContextMenu() &&
+                  interaction.isContextMenuCommand() &&
                   interaction.commandName === command.data.name
                ) {
                   await command.execute(interaction);
@@ -112,7 +120,7 @@ export class Bot {
             this.client.on('interactionCreate', async (interaction) => {
                if (
                   interaction.isModalSubmit() &&
-                  interaction.customId === modal.component.customId
+                  interaction.customId === modal.component.data.custom_id
                ) {
                   await modal.execute(interaction);
                }
@@ -134,15 +142,16 @@ export class Bot {
       for (const component of this.components) {
          this.client.on('interactionCreate', async (interaction) => {
             if (
-               component.type === 'BUTTON' &&
+               component.type === ComponentType.Button &&
                interaction.isButton() &&
-               component.component.customId === interaction.customId
+               'custom_id' in component.component.data &&
+               component.component.data.custom_id === interaction.customId
             ) {
                await component.execute(interaction);
             } else if (
-               component.type === 'SELECT_MENU' &&
-               interaction.isSelectMenu() &&
-               component.component.customId === interaction.customId
+               component.type === ComponentType.StringSelect &&
+               interaction.isStringSelectMenu() &&
+               component.component.data.custom_id === interaction.customId
             ) {
                await component.execute(interaction);
             }

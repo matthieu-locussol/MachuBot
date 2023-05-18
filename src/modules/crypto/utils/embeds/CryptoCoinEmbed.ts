@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { Colors, EmbedBuilder } from 'discord.js';
 import { formatFloat } from '../../../../utils/number';
 import { getColoredValue, getPriceValue } from '../formatters';
 
@@ -23,11 +23,11 @@ export interface CryptoCoinEmbedPayload {
    chart: string;
 }
 
-export const makeCryptoCoinEmbed = (payload: CryptoCoinEmbedPayload): MessageEmbed =>
-   new MessageEmbed()
+export const makeCryptoCoinEmbed = (payload: CryptoCoinEmbedPayload): EmbedBuilder =>
+   new EmbedBuilder()
       .setTitle(`#${payload.rank || '?'} ${payload.name} (${payload.symbol})`)
       .setURL(payload.homepage)
-      .setColor(payload.priceChanges['1d'] >= 0 ? 'GREEN' : 'RED')
+      .setColor(payload.priceChanges['1d'] >= 0 ? Colors.Green : Colors.Red)
       .setThumbnail(payload.image)
       .setImage(payload.chart)
       .setFooter({

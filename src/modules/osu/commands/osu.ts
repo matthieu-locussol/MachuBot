@@ -3,7 +3,7 @@ import {
    SlashCommandIntegerOption,
    SlashCommandStringOption,
    SlashCommandSubcommandBuilder,
-} from '@discordjs/builders';
+} from 'discord.js';
 import type { ChatInputCommand } from '../../../types/commands';
 import { osuAssociate } from './subcommands/osuAssociate';
 import { osuBest } from './subcommands/osuBest';
@@ -60,6 +60,10 @@ export const osuCommand: ChatInputCommand = {
             ),
       ),
    execute: async (interaction) => {
+      if (!interaction.isChatInputCommand()) {
+         return;
+      }
+
       if (interaction.options.getSubcommand() === 'associate') {
          const username = interaction.options.getString('username', true);
          await osuAssociate(interaction, username);

@@ -1,5 +1,10 @@
-import type { ButtonInteraction, CommandInteraction } from 'discord.js';
-import { MessageActionRow, MessageButton } from 'discord.js';
+import {
+   ActionRowBuilder,
+   ButtonBuilder,
+   ButtonInteraction,
+   ButtonStyle,
+   CommandInteraction,
+} from 'discord.js';
 import type { Emoji } from '../../../../utils/emoji';
 import { getEmoji } from '../../../../utils/emoji';
 import { clamp, formatCommas, formatFloat } from '../../../../utils/number';
@@ -79,12 +84,12 @@ export const osuRecent = async (
             loadingEmoji: getEmoji(guildManager, 'loading'),
          };
 
-         const row = new MessageActionRow({
+         const row = new ActionRowBuilder<ButtonBuilder>({
             components: [
                recentButtonComponent,
-               new MessageButton()
+               new ButtonBuilder()
                   .setLabel('Download map')
-                  .setStyle('LINK')
+                  .setStyle(ButtonStyle.Link)
                   .setURL(`https://api.chimu.moe/v1/download/${recent.beatmapset.id}?n=1`),
             ],
          });
@@ -105,8 +110,13 @@ export const osuRecent = async (
             goods: recent.statistics.count_100,
             mehs: recent.statistics.count_50,
             misses: recent.statistics.count_miss,
+            passedObjects:
+               recent.statistics.count_300 +
+               recent.statistics.count_100 +
+               recent.statistics.count_50 +
+               recent.statistics.count_miss,
          });
-         const [score, pp] = await Promise.all([scorePromise, ppPromise]);
+         const [score, ppInfos] = await Promise.all([scorePromise, ppPromise]);
          const bestScore = isBestScore(score, bests);
 
          await interaction.editReply({
@@ -115,11 +125,11 @@ export const osuRecent = async (
                   ...embedPayload,
                   worldIndex: score && score.rank_global <= 500 ? score.rank_global : null,
                   bestIndex: bestScore ? weightToRank(bestScore.weight.percentage) : null,
-                  pp: pp[0].pp,
-                  ppInfos: pp[1],
-                  od: formatFloat(pp[1].od, 2),
-                  ar: formatFloat(pp[1].ar, 2),
-                  stars: formatFloat(pp[0].stars, 2),
+                  pp: ppInfos.pp,
+                  ppInfos,
+                  od: formatFloat(ppInfos.od, 2),
+                  ar: formatFloat(ppInfos.ar, 2),
+                  stars: formatFloat(ppInfos.stars, 2),
                }),
             ],
             components: [row],

@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
 import axios, { AxiosResponse } from 'axios';
+import { SlashCommandBuilder } from 'discord.js';
 import { ChatInputCommand } from '../../../types/commands';
 import { getEmoji } from '../../../utils/emoji';
 import { makeStatusEmbed } from '../utils/embeds/StatusEmbed';

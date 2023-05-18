@@ -1,4 +1,4 @@
-import { GuildEmoji, MessageEmbed } from 'discord.js';
+import { EmbedBuilder, GuildEmoji } from 'discord.js';
 import { OSU_COLORS } from '../constants';
 import {
    bestScoreNameFormatter,
@@ -28,8 +28,8 @@ export interface OsuBestEmbedPayload {
    }[];
 }
 
-export const makeOsuBestEmbed = (payload: OsuBestEmbedPayload): MessageEmbed =>
-   new MessageEmbed()
+export const makeOsuBestEmbed = (payload: OsuBestEmbedPayload): EmbedBuilder =>
+   new EmbedBuilder()
       .setAuthor({
          name: recentAuthorFormatter(
             payload.player,

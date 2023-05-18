@@ -1,25 +1,26 @@
 import type {
-   BaseMessageComponent,
+   ButtonBuilder,
    ButtonInteraction,
-   MessageButton,
-   MessageSelectMenu,
-   SelectMenuInteraction,
+   ComponentType,
+   StringSelectMenuBuilder,
+   StringSelectMenuInteraction,
 } from 'discord.js';
-
-type PartialComponent<T extends BaseMessageComponent> = {
-   type: T['type'];
-   component: T;
-};
 
 export type ButtonComponentHandler = (interaction: ButtonInteraction) => Promise<void>;
 
-export type ButtonComponent = PartialComponent<MessageButton> & {
+export type ButtonComponent = {
+   type: ComponentType.Button;
+   component: ButtonBuilder;
    execute: ButtonComponentHandler;
 };
 
-export type SelectMenuComponentHandler = (interaction: SelectMenuInteraction) => Promise<void>;
+export type SelectMenuComponentHandler = (
+   interaction: StringSelectMenuInteraction,
+) => Promise<void>;
 
-export type SelectMenuComponent = PartialComponent<MessageSelectMenu> & {
+export type SelectMenuComponent = {
+   type: ComponentType.SelectMenu;
+   component: StringSelectMenuBuilder;
    execute: SelectMenuComponentHandler;
 };
 

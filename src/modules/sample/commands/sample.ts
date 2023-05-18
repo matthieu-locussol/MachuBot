@@ -1,9 +1,10 @@
 import {
+   ActionRowBuilder,
+   ButtonBuilder,
    SlashCommandBuilder,
    SlashCommandStringOption,
    SlashCommandSubcommandBuilder,
-} from '@discordjs/builders';
-import { MessageActionRow } from 'discord.js';
+} from 'discord.js';
 import type { ChatInputCommand } from '../../../types/commands';
 import { buttonComponent } from '../components/ui/buttonComponent';
 import { buttonModalComponent } from '../components/ui/buttonModalComponent';
@@ -44,11 +45,15 @@ export const sampleCommand: ChatInputCommand = {
          new SlashCommandSubcommandBuilder().setName('simple').setDescription('Simple subcommand'),
       ),
    execute: async (interaction) => {
+      if (!interaction.isChatInputCommand()) {
+         return;
+      }
+
       if (interaction.options.getSubcommand() === 'sub_sample') {
          const chosenInteraction = interaction.options.getString('interaction', true);
 
          if (chosenInteraction === 'button') {
-            const row = new MessageActionRow({
+            const row = new ActionRowBuilder<ButtonBuilder>({
                components: [buttonComponent, buttonSecondaryComponent],
             });
 
@@ -57,7 +62,7 @@ export const sampleCommand: ChatInputCommand = {
                components: [row],
             });
          } else if (chosenInteraction === 'select_menu') {
-            const row = new MessageActionRow({
+            const row = new ActionRowBuilder<ButtonBuilder>({
                components: [selectComponent],
             });
 
@@ -66,7 +71,7 @@ export const sampleCommand: ChatInputCommand = {
                components: [row],
             });
          } else if (chosenInteraction === 'modal') {
-            const row = new MessageActionRow({
+            const row = new ActionRowBuilder<ButtonBuilder>({
                components: [buttonModalComponent],
             });
 

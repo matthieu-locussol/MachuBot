@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CommandInteraction, MessageActionRow, MessageButton } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CommandInteraction } from 'discord.js';
 import { getEmoji } from '../../../../utils/emoji';
 import { makeCryptoMarketEmbed } from '../../utils/embeds/CryptoMarketEmbed';
 
@@ -42,22 +42,22 @@ export const cryptoMarket = async (interaction: CommandInteraction): Promise<voi
          }),
       ],
       components: [
-         new MessageActionRow({
+         new ActionRowBuilder<ButtonBuilder>({
             components: [
-               new MessageButton()
+               new ButtonBuilder()
                   .setLabel('CoinMarketCap')
-                  .setEmoji(getEmoji(guildManager, 'CoinMarketCap'))
-                  .setStyle('LINK')
+                  .setEmoji(getEmoji(guildManager, 'CoinMarketCap').toString())
+                  .setStyle(ButtonStyle.Link)
                   .setURL('https://coinmarketcap.com/'),
-               new MessageButton()
+               new ButtonBuilder()
                   .setLabel('CoinGecko')
-                  .setEmoji(getEmoji(guildManager, 'CoinGecko'))
-                  .setStyle('LINK')
+                  .setEmoji(getEmoji(guildManager, 'CoinGecko').toString())
+                  .setStyle(ButtonStyle.Link)
                   .setURL('https://www.coingecko.com/en'),
-               new MessageButton()
+               new ButtonBuilder()
                   .setLabel('Binance')
-                  .setEmoji(getEmoji(guildManager, 'Binance'))
-                  .setStyle('LINK')
+                  .setEmoji(getEmoji(guildManager, 'Binance').toString())
+                  .setStyle(ButtonStyle.Link)
                   .setURL('https://www.binance.com/en/markets/coinInfo'),
             ],
          }),

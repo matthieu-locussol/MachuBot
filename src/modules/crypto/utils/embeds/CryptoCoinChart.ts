@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MessageAttachment } from 'discord.js';
+import { AttachmentBuilder } from 'discord.js';
 import type { ChartOptions } from '../../../../utils/chart';
 import { makeChart } from '../../../../utils/chart';
 import { getChartPoint } from '../formatters';
@@ -12,7 +12,7 @@ export const makeCoinChart = async (
    coinId: string,
    currency: string,
    chartName: string,
-): Promise<MessageAttachment> => {
+): Promise<AttachmentBuilder> => {
    const response = await axios.get<CoinGeckoChartResponse>(
       `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency}&days=30&interval=daily`,
    );
@@ -31,6 +31,6 @@ export const makeCoinChart = async (
       chartOptions,
    );
 
-   const chartAttachment = new MessageAttachment(chartBuffer, chartName);
+   const chartAttachment = new AttachmentBuilder(chartBuffer, { name: chartName });
    return chartAttachment;
 };

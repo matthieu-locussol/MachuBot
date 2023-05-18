@@ -2,10 +2,10 @@ import axios from 'axios';
 import download from 'download';
 import { existsSync } from 'fs';
 import { resolve } from 'path';
-import { calculate, OsuData } from 'rosu-pp';
+import { Beatmap, Calculator } from 'rosu-pp';
 import { logger } from '../../../logger';
 import { _assert } from '../../../utils/_assert';
-import { getModsBits, Mod } from './mods';
+import { Mod, getModsBits } from './mods';
 
 const ENDPOINT_OAUTH = 'https://osu.ppy.sh/oauth/token';
 const ENDPOINT_API_V2 = 'https://osu.ppy.sh/api/v2';
@@ -453,24 +453,22 @@ export interface OsuPPPayload {
    goods?: number;
    mehs?: number;
    misses?: number;
+   passedObjects?: number;
 }
 
 export interface OsuPP {
    stars: number;
    pp: number;
+   ppPerfect: number;
    ar: number;
    cs: number;
    hp: number;
    od: number;
    bpm: number;
-   mode: 0 | 1 | 2 | 3;
    ppAcc: number;
    ppAim: number;
    ppFlashlight: number;
    ppSpeed: number;
-   aimStrain: number;
-   speedStrain: number;
-   flashlightRating: number;
    sliderFactor: number;
    clockRate: number;
    nCircles: number;
@@ -504,28 +502,64 @@ export const getOsuPP = async ({
    mehs,
    misses,
    mods,
-}: OsuPPPayload): Promise<OsuData[]> => {
+   passedObjects,
+}: OsuPPPayload): Promise<OsuPP> => {
    await downloadBeatmaps([beatmapId]);
 
-   const results = calculate({
-      path: resolve(__dirname, `../cache/${beatmapId}.osu`),
-      params: [
-         {
-            mode: 0,
-            acc: accuracy,
-            combo: combo || 1500,
-            n100: goods,
-            n50: mehs,
-            nMisses: misses,
-            mods: getModsBits(mods),
-         },
-         {
-            mode: 0,
-            acc: accuracy,
-            mods: getModsBits(mods),
-         },
-      ],
-   }) as OsuData[];
+   const calculator = new Calculator({
+      mode: 0,
+      acc: accuracy,
+      combo,
+      n100: goods,
+      n50: mehs,
+      nMisses: misses,
+      mods: getModsBits(mods),
+      passedObjects,
+   });
 
-   return results;
+   const calculatorPerfect = new Calculator({
+      mode: 0,
+      acc: accuracy,
+      mods: getModsBits(mods),
+   });
+
+   const beatmap = new Beatmap({ path: resolve(__dirname, `../cache/${beatmapId}.osu`) });
+
+   const { pp } = calculator.performance(beatmap);
+
+   const perfectDifficulty = calculatorPerfect.difficulty(beatmap);
+   if (perfectDifficulty.mode !== 0) {
+      throw new Error(`Invalid game mode: ${perfectDifficulty.mode}`);
+   }
+
+   const perfectPerformance = calculatorPerfect.performance(beatmap);
+   if (perfectPerformance.mode !== 0) {
+      throw new Error(`Invalid game mode: ${perfectPerformance.mode}`);
+   }
+
+   const { cs, hp, bpm, clockRate } = calculatorPerfect.mapAttributes(beatmap);
+   const { stars, maxCombo, ar, od, nCircles, nSliders, nSpinners, sliderFactor } =
+      perfectDifficulty;
+   const { pp: ppPerfect, ppAcc, ppAim, ppFlashlight, ppSpeed } = perfectPerformance;
+
+   return {
+      stars,
+      pp,
+      ppPerfect,
+      ar,
+      cs,
+      hp,
+      od,
+      bpm,
+      ppAcc,
+      ppAim,
+      ppFlashlight,
+      ppSpeed,
+      sliderFactor,
+      clockRate,
+      nCircles,
+      nSliders,
+      nSpinners,
+      maxCombo,
+   };
 };

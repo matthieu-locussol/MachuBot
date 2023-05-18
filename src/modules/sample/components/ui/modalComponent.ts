@@ -1,22 +1,22 @@
-import { MessageActionRow, Modal, TextInputComponent } from 'discord.js';
+import { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js';
 
-const shortInput = new TextInputComponent({
+const shortInput = new TextInputBuilder({
    customId: 'shortInput',
    label: 'Short input',
-   style: 'SHORT',
+   style: TextInputStyle.Short,
 });
 
-const paragraphInput = new TextInputComponent({
+const paragraphInput = new TextInputBuilder({
    customId: 'paragraphInput',
    label: 'Paragraph input',
-   style: 'PARAGRAPH',
+   style: TextInputStyle.Paragraph,
 });
 
-export const modalComponent = new Modal({
+export const modalComponent = new ModalBuilder({
    customId: 'modal',
    title: 'Sample modal',
    components: [
-      new MessageActionRow({ components: [shortInput] }),
-      new MessageActionRow({ components: [paragraphInput] }),
+      new ActionRowBuilder<TextInputBuilder>({ components: [shortInput] }),
+      new ActionRowBuilder<TextInputBuilder>({ components: [paragraphInput] }),
    ],
 });

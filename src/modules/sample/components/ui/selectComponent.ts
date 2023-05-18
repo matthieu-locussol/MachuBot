@@ -1,6 +1,6 @@
-import { MessageSelectMenu } from 'discord.js';
+import { StringSelectMenuBuilder } from 'discord.js';
 
-export const selectComponent = new MessageSelectMenu({
+export const selectComponent = new StringSelectMenuBuilder({
    customId: 'select',
 })
    .addOptions([

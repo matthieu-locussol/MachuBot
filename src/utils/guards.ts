@@ -1,9 +1,9 @@
-import { ApplicationCommandType } from 'discord-api-types/payloads/v9';
+import { ApplicationCommandType } from 'discord.js';
 import { logger } from '../logger';
 import type { Command } from '../types/commands';
 import type { Component } from '../types/components';
-import { isUnique } from './array';
 import { _assertTrue } from './_assert';
+import { isUnique } from './array';
 
 const MAX_CHAT_INPUT_COMMANDS = 100;
 
@@ -13,7 +13,11 @@ const MAX_CONTEXT_MENU_MESSAGE_COMMANDS = 5;
 
 export const componentsUnicityGuard = (components: Component[]): void => {
    _assertTrue(
-      isUnique(components.map((entry) => entry.component.customId)),
+      isUnique(
+         components.map(
+            (entry) => 'custom_id' in entry.component.data && entry.component.data.custom_id,
+         ),
+      ),
       'Components names are not unique!',
    );
 };

@@ -66,8 +66,8 @@ describe(__filename, () => {
    });
 
    test('recentDescriptionFormatter', () => {
-      const samples: [number | null, number | null, string][] = [
-         [null, null, ''],
+      const samples: [number | null, number | null, string | null][] = [
+         [null, null, null],
          [1, null, '***Personal record #1***'],
          [null, 2, '***World record #2***'],
          [3, 4, '***World record #4*** • ***Personal record #3***'],
@@ -139,7 +139,7 @@ describe(__filename, () => {
       };
 
       const mockedPP: OsuPP = {
-         pp: 1127,
+         ppPerfect: 1127,
          maxCombo: 437,
       } as OsuPP;
 

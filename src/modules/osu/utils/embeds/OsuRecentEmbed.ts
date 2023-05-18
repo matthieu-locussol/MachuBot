@@ -1,5 +1,4 @@
-import type { GuildEmoji } from 'discord.js';
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder, GuildEmoji } from 'discord.js';
 import type { OsuPP, UserBest } from '../api';
 import { OSU_COLORS } from '../constants';
 import {
@@ -55,8 +54,8 @@ export interface OsuRecentEmbedPayload {
    loadingEmoji: GuildEmoji;
 }
 
-export const makeOsuRecentEmbed = (payload: OsuRecentEmbedPayload): MessageEmbed =>
-   new MessageEmbed()
+export const makeOsuRecentEmbed = (payload: OsuRecentEmbedPayload): EmbedBuilder =>
+   new EmbedBuilder()
       .setAuthor({
          name: recentAuthorFormatter(
             payload.player,

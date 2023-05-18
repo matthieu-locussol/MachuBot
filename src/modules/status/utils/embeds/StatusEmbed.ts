@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { Colors, EmbedBuilder } from 'discord.js';
 import { description, version } from '../../../../../package.json';
 
 interface StatusEmbedPayload {
@@ -6,14 +6,14 @@ interface StatusEmbedPayload {
    osuStatus: string;
 }
 
-export const makeStatusEmbed = ({ coinGeckoStatus, osuStatus }: StatusEmbedPayload): MessageEmbed =>
-   new MessageEmbed()
+export const makeStatusEmbed = ({ coinGeckoStatus, osuStatus }: StatusEmbedPayload): EmbedBuilder =>
+   new EmbedBuilder()
       .setTitle(`MachuBot - Version ${version}`)
       .setDescription(
          `${description}\n*Made by [Matthieu Locussol](https://www.matthieu-locussol.com/)*`,
       )
       .setURL('https://github.com/matthieu-locussol/MachuBot')
-      .setColor('BLUE')
+      .setColor(Colors.Blue)
       .setFooter({
          text: `Informations about APIs - MachuBot`,
       })

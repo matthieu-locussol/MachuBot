@@ -1,10 +1,10 @@
-import { ButtonInteraction, CommandInteraction, MessageActionRow } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, CommandInteraction } from 'discord.js';
 import { formatTimeAgo } from '../../../../utils/date';
 import { Emoji, getEmoji } from '../../../../utils/emoji';
 import { clamp, formatCommas, formatFloat } from '../../../../utils/number';
 import { bestButtonComponent } from '../../components/ui/bestButtonComponent';
 import { getUser, getUserBests } from '../../utils/api';
-import { makeOsuBestEmbed, OsuBestEmbedPayload } from '../../utils/embeds/OsuBestEmbed';
+import { OsuBestEmbedPayload, makeOsuBestEmbed } from '../../utils/embeds/OsuBestEmbed';
 import { getSavedUserId, getUserId } from '../../utils/username';
 
 export const osuBest = async (
@@ -57,7 +57,7 @@ export const osuBest = async (
          await interaction.editReply({
             embeds: [embed],
             components: [
-               new MessageActionRow({
+               new ActionRowBuilder<ButtonBuilder>({
                   components: [bestButtonComponent],
                }),
             ],

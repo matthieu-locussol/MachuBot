@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder } from 'discord.js';
 import type { ChatInputCommand } from '../../../types/commands';
 
 export const pingCommand: ChatInputCommand = {

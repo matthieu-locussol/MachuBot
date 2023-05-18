@@ -2,7 +2,7 @@ import {
    SlashCommandBuilder,
    SlashCommandStringOption,
    SlashCommandSubcommandBuilder,
-} from '@discordjs/builders';
+} from 'discord.js';
 import type { ChatInputCommand } from '../../../types/commands';
 import { cryptoCoin } from './subcommands/cryptoCoin';
 import { cryptoMarket } from './subcommands/cryptoMarket';
@@ -44,6 +44,10 @@ export const cryptoCommand: ChatInputCommand = {
             ),
       ),
    execute: async (interaction) => {
+      if (!interaction.isChatInputCommand()) {
+         return;
+      }
+
       if (interaction.options.getSubcommand() === 'market') {
          await cryptoMarket(interaction);
       } else if (interaction.options.getSubcommand() === 'coin') {

@@ -3,25 +3,18 @@ import type {
    SlashCommandBuilder,
    SlashCommandSubcommandsOnlyBuilder,
 } from '@discordjs/builders';
-import type {
-   BaseCommandInteraction,
-   CommandInteraction,
-   ContextMenuInteraction,
-} from 'discord.js';
+import type { CommandInteraction, ContextMenuCommandInteraction } from 'discord.js';
 
-type PartialCommand<T extends BaseCommandInteraction> = {
-   type: 'APPLICATION_COMMAND' | 'CONTEXT_MENU_COMMAND';
-   execute: (interaction: T) => Promise<void>;
-};
-
-export type ChatInputCommand = PartialCommand<CommandInteraction> & {
+export type ChatInputCommand = {
    type: 'APPLICATION_COMMAND';
    data: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder;
+   execute: (interaction: CommandInteraction) => Promise<void>;
 };
 
-export type ContextMenuCommand = PartialCommand<ContextMenuInteraction> & {
+export type ContextMenuCommand = {
    type: 'CONTEXT_MENU_COMMAND';
    data: ContextMenuCommandBuilder;
+   execute: (interaction: ContextMenuCommandInteraction) => Promise<void>;
 };
 
 export type Command = ChatInputCommand | ContextMenuCommand;
