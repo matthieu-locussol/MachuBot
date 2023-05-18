@@ -13,32 +13,9 @@
          "source.organizeImports": true
       },
       "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.formatOnSave": true,
-      "restoreTerminals.keepExistingTerminalsOpen": false,
-      "restoreTerminals.terminals": [
-         {
-            "splitTerminals": [
-               {
-                  "name": "MachuDevbot",
-                  "commands": ["yarn dev"]
-               }
-            ]
-         },
-         {
-            "splitTerminals": [
-               {
-                  "name": "Shell",
-                  "commands": [""]
-               }
-            ]
-         }
-      ]
+      "editor.formatOnSave": true
    },
    "extensions": {
-      "recommendations": [
-         "dbaeumer.vscode-eslint",
-         "esbenp.prettier-vscode",
-         "ethansk.restore-terminals"
-      ]
+      "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
    }
 }
