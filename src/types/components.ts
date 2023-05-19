@@ -5,8 +5,9 @@ import type {
    StringSelectMenuBuilder,
    StringSelectMenuInteraction,
 } from 'discord.js';
+import type { Bot } from '../bot';
 
-export type ButtonComponentHandler = (interaction: ButtonInteraction) => Promise<void>;
+export type ButtonComponentHandler = (interaction: ButtonInteraction, bot: Bot) => Promise<void>;
 
 export type ButtonComponent = {
    type: ComponentType.Button;
@@ -16,6 +17,7 @@ export type ButtonComponent = {
 
 export type SelectMenuComponentHandler = (
    interaction: StringSelectMenuInteraction,
+   bot: Bot,
 ) => Promise<void>;
 
 export type SelectMenuComponent = {

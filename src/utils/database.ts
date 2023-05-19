@@ -4,11 +4,17 @@ interface GuildDatabase {
    osu: {
       usernames: Record<string, number>;
    };
+   music: {
+      volume: number;
+   };
 }
 
 const defaultDatabase: GuildDatabase = {
    osu: {
       usernames: {},
+   },
+   music: {
+      volume: 50,
    },
 };
 
@@ -24,6 +30,10 @@ const loadDatabase = (): Keyv<GuildDatabase> => {
 export const loadGuildDatabase = async (guildId: string): Promise<GuildDatabaseMutator> => {
    const database = loadDatabase();
    const guildDatabase = (await database.get(guildId)) || defaultDatabase;
+
+   if (guildDatabase.music === undefined) {
+      guildDatabase.music = defaultDatabase.music;
+   }
 
    return {
       ...guildDatabase,

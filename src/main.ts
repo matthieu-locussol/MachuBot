@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { Bot } from './bot';
 import { cryptoModule } from './modules/crypto';
+// eslint-disable-next-line import/no-cycle
 import { musicModule } from './modules/music';
 import { osuModule } from './modules/osu';
 import { pingModule } from './modules/ping';

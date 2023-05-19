@@ -1,3 +1,5 @@
+import { YoutubeExtractor } from '@discord-player/extractor';
+import { Player } from 'discord-player';
 import {
    Client,
    ComponentType,
@@ -43,6 +45,8 @@ export class Bot {
 
    private commands: SerializableInteraction[] = [];
 
+   private musicPlayer: Player;
+
    constructor(modules: Module[]) {
       this.token = accessEnvironmentVariable(
          'DISCORD_TOKEN_PRODUCTION',
@@ -58,6 +62,7 @@ export class Bot {
          intents: [
             GatewayIntentBits.Guilds,
             GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.GuildVoiceStates,
             GatewayIntentBits.MessageContent,
          ],
          presence: {
@@ -76,6 +81,11 @@ export class Bot {
       this.initializeModules();
       this.initializeComponents();
       this.initializeCommands();
+
+      this.musicPlayer = new Player(this.client);
+      this.musicPlayer.extractors.register(YoutubeExtractor, {}).then(() => {
+         logger.info('Music player is ready!');
+      });
    }
 
    public start = async (): Promise<void> => {
@@ -109,13 +119,13 @@ export class Bot {
                   interaction.isCommand() &&
                   interaction.commandName === command.data.name
                ) {
-                  await command.execute(interaction);
+                  await command.execute(interaction, this);
                } else if (
                   command.type === 'CONTEXT_MENU_COMMAND' &&
                   interaction.isContextMenuCommand() &&
                   interaction.commandName === command.data.name
                ) {
-                  await command.execute(interaction);
+                  await command.execute(interaction, this);
                }
             });
          }
@@ -126,7 +136,7 @@ export class Bot {
                   interaction.isModalSubmit() &&
                   interaction.customId === modal.component.data.custom_id
                ) {
-                  await modal.execute(interaction);
+                  await modal.execute(interaction, this);
                }
             });
          }
@@ -134,7 +144,7 @@ export class Bot {
          for (const listener of module.listeners) {
             this.client.on('messageCreate', async (message) => {
                if (!message.author.bot) {
-                  await listener.execute(message);
+                  await listener.execute(message, this);
                }
             });
          }
@@ -159,13 +169,13 @@ export class Bot {
                'custom_id' in component.component.data &&
                component.component.data.custom_id === interaction.customId
             ) {
-               await component.execute(interaction);
+               await component.execute(interaction, this);
             } else if (
                component.type === ComponentType.StringSelect &&
                interaction.isStringSelectMenu() &&
                component.component.data.custom_id === interaction.customId
             ) {
-               await component.execute(interaction);
+               await component.execute(interaction, this);
             }
          });
       }
@@ -225,4 +235,8 @@ export class Bot {
          logger.info(`Production bot started as ${this.client.user.tag}`);
       });
    };
+
+   getMusicPlayer(): Player {
+      return this.musicPlayer;
+   }
 }
