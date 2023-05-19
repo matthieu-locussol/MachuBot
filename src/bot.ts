@@ -55,7 +55,11 @@ export class Bot {
 
       this.rest = new REST({ version: '9' }).setToken(this.token);
       this.client = new Client({
-         intents: [GatewayIntentBits.Guilds],
+         intents: [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.MessageContent,
+         ],
          presence: {
             status: 'online',
             activities: [
@@ -123,6 +127,14 @@ export class Bot {
                   interaction.customId === modal.component.data.custom_id
                ) {
                   await modal.execute(interaction);
+               }
+            });
+         }
+
+         for (const listener of module.listeners) {
+            this.client.on('messageCreate', async (message) => {
+               if (!message.author.bot) {
+                  await listener.execute(message);
                }
             });
          }

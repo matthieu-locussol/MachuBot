@@ -5,3 +5,8 @@ export const toUpperFirst = (value: string): string => {
 
    return `${value[0].toUpperCase()}${value.slice(1)}`;
 };
+
+export const YOUTUBE_REGEX =
+   /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]*)(&(amp;)?[\w?=]*)?/;
+
+export const isYoutubeUrl = (url: string): boolean => YOUTUBE_REGEX.test(url);

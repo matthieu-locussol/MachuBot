@@ -11,5 +11,6 @@ import { select } from './components/select';
 export const sampleModule: Module = {
    commands: [sampleCommand, sampleContextMessageCommand, sampleContextUserCommand],
    components: [button, buttonSecondary, select, buttonModal],
+   listeners: [],
    modals: [modal],
 };
