@@ -6,7 +6,7 @@ import { loadGuildDatabase } from '../../../../utils/database';
 import { extractYoutubeLink } from '../../../../utils/string';
 
 export const playButtonHandler: ButtonComponentHandler = async (interaction, bot) => {
-   await interaction.deferReply({ ephemeral: true });
+   await interaction.deferUpdate();
 
    if (interaction.guild === null) {
       return;
@@ -21,7 +21,6 @@ export const playButtonHandler: ButtonComponentHandler = async (interaction, bot
    });
 
    if (member === undefined || member.voice.channel === null) {
-      interaction.editReply('You must be in a voice channel to use this command.');
       return;
    }
 
@@ -39,37 +38,29 @@ export const playButtonHandler: ButtonComponentHandler = async (interaction, bot
    _assert(queue);
 
    const queuePlayerNode = new GuildQueuePlayerNode(queue);
-
    const url = extractYoutubeLink(interaction.message.content);
 
    if (queue.connection?.state.status === VoiceConnectionStatus.Ready) {
-      if (url !== database.music.currentUrl) {
+      if (url === queuePlayerNode.queue.currentTrack?.url && queuePlayerNode.isPaused()) {
+         queuePlayerNode.resume();
+      } else {
          const searchResult = await queue.player.search(url, {
             requestedBy: interaction.user,
             searchEngine: QueryType.AUTO,
          });
 
-         queuePlayerNode.insert(searchResult.tracks[0]);
-         queuePlayerNode.skip();
-
-         if (queue.dispatcher?.isPaused) {
-            queue.dispatcher?.resume();
+         if (queuePlayerNode.isIdle()) {
+            queue.player.play(member.voice.channel, url);
+         } else {
+            queuePlayerNode.insert(searchResult.tracks[0]);
+            queuePlayerNode.skip();
          }
 
-         database.music.currentUrl = url;
-         await database.save();
-
-         await interaction.editReply('Playing...');
-      } else if (queue.dispatcher?.isPaused) {
-         queue.dispatcher?.resume();
-         await interaction.editReply('Resuming...');
+         if (queuePlayerNode.isPaused()) {
+            queuePlayerNode.resume();
+         }
       }
    } else {
-      database.music.currentUrl = url;
-      await database.save();
-
       queue.player.play(member.voice.channel, url);
-
-      await interaction.editReply('Playing...');
    }
 };

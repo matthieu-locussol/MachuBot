@@ -1,4 +1,6 @@
+import { GuildQueuePlayerNode } from 'discord-player';
 import type { ButtonComponentHandler } from '../../../../types/components';
+import { _assert } from '../../../../utils/_assert';
 import { loadGuildDatabase } from '../../../../utils/database';
 import { clamp } from '../../../../utils/number';
 
@@ -18,7 +20,6 @@ export const volumeDownButtonHandler: ButtonComponentHandler = async (interactio
    });
 
    if (member === undefined || member.voice.channel === null) {
-      interaction.editReply('You must be in a voice channel to use this command.');
       return;
    }
 
@@ -26,14 +27,14 @@ export const volumeDownButtonHandler: ButtonComponentHandler = async (interactio
       const database = await loadGuildDatabase(interaction.guild.id);
       const currentVolume = database.music.volume;
       const newVolume = clamp(currentVolume - 10, 0, 100);
-
       database.music.volume = newVolume;
-      await database.save();
 
-      bot.getMusicPlayer().queues.get(interaction.guild.id)?.dispatcher?.setVolume(newVolume);
+      const queue = bot.getMusicPlayer().queues.get(interaction.guild.id);
+      _assert(queue);
 
-      await interaction.editReply(`Volume set to ${newVolume}.`);
-   } else {
-      await interaction.editReply('No song is currently being played.');
+      const queuePlayerNode = new GuildQueuePlayerNode(queue);
+      queuePlayerNode.setVolume(newVolume);
+
+      await Promise.all([database.save(), interaction.editReply(`Volume set to ${newVolume}%.`)]);
    }
 };

@@ -1,7 +1,9 @@
+import { GuildQueuePlayerNode } from 'discord-player';
 import type { ButtonComponentHandler } from '../../../../types/components';
+import { _assert } from '../../../../utils/_assert';
 
 export const pauseButtonHandler: ButtonComponentHandler = async (interaction, bot) => {
-   await interaction.deferReply({ ephemeral: true });
+   await interaction.deferUpdate();
 
    if (interaction.guild === null) {
       return;
@@ -16,14 +18,14 @@ export const pauseButtonHandler: ButtonComponentHandler = async (interaction, bo
    });
 
    if (member === undefined || member.voice.channel === null) {
-      interaction.editReply('You must be in a voice channel to use this command.');
       return;
    }
 
    if (bot.getMusicPlayer().queues.has(interaction.guild.id)) {
-      bot.getMusicPlayer().queues.get(interaction.guild.id)?.dispatcher?.pause();
-      await interaction.editReply('Paused.');
-   } else {
-      await interaction.editReply('No song is currently being played.');
+      const queue = bot.getMusicPlayer().queues.get(interaction.guild.id);
+      _assert(queue);
+
+      const queuePlayerNode = new GuildQueuePlayerNode(queue);
+      queuePlayerNode.pause();
    }
 };

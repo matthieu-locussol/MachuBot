@@ -9,6 +9,12 @@ import { volumeUpButton } from '../components/volumeUp';
 
 export const linksListener: Listener = {
    execute: async (message) => {
+      if (process.env.NODE_ENV === 'production') {
+         if (message.channel.id === process.env.DISCORD_DEVELOPMENT_CHANNEL_ID) {
+            return;
+         }
+      }
+
       if (isYoutubeUrl(message.content)) {
          await message.delete();
          await message.channel.send({

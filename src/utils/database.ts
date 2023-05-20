@@ -6,7 +6,6 @@ interface GuildDatabase {
    };
    music: {
       volume: number;
-      currentUrl: string;
    };
 }
 
@@ -16,7 +15,6 @@ const defaultDatabase: GuildDatabase = {
    },
    music: {
       volume: 50,
-      currentUrl: '',
    },
 };
 
@@ -35,10 +33,6 @@ export const loadGuildDatabase = async (guildId: string): Promise<GuildDatabaseM
 
    if (guildDatabase.music === undefined) {
       guildDatabase.music = defaultDatabase.music;
-   }
-
-   if (guildDatabase.music.currentUrl === undefined) {
-      guildDatabase.music.currentUrl = defaultDatabase.music.currentUrl;
    }
 
    return {
