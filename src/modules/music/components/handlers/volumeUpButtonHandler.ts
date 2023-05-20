@@ -3,7 +3,7 @@ import { loadGuildDatabase } from '../../../../utils/database';
 import { clamp } from '../../../../utils/number';
 
 export const volumeUpButtonHandler: ButtonComponentHandler = async (interaction, bot) => {
-   await interaction.deferReply();
+   await interaction.deferReply({ ephemeral: true });
 
    if (interaction.guild === null) {
       return;
@@ -28,7 +28,7 @@ export const volumeUpButtonHandler: ButtonComponentHandler = async (interaction,
       const newVolume = clamp(currentVolume + 10, 0, 100);
 
       database.music.volume = newVolume;
-      database.save();
+      await database.save();
 
       bot.getMusicPlayer().queues.get(interaction.guild.id)?.dispatcher?.setVolume(newVolume);
 

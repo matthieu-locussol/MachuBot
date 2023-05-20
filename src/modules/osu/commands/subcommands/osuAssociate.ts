@@ -23,7 +23,7 @@ export const osuAssociate = async (
    try {
       const osuUser = await getUser(username);
       database.osu.usernames[userId] = osuUser.id;
-      database.save();
+      await database.save();
 
       await interaction.editReply(
          `Your discord account has been associated to the nickname \`${username}\` on osu!.`,

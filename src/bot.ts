@@ -82,7 +82,12 @@ export class Bot {
       this.initializeComponents();
       this.initializeCommands();
 
-      this.musicPlayer = new Player(this.client);
+      this.musicPlayer = new Player(this.client, {
+         ytdlOptions: {
+            filter: 'audioonly',
+            highWaterMark: 1 << 30,
+         },
+      });
       this.musicPlayer.extractors.register(YoutubeExtractor, {}).then(() => {
          logger.info('Music player is ready!');
       });

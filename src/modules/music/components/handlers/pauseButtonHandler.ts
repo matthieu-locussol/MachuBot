@@ -1,7 +1,7 @@
 import type { ButtonComponentHandler } from '../../../../types/components';
 
 export const pauseButtonHandler: ButtonComponentHandler = async (interaction, bot) => {
-   await interaction.deferReply();
+   await interaction.deferReply({ ephemeral: true });
 
    if (interaction.guild === null) {
       return;
