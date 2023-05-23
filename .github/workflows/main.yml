@@ -71,8 +71,8 @@ jobs:
          - run: echo "${{ secrets.SSHKEY }}" > key.pem
          - run: chmod 600 key.pem
          - run:
-              rsync -av -e "ssh -i key.pem -o StrictHostKeyChecking=no" . ${{ secrets.USER
-              }}@${{secrets.HOST }}:${{ secrets.DIR }}/
+              rsync -av -e "ssh -i key.pem -o ConnectTimeout=1200 StrictHostKeyChecking=no" . ${{
+              secrets.USER }}@${{secrets.HOST }}:${{ secrets.DIR }}/
          - run:
               ssh -i key.pem ${{ secrets.USER }}@${{ secrets.HOST }} "cd ${{ secrets.DIR }} && pm2
               startOrRestart pm2.config.json"
