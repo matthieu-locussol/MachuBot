@@ -13,8 +13,8 @@
       "check:eslint": "eslint --ignore-path .gitignore src/**/*",
       "check:typescript": "tsc --project ./tsconfig.json --noEmit",
       "format": "pretty-quick --staged",
-      "tests": "jest",
-      "tests:ci": "jest --ci",
+      "tests": "TZ='Europe/Paris' jest",
+      "tests:ci": "TZ='Europe/Paris' jest --ci",
       "release": "standard-version -a",
       "postrelease": "git add CHANGELOG.md ; git commit -m\"chore: updated CHANGELOG.md\"",
       "postinstall": "husky install"
