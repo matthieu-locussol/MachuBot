@@ -1,6 +1,6 @@
 {
    "name": "machubot",
-   "version": "0.7.1",
+   "version": "0.7.2",
    "description": "Yet another discord bot.",
    "repository": "git@github.com:matthieu-locussol/MachuBot.git",
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com>",
