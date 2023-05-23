@@ -68,3 +68,9 @@ drag-n-drop all the directory content and you're done! Don't forget to set your 
 No. If you'd like not to have the Osu! module enabled, you can just edit the `main.ts` file and
 remove the `osuModule` from the `modules` array. In that case, you will not need to provide the
 environment variables `OSU_OAUTH_CLIENT_ID` and `OSU_OAUTH_CLIENT_SECRET`.
+
+## Invitations links
+
+[Invite production bot](https://discord.com/api/oauth2/authorize?client_id=896388427040313386&permissions=8&scope=bot%20applications.commands)
+
+[Invite development bot](https://discord.com/api/oauth2/authorize?client_id=904661905711456276&permissions=8&scope=bot%20applications.commands)

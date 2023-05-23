@@ -49,13 +49,14 @@ export const statusCommand: ChatInputCommand = {
          return '';
       };
 
+      const { embed, attachment } = makeStatusEmbed({
+         coinGeckoStatus: `${getStatusEmoji(coinGeckoStatus)}\tCoinGecko status`,
+         osuStatus: `${getStatusEmoji(osuStatus)}\tOsu status ${getOsuVersion(osuStatus)}`,
+      });
+
       await interaction.editReply({
-         embeds: [
-            makeStatusEmbed({
-               coinGeckoStatus: `${getStatusEmoji(coinGeckoStatus)}\tCoinGecko status`,
-               osuStatus: `${getStatusEmoji(osuStatus)}\tOsu status ${getOsuVersion(osuStatus)}`,
-            }),
-         ],
+         embeds: [embed],
+         files: [attachment],
       });
    },
 };

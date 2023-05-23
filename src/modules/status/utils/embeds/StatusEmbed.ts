@@ -1,4 +1,4 @@
-import { Colors, EmbedBuilder } from 'discord.js';
+import { AttachmentBuilder, Colors, EmbedBuilder } from 'discord.js';
 import { description, version } from '../../../../../package.json';
 
 interface StatusEmbedPayload {
@@ -6,8 +6,16 @@ interface StatusEmbedPayload {
    osuStatus: string;
 }
 
-export const makeStatusEmbed = ({ coinGeckoStatus, osuStatus }: StatusEmbedPayload): EmbedBuilder =>
-   new EmbedBuilder()
+export const makeStatusEmbed = ({
+   coinGeckoStatus,
+   osuStatus,
+}: StatusEmbedPayload): {
+   embed: EmbedBuilder;
+   attachment: AttachmentBuilder;
+} => {
+   const attachment = new AttachmentBuilder('assets/Avatar.png', { name: 'Avatar.png' });
+   const embed = new EmbedBuilder()
+      .setThumbnail('attachment://Avatar.png')
       .setTitle(`MachuBot - Version ${version}`)
       .setDescription(
          `${description}\n*Made by [Matthieu Locussol](https://www.matthieu-locussol.com/)*`,
@@ -27,3 +35,6 @@ export const makeStatusEmbed = ({ coinGeckoStatus, osuStatus }: StatusEmbedPaylo
             value: '[See the Osu! documentation](https://osu.ppy.sh/docs/index.html)',
          },
       ]);
+
+   return { embed, attachment };
+};
