@@ -1,5 +1,5 @@
-import { YoutubeExtractor } from '@discord-player/extractor';
-import { Player } from 'discord-player';
+import { AttachmentExtractor, YoutubeExtractor } from '@discord-player/extractor';
+import { GuildQueuePlayerNode, Player } from 'discord-player';
 import {
    Client,
    ComponentType,
@@ -88,6 +88,7 @@ export class Bot {
             highWaterMark: 1 << 30,
          },
       });
+      this.musicPlayer.extractors.register(AttachmentExtractor, {});
       this.musicPlayer.extractors.register(YoutubeExtractor, {}).then(() => {
          logger.info('Music player is ready!');
       });
@@ -219,9 +220,27 @@ export class Bot {
          },
       );
 
-      this.client.on('ready', () => {
+      this.client.on('ready', async () => {
          _assert(this.client.user);
          logger.info(`Development bot started as ${this.client.user.tag}`);
+      });
+
+      this.client.on('voiceStateUpdate', async (_, newState) => {
+         const prankedUserId = '228887768699371522';
+         const channelId = '750445173506310196';
+         const songUrl =
+            'https://cdn.discordapp.com/attachments/706591844967907409/1110398989045608478/FBI.mp3';
+
+         if (newState.member?.id === prankedUserId && newState.channelId === channelId) {
+            const queue = this.musicPlayer.queues.has(newState.guild.id)
+               ? this.musicPlayer.queues.get(newState.guild.id)
+               : undefined;
+            const queuePlayerNode = queue ? new GuildQueuePlayerNode(queue) : undefined;
+
+            if (queuePlayerNode === undefined || queuePlayerNode.isIdle()) {
+               await this.musicPlayer.play(channelId, songUrl);
+            }
+         }
       });
    };
 
