@@ -29,16 +29,17 @@ instructions below to learn more about the environment variables and their purpo
 
 ## Environment variables
 
-| Variable                      | Description                                                                 |
-| ----------------------------- | --------------------------------------------------------------------------- |
-| DISCORD_CLIENT_ID_DEVELOPMENT | Your development bot application ID                                         |
-| DISCORD_CLIENT_ID_PRODUCTION  | Your production bot application ID                                          |
-| DISCORD_TOKEN_DEVELOPMENT     | Your development bot secret token                                           |
-| DISCORD_TOKEN_PRODUCTION      | Your production bot secret token                                            |
-| DISCORD_DEVELOPMENT_SERVER_ID | The discord server ID on which you invited your development bot for testing |
-| DISCORD_EMOJIS_SERVER_ID      | The discord server ID on which you store custom emojis                      |
-| OSU_OAUTH_CLIENT_ID           | Your Osu! application OAuth ID                                              |
-| OSU_OAUTH_CLIENT_SECRET       | Your Osu! application OAuth secret                                          |
+| Variable                       | Description                                                                         |
+| ------------------------------ | ----------------------------------------------------------------------------------- |
+| DISCORD_CLIENT_ID_DEVELOPMENT  | Your development bot application ID                                                 |
+| DISCORD_CLIENT_ID_PRODUCTION   | Your production bot application ID                                                  |
+| DISCORD_TOKEN_DEVELOPMENT      | Your development bot secret token                                                   |
+| DISCORD_TOKEN_PRODUCTION       | Your production bot secret token                                                    |
+| DISCORD_DEVELOPMENT_SERVER_ID  | The discord server ID on which you invited your development bot for testing         |
+| DISCORD_DEVELOPMENT_CHANNEL_ID | The discord channel ID on which the development bot has exclusive access for musics |
+| DISCORD_EMOJIS_SERVER_ID       | The discord server ID on which you store custom emojis                              |
+| OSU_OAUTH_CLIENT_ID            | Your Osu! application OAuth ID                                                      |
+| OSU_OAUTH_CLIENT_SECRET        | Your Osu! application OAuth secret                                                  |
 
 Depending on if you want to setup a development and/or a production bot, refer to the variable names
 to know if you need these. For example, if you want to setup a development bot locally, you at least
