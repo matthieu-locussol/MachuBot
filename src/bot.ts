@@ -224,24 +224,6 @@ export class Bot {
          _assert(this.client.user);
          logger.info(`Development bot started as ${this.client.user.tag}`);
       });
-
-      this.client.on('voiceStateUpdate', async (_, newState) => {
-         const prankedUserId = '228887768699371522';
-         const channelId = '750445173506310196';
-         const songUrl =
-            'https://cdn.discordapp.com/attachments/706591844967907409/1110398989045608478/FBI.mp3';
-
-         if (newState.member?.id === prankedUserId && newState.channelId === channelId) {
-            const queue = this.musicPlayer.queues.has(newState.guild.id)
-               ? this.musicPlayer.queues.get(newState.guild.id)
-               : undefined;
-            const queuePlayerNode = queue ? new GuildQueuePlayerNode(queue) : undefined;
-
-            if (queuePlayerNode === undefined || queuePlayerNode.isIdle()) {
-               await this.musicPlayer.play(channelId, songUrl);
-            }
-         }
-      });
    };
 
    private initializeProduction = async (): Promise<void> => {
@@ -257,6 +239,30 @@ export class Bot {
       this.client.on('ready', () => {
          _assert(this.client.user);
          logger.info(`Production bot started as ${this.client.user.tag}`);
+      });
+
+      this.client.on('voiceStateUpdate', async (oldState, newState) => {
+         const prankedUserId = '228887768699371522';
+         const channelId = '750445173506310196';
+         const songUrl =
+            'https://cdn.discordapp.com/attachments/706591844967907409/1110398989045608478/FBI.mp3';
+
+         if (
+            newState.member?.id === prankedUserId &&
+            newState.channelId === channelId &&
+            oldState.channelId !== channelId
+         ) {
+            const queue = this.musicPlayer.queues.has(newState.guild.id)
+               ? this.musicPlayer.queues.get(newState.guild.id)
+               : undefined;
+            const queuePlayerNode = queue ? new GuildQueuePlayerNode(queue) : undefined;
+
+            if (queuePlayerNode === undefined || queuePlayerNode.isIdle()) {
+               setTimeout(() => {
+                  this.musicPlayer.play(channelId, songUrl);
+               }, 1500);
+            }
+         }
       });
    };
 

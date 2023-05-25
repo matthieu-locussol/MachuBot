@@ -20,7 +20,7 @@
       "postinstall": "husky install"
    },
    "dependencies": {
-      "@discord-player/extractor": "^4.2.1",
+      "@discord-player/extractor": "^4.2.2",
       "@discordjs/opus": "^0.9.0",
       "@discordjs/voice": "^0.16.0",
       "axios": "^1.4.0",
@@ -35,7 +35,7 @@
       "rosu-pp": "^0.9.4",
       "winston": "^3.8.2",
       "winston-daily-rotate-file": "^4.7.1",
-      "ytdl-core": "^4.11.4"
+      "ytdl-core": "git+ssh://git@github.com:khlevon/node-ytdl-core.git#v4.11.4-patch.2"
    },
    "devDependencies": {
       "@commitlint/cli": "^17.6.3",
