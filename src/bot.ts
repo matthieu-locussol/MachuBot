@@ -184,15 +184,18 @@ export class Bot {
                component.component.data.custom_id === interaction.customId
             ) {
                await component.execute(interaction, this);
-            } else if (
-               component.type === ComponentType.StringSelect &&
-               interaction.isStringSelectMenu() &&
-               interaction.customId.startsWith('surveyAnswerSelect-')
-            ) {
-               await answerSelectHandler(interaction, this);
             }
          });
       }
+
+      this.client.on('interactionCreate', async (interaction) => {
+         if (
+            interaction.isStringSelectMenu() &&
+            interaction.customId.startsWith('surveyAnswerSelect-')
+         ) {
+            await answerSelectHandler(interaction, this);
+         }
+      });
 
       const componentsCount = this.components.length;
       logger.info(`${componentsCount} Components registered!`);
