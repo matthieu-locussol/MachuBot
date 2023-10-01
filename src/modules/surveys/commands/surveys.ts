@@ -4,7 +4,6 @@ import {
    SlashCommandStringOption,
    SlashCommandSubcommandBuilder,
 } from 'discord.js';
-import { logger } from '../../../logger';
 import { ChatInputCommand } from '../../../types/commands';
 import { createSurvey } from './subcommands/create';
 
@@ -57,7 +56,7 @@ export const surveysCommand: ChatInputCommand = {
                content: `An error occured while creating the survey.`,
             });
 
-            logger.error(error);
+            console.log(error);
          }
       }
    },
