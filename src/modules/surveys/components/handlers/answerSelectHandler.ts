@@ -25,7 +25,6 @@ export const answerSelectHandler: SelectMenuComponentHandler = async (interactio
    const userId = interaction.user.id;
    const messageId = interaction.message.id;
    const answerIds = interaction.values;
-   console.log(userId, messageId, answerIds);
    const { answers, channelId, selectCustomId, authorId, multiple } = database.surveys[messageId];
    const author = interaction.guild?.members.cache.get(authorId)?.user;
    _assert(author, 'author should be defined');
@@ -33,8 +32,6 @@ export const answerSelectHandler: SelectMenuComponentHandler = async (interactio
    const userAnswers = answerIds.map((answerId) => answers[Number(answerId)]);
    const authorGuildNickname =
       interaction.guild?.members.cache.get(author.id)?.nickname || author.username;
-
-   console.log(authorGuildNickname, userAnswers);
 
    const messageChannel = interaction.guild?.channels.cache.get(channelId);
    _assert(messageChannel, 'messageChannel should be defined');
