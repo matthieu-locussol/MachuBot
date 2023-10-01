@@ -84,6 +84,7 @@ export class Bot {
 
       this.musicPlayer = new Player(this.client, {
          ytdlOptions: {
+            quality: 'highestaudio',
             filter: 'audioonly',
             highWaterMark: 1 << 30,
          },
@@ -242,25 +243,37 @@ export class Bot {
       });
 
       this.client.on('voiceStateUpdate', async (oldState, newState) => {
-         const prankedUserId = '228887768699371522';
-         const channelId = '750445173506310196';
-         const songUrl =
-            'https://cdn.discordapp.com/attachments/706591844967907409/1110398989045608478/FBI.mp3';
+         const usersSongs = [
+            {
+               userId: '228887768699371522', // Pila
+               channelId: '750445173506310196',
+               songUrl:
+                  'https://cdn.discordapp.com/attachments/706591844967907409/1110398989045608478/FBI.mp3',
+            },
+            {
+               userId: '300712645302943744', // Joseph
+               channelId: '750445173506310196',
+               songUrl:
+                  'https://cdn.discordapp.com/attachments/1131852548593156206/1156240773981929492/soulnsane.mp3',
+            },
+         ];
 
-         if (
-            newState.member?.id === prankedUserId &&
-            newState.channelId === channelId &&
-            oldState.channelId !== channelId
-         ) {
-            const queue = this.musicPlayer.queues.has(newState.guild.id)
-               ? this.musicPlayer.queues.get(newState.guild.id)
-               : undefined;
-            const queuePlayerNode = queue ? new GuildQueuePlayerNode(queue) : undefined;
+         for (const { userId, channelId, songUrl } of usersSongs) {
+            if (
+               newState.member?.id === userId &&
+               newState.channelId === channelId &&
+               oldState.channelId !== channelId
+            ) {
+               const queue = this.musicPlayer.queues.has(newState.guild.id)
+                  ? this.musicPlayer.queues.get(newState.guild.id)
+                  : undefined;
+               const queuePlayerNode = queue ? new GuildQueuePlayerNode(queue) : undefined;
 
-            if (queuePlayerNode === undefined || queuePlayerNode.isIdle()) {
-               setTimeout(() => {
-                  this.musicPlayer.play(channelId, songUrl);
-               }, 1500);
+               if (queuePlayerNode === undefined || queuePlayerNode.isIdle()) {
+                  setTimeout(() => {
+                     this.musicPlayer.play(channelId, songUrl);
+                  }, 1500);
+               }
             }
          }
       });
