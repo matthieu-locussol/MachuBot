@@ -7,8 +7,9 @@ import { osuModule } from './modules/osu';
 import { pingModule } from './modules/ping';
 import { sampleModule } from './modules/sample';
 import { statusModule } from './modules/status';
+import { surveysModule } from './modules/surveys';
 
-const modules = [pingModule, cryptoModule, statusModule, osuModule, musicModule];
+const modules = [pingModule, cryptoModule, statusModule, osuModule, musicModule, surveysModule];
 
 if (process.env.NODE_ENV !== 'production') {
    modules.push(sampleModule);

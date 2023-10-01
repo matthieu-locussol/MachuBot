@@ -13,6 +13,7 @@ import {
 import { resolve } from 'path';
 import { version } from '../package.json';
 import { logger } from './logger';
+import { answerSelectHandler } from './modules/surveys/components/handlers/answerSelectHandler';
 import { Component } from './types/components';
 import type { Module } from './types/modules';
 import { _assert } from './utils/_assert';
@@ -183,6 +184,12 @@ export class Bot {
                component.component.data.custom_id === interaction.customId
             ) {
                await component.execute(interaction, this);
+            } else if (
+               component.type === ComponentType.StringSelect &&
+               interaction.isStringSelectMenu() &&
+               interaction.customId.startsWith('surveyAnswerSelect-')
+            ) {
+               await answerSelectHandler(interaction, this);
             }
          });
       }

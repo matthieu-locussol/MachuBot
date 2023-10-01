@@ -1,11 +1,24 @@
 import Keyv from 'keyv';
 
+export interface Survey {
+   authorId: string;
+   channelId: string;
+   selectCustomId: string;
+   question: string;
+   answers: string[];
+   results: Record<number, string[]>;
+   multiple: boolean;
+}
+
 interface GuildDatabase {
    osu: {
       usernames: Record<string, number>;
    };
    music: {
       volume: number;
+   };
+   surveys: {
+      [messageId: string]: Survey;
    };
 }
 
@@ -16,9 +29,10 @@ const defaultDatabase: GuildDatabase = {
    music: {
       volume: 50,
    },
+   surveys: {},
 };
 
-interface GuildDatabaseMutator extends GuildDatabase {
+export interface GuildDatabaseMutator extends GuildDatabase {
    save: () => Promise<void>;
 }
 
@@ -33,6 +47,10 @@ export const loadGuildDatabase = async (guildId: string): Promise<GuildDatabaseM
 
    if (guildDatabase.music === undefined) {
       guildDatabase.music = defaultDatabase.music;
+   }
+
+   if (guildDatabase.surveys === undefined) {
+      guildDatabase.surveys = defaultDatabase.surveys;
    }
 
    return {
