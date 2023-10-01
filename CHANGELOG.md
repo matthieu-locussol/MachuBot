@@ -1,13 +1,15 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See
+[standard-version](https://github.com/conventional-changelog/standard-version) for commit
+guidelines.
 
 ## [0.8.0](https://github.com/matthieu-locussol/MachuBot/compare/v0.7.3...v0.8.0) (2023-10-01)
 
-
 ### Features
 
-* added a surveys module ([bc9d0cb](https://github.com/matthieu-locussol/MachuBot/commit/bc9d0cb984a7d545669959fff7c3cf0c0a360d28))
+-  added a surveys module
+   ([bc9d0cb](https://github.com/matthieu-locussol/MachuBot/commit/bc9d0cb984a7d545669959fff7c3cf0c0a360d28))
 
 ### [0.7.3](https://github.com/matthieu-locussol/MachuBot/compare/v0.7.2...v0.7.3) (2023-10-01)
 
