@@ -1,18 +1,20 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See
+[standard-version](https://github.com/conventional-changelog/standard-version) for commit
+guidelines.
 
 ### [0.7.3](https://github.com/matthieu-locussol/MachuBot/compare/v0.7.2...v0.7.3) (2023-10-01)
 
-
 ### Features
 
-* user voice channel prank ([460dbb2](https://github.com/matthieu-locussol/MachuBot/commit/460dbb23415788385e974f6eddb1d4bae1c5bb7b))
-
+-  user voice channel prank
+   ([460dbb2](https://github.com/matthieu-locussol/MachuBot/commit/460dbb23415788385e974f6eddb1d4bae1c5bb7b))
 
 ### Bug Fixes
 
-* temporary fix for ytdl-core ([d09d59e](https://github.com/matthieu-locussol/MachuBot/commit/d09d59e9db8981b13a6417c9240e798b7fb5205c))
+-  temporary fix for ytdl-core
+   ([d09d59e](https://github.com/matthieu-locussol/MachuBot/commit/d09d59e9db8981b13a6417c9240e798b7fb5205c))
 
 ### [0.7.2](https://github.com/matthieu-locussol/MachuBot/compare/v0.7.1...v0.7.2) (2023-05-23)
 
