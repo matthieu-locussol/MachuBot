@@ -1,4 +1,3 @@
-import { Canvas, Image } from 'canvas';
 import {
    ActionRowBuilder,
    AttachmentBuilder,
@@ -13,6 +12,8 @@ import { random } from '../../../utils/number';
 import { d12ButtonComponent } from '../components/ui/d12ButtonComponent';
 import { d20ButtonComponent } from '../components/ui/d20ButtonComponent';
 import { d6ButtonComponent } from '../components/ui/d6ButtonComponent';
+
+const { Canvas, Image } = require('canvas');
 
 export type DICE_TYPE = 'd6' | 'd12' | 'd20';
 
