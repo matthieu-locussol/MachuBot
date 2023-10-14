@@ -1,13 +1,15 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See
+[standard-version](https://github.com/conventional-changelog/standard-version) for commit
+guidelines.
 
 ### [1.0.1](https://github.com/matthieu-locussol/MachuBot/compare/v1.0.0...v1.0.1) (2023-10-14)
 
-
 ### Bug Fixes
 
-* updated imports ([1e502bf](https://github.com/matthieu-locussol/MachuBot/commit/1e502bf6d2b045b91ca73cb0f5f85edca3acf0e1))
+-  updated imports
+   ([1e502bf](https://github.com/matthieu-locussol/MachuBot/commit/1e502bf6d2b045b91ca73cb0f5f85edca3acf0e1))
 
 ## [1.0.0](https://github.com/matthieu-locussol/MachuBot/compare/v0.8.3...v1.0.0) (2023-10-14)
 
