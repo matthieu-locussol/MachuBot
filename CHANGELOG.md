@@ -1,8 +1,13 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See
-[standard-version](https://github.com/conventional-changelog/standard-version) for commit
-guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.0.0](https://github.com/matthieu-locussol/MachuBot/compare/v0.8.3...v1.0.0) (2023-10-14)
+
+
+### Features
+
+* added a dice module ([c45c8d4](https://github.com/matthieu-locussol/MachuBot/commit/c45c8d4cc838e98cfbeec75dde66124762f81c0a))
 
 ### [0.8.3](https://github.com/matthieu-locussol/MachuBot/compare/v0.8.2...v0.8.3) (2023-10-01)
 
