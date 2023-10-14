@@ -7,3 +7,5 @@ export const unique = <T>(array: T[]): T[] => {
    const set = new Set<T>(array);
    return [...set];
 };
+
+export const sum = (array: number[]): number => array.reduce((acc, curr) => acc + curr, 0);

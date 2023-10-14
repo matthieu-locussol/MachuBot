@@ -46,3 +46,10 @@ export const secondsToDuration = (seconds: number): string => {
 
    return `${twoDigits(realHours)}:${twoDigits(realMinutes)}:${twoDigits(realSeconds)}`;
 };
+
+export const random = (min: number, max: number): number => {
+   const clampedMin = Math.ceil(min);
+   const clampedMax = Math.floor(max);
+
+   return Math.floor(Math.random() * (clampedMax - clampedMin + 1)) + clampedMin;
+};
