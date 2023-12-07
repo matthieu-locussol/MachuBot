@@ -17,6 +17,7 @@ import { answerSelectHandler } from './modules/surveys/components/handlers/answe
 import { Component } from './types/components';
 import type { Module } from './types/modules';
 import { _assert } from './utils/_assert';
+import { pickRandom } from './utils/array';
 import { accessEnvironmentVariable } from './utils/environment';
 import { shouldPersistPayload } from './utils/file';
 import {
@@ -235,6 +236,8 @@ export class Bot {
          _assert(this.client.user);
          logger.info(`Development bot started as ${this.client.user.tag}`);
       });
+
+      this.initializeJoinSounds();
    };
 
    private initializeProduction = async (): Promise<void> => {
@@ -252,23 +255,38 @@ export class Bot {
          logger.info(`Production bot started as ${this.client.user.tag}`);
       });
 
+      this.initializeJoinSounds();
+   };
+
+   private initializeJoinSounds = (): void => {
       this.client.on('voiceStateUpdate', async (oldState, newState) => {
          const usersSongs = [
             {
                userId: '228887768699371522', // Pila
                channelId: '750445173506310196',
-               songUrl:
+               songsUrl: [
                   'https://cdn.discordapp.com/attachments/706591844967907409/1110398989045608478/FBI.mp3',
+               ],
             },
             {
                userId: '300712645302943744', // Joseph
                channelId: '750445173506310196',
-               songUrl:
+               songsUrl: [
                   'https://cdn.discordapp.com/attachments/1131852548593156206/1156240773981929492/soulnsane.mp3',
+               ],
+            },
+            {
+               userId: '230726394621984768', // Matthieu
+               channelId: '750445173506310196',
+               songsUrl: [
+                  'https://cdn.discordapp.com/attachments/706591844967907409/1182178111958290513/parle-de-moi-1.mp3',
+                  'https://cdn.discordapp.com/attachments/706591844967907409/1182178112251887616/parle-de-moi-2.mp3',
+                  'https://cdn.discordapp.com/attachments/706591844967907409/1182178112549699584/parle-de-moi-3.mp3',
+               ],
             },
          ];
 
-         for (const { userId, channelId, songUrl } of usersSongs) {
+         for (const { userId, channelId, songsUrl } of usersSongs) {
             if (
                newState.member?.id === userId &&
                newState.channelId === channelId &&
@@ -281,7 +299,7 @@ export class Bot {
 
                if (queuePlayerNode === undefined || queuePlayerNode.isIdle()) {
                   setTimeout(() => {
-                     this.musicPlayer.play(channelId, songUrl);
+                     this.musicPlayer.play(channelId, pickRandom(songsUrl));
                   }, 1500);
                }
             }
