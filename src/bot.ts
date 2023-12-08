@@ -274,6 +274,7 @@ export class Bot {
                songsUrl: [
                   // 'https://cdn.discordapp.com/attachments/1131852548593156206/1156240773981929492/soulnsane.mp3',
                   'https://cdn.discordapp.com/attachments/706591844967907409/1182502331514884126/Mephisto_Youre_Too_Late_Hahahahahahaha.mp3',
+                  'https://cdn.discordapp.com/attachments/728271734989652018/1182537106476781740/The_Sanctity_of_This_Place_Has_Been_Fouled.mp3',
                ],
             },
             {
