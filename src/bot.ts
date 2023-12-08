@@ -272,7 +272,8 @@ export class Bot {
                userId: '300712645302943744', // Joseph
                channelId: '750445173506310196',
                songsUrl: [
-                  'https://cdn.discordapp.com/attachments/1131852548593156206/1156240773981929492/soulnsane.mp3',
+                  // 'https://cdn.discordapp.com/attachments/1131852548593156206/1156240773981929492/soulnsane.mp3',
+                  'https://cdn.discordapp.com/attachments/706591844967907409/1182502331514884126/Mephisto_Youre_Too_Late_Hahahahahahaha.mp3',
                ],
             },
             {
