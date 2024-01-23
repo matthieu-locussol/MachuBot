@@ -1,8 +1,16 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See
-[standard-version](https://github.com/conventional-changelog/standard-version) for commit
-guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.1.0](https://github.com/matthieu-locussol/MachuBot/compare/v1.0.1...v1.1.0) (2024-01-23)
+
+
+### Features
+
+* added AI assistant when mentioned ([12af157](https://github.com/matthieu-locussol/MachuBot/commit/12af1575a52929ca051368d82074bd06eea4a2cb))
+* added pickRandom & Matthieu songs entrance ([9166ec9](https://github.com/matthieu-locussol/MachuBot/commit/9166ec9ecc0b2f8bce1e29f778356d820e86d3e1))
+* updated songs ([66751ba](https://github.com/matthieu-locussol/MachuBot/commit/66751ba5626f6ab53fba4d08462e3eb72de7aa04))
+* updated songs ([587e181](https://github.com/matthieu-locussol/MachuBot/commit/587e1816adb376a2edec7fad430ac2d9ebe6c71c))
 
 ### [1.0.1](https://github.com/matthieu-locussol/MachuBot/compare/v1.0.0...v1.0.1) (2023-10-14)
 
