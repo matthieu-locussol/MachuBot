@@ -1,8 +1,13 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See
-[standard-version](https://github.com/conventional-changelog/standard-version) for commit
-guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.1.1](https://github.com/matthieu-locussol/MachuBot/compare/v1.1.0...v1.1.1) (2024-01-24)
+
+
+### Features
+
+* takes into account who mentioned the bot ([514e325](https://github.com/matthieu-locussol/MachuBot/commit/514e325f3d229d1a71d53504e34d89646b0595a4))
 
 ## [1.1.0](https://github.com/matthieu-locussol/MachuBot/compare/v1.0.1...v1.1.0) (2024-01-23)
 
