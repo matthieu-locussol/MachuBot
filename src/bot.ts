@@ -340,6 +340,7 @@ export class Bot {
          '228250481938399234': 'Benben',
          '242599007824773121': 'Valentin',
          '714135787163091025': 'Natsuki',
+         '144503481502400514': 'Hugo',
       }[userId] ?? 'UNKNOWN');
 
    private initializeAI = (): void => {
