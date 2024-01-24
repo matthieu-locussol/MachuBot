@@ -327,6 +327,20 @@ export class Bot {
       });
    };
 
+   private static getUserNameFromId = (userId: string): string =>
+      ({
+         '228887768699371522': 'Pila',
+         '300712645302943744': 'Joseph',
+         '230726394621984768': 'Matthieu',
+         '395715726888927233': 'Colin',
+         '312899742243880960': 'Swissex',
+         '147081133920747520': 'Gautier',
+         '219196232050933760': 'Balat',
+         '221565144482840576': 'Norick',
+         '228250481938399234': 'Benben',
+         '242599007824773121': 'Valentin',
+      }[userId] ?? 'UNKNOWN');
+
    private initializeAI = (): void => {
       this.client.on('messageCreate', async (message) => {
          if (message.author.bot) {
@@ -360,6 +374,9 @@ export class Bot {
 
          const run = await openAIClient.beta.threads.runs.create(thread.id, {
             assistant_id: this.assistant.id,
+            additional_instructions: `Ton interlocuteur est : ${Bot.getUserNameFromId(
+               message.author.id,
+            )}`,
          });
 
          const periodicallyRetrieveAnswer = async () => {
