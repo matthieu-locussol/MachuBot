@@ -50,7 +50,15 @@ export const playButtonHandler: ButtonComponentHandler = async (interaction, bot
          });
 
          if (queuePlayerNode.isIdle()) {
-            queue.player.play(member.voice.channel, url);
+            queue.player.play(member.voice.channel, url, {
+               nodeOptions: {
+                  metadata: interaction,
+                  leaveOnEnd: false,
+                  leaveOnEmpty: true,
+                  leaveOnEmptyCooldown: 5000,
+                  leaveOnStop: false,
+               },
+            });
          } else {
             queuePlayerNode.insert(searchResult.tracks[0]);
             queuePlayerNode.skip();
@@ -61,6 +69,14 @@ export const playButtonHandler: ButtonComponentHandler = async (interaction, bot
          }
       }
    } else {
-      queue.player.play(member.voice.channel, url);
+      queue.player.play(member.voice.channel, url, {
+         nodeOptions: {
+            metadata: interaction,
+            leaveOnEnd: false,
+            leaveOnEmpty: true,
+            leaveOnEmptyCooldown: 5000,
+            leaveOnStop: false,
+         },
+      });
    }
 };

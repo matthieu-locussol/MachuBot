@@ -318,8 +318,16 @@ export class Bot {
                const queuePlayerNode = queue ? new GuildQueuePlayerNode(queue) : undefined;
 
                if (queuePlayerNode === undefined || queuePlayerNode.isIdle()) {
+                  // eslint-disable-next-line @typescript-eslint/no-loop-func
                   setTimeout(() => {
-                     this.musicPlayer.play(channelId, pickRandom(songsUrl));
+                     this.musicPlayer.play(channelId, pickRandom(songsUrl), {
+                        nodeOptions: {
+                           leaveOnEnd: false,
+                           leaveOnEmpty: true,
+                           leaveOnEmptyCooldown: 5000,
+                           leaveOnStop: false,
+                        },
+                     });
                   }, 1500);
                }
             }
