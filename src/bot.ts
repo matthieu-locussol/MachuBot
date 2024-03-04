@@ -1,4 +1,8 @@
-import { AttachmentExtractor, YoutubeExtractor } from '@discord-player/extractor';
+import {
+   AttachmentExtractor,
+   SoundCloudExtractor,
+   YoutubeExtractor,
+} from '@discord-player/extractor';
 import { GuildQueuePlayerNode, Player } from 'discord-player';
 import {
    Client,
@@ -102,9 +106,14 @@ export class Bot {
             highWaterMark: 1 << 30,
          },
       });
-      this.musicPlayer.extractors.register(AttachmentExtractor, {});
+      this.musicPlayer.extractors.register(AttachmentExtractor, {}).then(() => {
+         logger.info('AttachmentExtractor is ready!');
+      });
       this.musicPlayer.extractors.register(YoutubeExtractor, {}).then(() => {
-         logger.info('Music player is ready!');
+         logger.info('YoutubeExtractor is ready!');
+      });
+      this.musicPlayer.extractors.register(SoundCloudExtractor, {}).then(() => {
+         logger.info('SoundCloudExtractor is ready!');
       });
    }
 
