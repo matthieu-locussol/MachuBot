@@ -282,26 +282,24 @@ export class Bot {
             {
                userId: '228887768699371522', // Pila
                channelId: '750445173506310196',
-               songsUrl: [
-                  'https://cdn.discordapp.com/attachments/706591844967907409/1110398989045608478/FBI.mp3',
-               ],
+               songsUrl: ['https://soundcloud.com/matthieu-locussol/fbi'],
             },
             {
                userId: '300712645302943744', // Joseph
                channelId: '750445173506310196',
                songsUrl: [
-                  // 'https://cdn.discordapp.com/attachments/1131852548593156206/1156240773981929492/soulnsane.mp3',
-                  'https://cdn.discordapp.com/attachments/706591844967907409/1182502331514884126/Mephisto_Youre_Too_Late_Hahahahahahaha.mp3',
-                  'https://cdn.discordapp.com/attachments/728271734989652018/1182537106476781740/The_Sanctity_of_This_Place_Has_Been_Fouled.mp3',
+                  'https://soundcloud.com/matthieu-locussol/soulnsane',
+                  'https://soundcloud.com/matthieu-locussol/mephisto-youre-too-late-hahahahahahaha',
+                  'https://soundcloud.com/matthieu-locussol/the-sanctity-of-this-place-has-been-fouled',
                ],
             },
             {
                userId: '230726394621984768', // Matthieu
                channelId: '750445173506310196',
                songsUrl: [
-                  'https://cdn.discordapp.com/attachments/706591844967907409/1182178111958290513/parle-de-moi-1.mp3',
-                  'https://cdn.discordapp.com/attachments/706591844967907409/1182178112251887616/parle-de-moi-2.mp3',
-                  'https://cdn.discordapp.com/attachments/706591844967907409/1182178112549699584/parle-de-moi-3.mp3',
+                  'https://soundcloud.com/matthieu-locussol/parle-de-moi-1',
+                  'https://soundcloud.com/matthieu-locussol/parle-de-moi-2',
+                  'https://soundcloud.com/matthieu-locussol/parle-de-moi-3',
                ],
             },
          ];
