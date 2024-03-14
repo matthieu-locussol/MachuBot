@@ -297,7 +297,7 @@ export class Bot {
                userId: '300712645302943744', // Joseph
                channelId: '750445173506310196',
                songsUrl: [
-                  'https://soundcloud.com/matthieu-locussol/soulnsane',
+                  // 'https://soundcloud.com/matthieu-locussol/soulnsane',
                   'https://soundcloud.com/matthieu-locussol/mephisto-youre-too-late-hahahahahahaha',
                   'https://soundcloud.com/matthieu-locussol/the-sanctity-of-this-place-has-been-fouled',
                ],
