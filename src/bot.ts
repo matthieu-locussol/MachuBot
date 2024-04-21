@@ -311,13 +311,21 @@ export class Bot {
                   'https://soundcloud.com/matthieu-locussol/parle-de-moi-3',
                ],
             },
+            {
+               userId: '196946198567845898', // Diego
+               channelId: -1,
+               songsUrl: ['https://soundcloud.com/matthieu-locussol/rodrigo'],
+            },
          ];
 
          for (const { userId, channelId, songsUrl } of usersSongs) {
+            const shouldPlaySongAnyway = newState.member?.id === userId && channelId === -1;
+
             if (
-               newState.member?.id === userId &&
-               newState.channelId === channelId &&
-               oldState.channelId !== channelId
+               (newState.member?.id === userId &&
+                  newState.channelId === channelId &&
+                  oldState.channelId !== channelId) ||
+               shouldPlaySongAnyway
             ) {
                const queue = this.musicPlayer.queues.has(newState.guild.id)
                   ? this.musicPlayer.queues.get(newState.guild.id)
@@ -327,14 +335,16 @@ export class Bot {
                if (queuePlayerNode === undefined || queuePlayerNode.isIdle()) {
                   // eslint-disable-next-line @typescript-eslint/no-loop-func
                   setTimeout(() => {
-                     this.musicPlayer.play(channelId, pickRandom(songsUrl), {
-                        nodeOptions: {
-                           leaveOnEnd: false,
-                           leaveOnEmpty: true,
-                           leaveOnEmptyCooldown: 5000,
-                           leaveOnStop: false,
-                        },
-                     });
+                     if (newState.channelId !== null) {
+                        this.musicPlayer.play(newState.channelId, pickRandom(songsUrl), {
+                           nodeOptions: {
+                              leaveOnEnd: false,
+                              leaveOnEmpty: true,
+                              leaveOnEmptyCooldown: 5000,
+                              leaveOnStop: false,
+                           },
+                        });
+                     }
                   }, 1500);
                }
             }
