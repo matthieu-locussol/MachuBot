@@ -313,13 +313,18 @@ export class Bot {
             },
             {
                userId: '196946198567845898', // Diego
-               channelId: -1,
-               songsUrl: ['https://soundcloud.com/matthieu-locussol/rodrigo'],
+               channelId: '750445173506310196',
+               songsUrl: [
+                  'https://soundcloud.com/matthieu-locussol/rodrigo',
+                  'https://soundcloud.com/matthieu-locussol/sabalero',
+                  'https://soundcloud.com/matthieu-locussol/ole-ole-diego',
+                  'https://soundcloud.com/matthieu-locussol/maradona-guy2bez',
+               ],
             },
          ];
 
          for (const { userId, channelId, songsUrl } of usersSongs) {
-            const shouldPlaySongAnyway = newState.member?.id === userId && channelId === -1;
+            const shouldPlaySongAnyway = newState.member?.id === userId && channelId === '-1';
 
             if (
                (newState.member?.id === userId &&
