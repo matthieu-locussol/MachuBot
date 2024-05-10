@@ -9,13 +9,11 @@ import {
    ComponentType,
    ContextMenuCommandBuilder,
    GatewayIntentBits,
-   MessageType,
    REST,
    RESTPostAPIApplicationCommandsJSONBody,
    Routes,
    SlashCommandBuilder,
 } from 'discord.js';
-import OpenAI from 'openai';
 import { resolve } from 'path';
 import { version } from '../package.json';
 import { logger } from './logger';
@@ -33,10 +31,6 @@ import {
    contextMenuMessageCommandsGuard,
    contextMenuUserCommandsGuard,
 } from './utils/guards';
-
-const openAIClient = new OpenAI({
-   apiKey: process.env.OPENAI_API_KEY,
-});
 
 type SerializableInteraction =
    | Pick<SlashCommandBuilder, 'toJSON'>
@@ -58,8 +52,6 @@ export class Bot {
    private commands: SerializableInteraction[] = [];
 
    private musicPlayer: Player;
-
-   private assistant: OpenAI.Beta.Assistants.Assistant | null = null;
 
    constructor(modules: Module[]) {
       this.token = accessEnvironmentVariable(
@@ -88,8 +80,6 @@ export class Bot {
             ],
          },
       });
-
-      this.initializeAssistant();
 
       this.modules = modules;
 
@@ -137,11 +127,6 @@ export class Bot {
       contextMenuMessageCommandsGuard(commands);
 
       this.commands = commands.map((entry) => entry.data);
-   };
-
-   private initializeAssistant = async (): Promise<void> => {
-      _assert(process.env.OPENAI_ASSISTANT_ID, 'No OpenAI assistant ID provided!');
-      this.assistant = await openAIClient.beta.assistants.retrieve(process.env.OPENAI_ASSISTANT_ID);
    };
 
    private initializeModules = (): void => {
@@ -263,7 +248,6 @@ export class Bot {
       });
 
       this.initializeJoinSounds();
-      this.initializeAI();
    };
 
    private initializeProduction = async (): Promise<void> => {
@@ -282,7 +266,6 @@ export class Bot {
       });
 
       this.initializeJoinSounds();
-      this.initializeAI();
    };
 
    private initializeJoinSounds = (): void => {
@@ -354,93 +337,6 @@ export class Bot {
                }
             }
          }
-      });
-   };
-
-   private static getUserNameFromId = (userId: string): string =>
-      ({
-         '228887768699371522': 'Pila',
-         '300712645302943744': 'Joseph',
-         '230726394621984768': 'Matthieu',
-         '395715726888927233': 'Colin',
-         '312899742243880960': 'Swissex',
-         '147081133920747520': 'Gautier',
-         '219196232050933760': 'Balat',
-         '221565144482840576': 'Norick',
-         '228250481938399234': 'Benben',
-         '242599007824773121': 'Valentin',
-         '714135787163091025': 'Natsuki',
-         '144503481502400514': 'Hugo',
-      }[userId] ?? 'UNKNOWN');
-
-   private initializeAI = (): void => {
-      this.client.on('messageCreate', async (message) => {
-         if (message.author.bot) {
-            return;
-         }
-
-         if (
-            message.content.includes('@here') ||
-            message.content.includes('@everyone') ||
-            message.type === MessageType.Reply
-         ) {
-            return;
-         }
-
-         _assert(this.client.user);
-         if (!message.mentions.has(this.client.user.id)) {
-            return;
-         }
-
-         _assert(this.assistant, 'No OpenAI assistant initialized!');
-
-         const thread = await openAIClient.beta.threads.create({
-            messages: [
-               {
-                  role: 'user',
-                  content: message.content,
-                  file_ids: [],
-               },
-            ],
-         });
-
-         const run = await openAIClient.beta.threads.runs.create(thread.id, {
-            assistant_id: this.assistant.id,
-            additional_instructions: `Ton interlocuteur est : ${Bot.getUserNameFromId(
-               message.author.id,
-            )}`,
-         });
-
-         const periodicallyRetrieveAnswer = async () => {
-            let lastRunStatus: OpenAI.Beta.Threads.Runs.Run;
-
-            while (run.status === 'queued' || run.status === 'in_progress') {
-               lastRunStatus = await openAIClient.beta.threads.runs.retrieve(thread.id, run.id);
-
-               if (lastRunStatus.status === 'completed') {
-                  const messages = await openAIClient.beta.threads.messages.list(thread.id);
-                  const assistantMessage = messages.data[0].content[0];
-
-                  if (assistantMessage.type === 'text') {
-                     await message.reply(assistantMessage.text.value);
-                  }
-
-                  break;
-               } else if (
-                  lastRunStatus.status === 'queued' ||
-                  lastRunStatus.status === 'in_progress'
-               ) {
-                  await new Promise((res) => {
-                     setTimeout(res, 500);
-                  });
-               } else {
-                  logger.error('Run status:', lastRunStatus.status);
-                  break;
-               }
-            }
-         };
-
-         periodicallyRetrieveAnswer();
       });
    };
 
