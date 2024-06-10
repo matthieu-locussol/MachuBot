@@ -21,7 +21,6 @@
    },
    "dependencies": {
       "@discord-player/extractor": "^4.2.2",
-      "@discordjs/opus": "github:discordjs/opus",
       "@discordjs/voice": "^0.16.0",
       "axios": "^1.4.0",
       "chart.js": "3.8.0",
