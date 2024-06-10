@@ -35,7 +35,7 @@
       "merge-images": "^2.0.0",
       "openai": "^4.0.0",
       "opusscript": "^0.1.1",
-      "rosu-pp": "^0.9.4",
+      "rosu-pp-js": "^1.0.2",
       "winston": "^3.8.2",
       "winston-daily-rotate-file": "^4.7.1",
       "ytdl-core": "^4.11.5"

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import download from 'download';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { resolve } from 'path';
-import { Beatmap, Calculator } from 'rosu-pp';
+import { Beatmap, Performance } from 'rosu-pp-js';
 import { logger } from '../../../logger';
 import { _assert } from '../../../utils/_assert';
 import { Mod, getModsBits } from './mods';
@@ -470,7 +470,6 @@ export interface OsuPP {
    ppFlashlight: number;
    ppSpeed: number;
    sliderFactor: number;
-   clockRate: number;
    nCircles: number;
    nSliders: number;
    nSpinners: number;
@@ -506,60 +505,50 @@ export const getOsuPP = async ({
 }: OsuPPPayload): Promise<OsuPP> => {
    await downloadBeatmaps([beatmapId]);
 
-   const calculator = new Calculator({
-      mode: 0,
-      acc: accuracy,
+   const calculator = new Performance({
+      accuracy,
       combo,
       n100: goods,
       n50: mehs,
-      nMisses: misses,
+      misses,
       mods: getModsBits(mods),
       passedObjects,
    });
 
-   const calculatorPerfect = new Calculator({
-      mode: 0,
-      acc: accuracy,
+   const calculatorPerfect = new Performance({
+      accuracy,
       mods: getModsBits(mods),
    });
 
-   const beatmap = new Beatmap({ path: resolve(__dirname, `../cache/${beatmapId}.osu`) });
+   const bytes = readFileSync(resolve(__dirname, `../cache/${beatmapId}.osu`));
+   const beatmap = new Beatmap(bytes);
 
-   const { pp } = calculator.performance(beatmap);
+   const { pp } = calculator.calculate(beatmap);
 
-   const perfectDifficulty = calculatorPerfect.difficulty(beatmap);
-   if (perfectDifficulty.mode !== 0) {
-      throw new Error(`Invalid game mode: ${perfectDifficulty.mode}`);
-   }
-
-   const perfectPerformance = calculatorPerfect.performance(beatmap);
-   if (perfectPerformance.mode !== 0) {
-      throw new Error(`Invalid game mode: ${perfectPerformance.mode}`);
-   }
-
-   const { cs, hp, bpm, clockRate } = calculatorPerfect.mapAttributes(beatmap);
+   const perfectPerformance = calculatorPerfect.calculate(beatmap);
+   const { hp } = perfectPerformance.difficulty;
+   const { cs, bpm } = beatmap;
    const { stars, maxCombo, ar, od, nCircles, nSliders, nSpinners, sliderFactor } =
-      perfectDifficulty;
-   const { pp: ppPerfect, ppAcc, ppAim, ppFlashlight, ppSpeed } = perfectPerformance;
+      perfectPerformance.difficulty;
+   const { pp: ppPerfect, ppAccuracy, ppAim, ppFlashlight, ppSpeed } = perfectPerformance;
 
    return {
       stars,
       pp,
       ppPerfect,
-      ar,
+      ar: ar || 0,
       cs,
-      hp,
-      od,
+      hp: hp || 0,
+      od: od || 0,
       bpm,
-      ppAcc,
-      ppAim,
-      ppFlashlight,
-      ppSpeed,
-      sliderFactor,
-      clockRate,
-      nCircles,
-      nSliders,
-      nSpinners,
+      ppAcc: ppAccuracy || 0,
+      ppAim: ppAim || 0,
+      ppFlashlight: ppFlashlight || 0,
+      ppSpeed: ppSpeed || 0,
+      sliderFactor: sliderFactor || 0,
+      nCircles: nCircles || 0,
+      nSliders: nSliders || 0,
+      nSpinners: nSpinners || 0,
       maxCombo,
    };
 };
