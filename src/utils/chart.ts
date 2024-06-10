@@ -1,5 +1,4 @@
 import type { ChartConfiguration } from 'chart.js';
-import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 
 export interface ChartPoint {
    label?: string;
@@ -51,11 +50,13 @@ export const makeChart = async (
    values: ChartPoint[],
    options: Partial<ChartOptions>,
 ): Promise<Buffer> => {
-   const { width, height, title, color, radius, showScales } = {
+   const { /* width, height */ title, color, radius, showScales } = {
       ...defaultOptions,
       ...options,
    };
 
+   // @ts-ignore
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
    const configuration: ChartConfiguration = {
       type: 'line',
       data: {
@@ -95,11 +96,13 @@ export const makeChart = async (
       },
    };
 
-   const chartJSNodeCanvas = new ChartJSNodeCanvas({
-      width,
-      height,
-   });
+   return Buffer.from('');
 
-   const imageBuffer = await chartJSNodeCanvas.renderToBuffer(configuration);
-   return imageBuffer;
+   // const chartJSNodeCanvas = new ChartJSNodeCanvas({
+   //    width,
+   //    height,
+   // });
+
+   // const imageBuffer = await chartJSNodeCanvas.renderToBuffer(configuration);
+   // return imageBuffer;
 };
