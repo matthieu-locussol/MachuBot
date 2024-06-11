@@ -44,7 +44,7 @@
    "devDependencies": {
       "@commitlint/cli": "^17.6.3",
       "@commitlint/config-conventional": "^17.6.3",
-      "@keyv/sqlite": "^3.6.5",
+      "@keyv/mysql": "^1.7.5",
       "@types/download": "^8.0.2",
       "@types/gm": "^1.25.4",
       "@types/jest": "^29.5.1",
