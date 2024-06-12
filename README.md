@@ -1,25 +1,19 @@
-# MachuBot [![CodeQL](https://github.com/matthieu-locussol/MachuBot/actions/workflows/codeql.yml/badge.svg)](https://github.com/matthieu-locussol/MachuBot/actions/workflows/codeql.yml) [![Deploy](https://github.com/matthieu-locussol/MachuBot/actions/workflows/main.yml/badge.svg)](https://github.com/matthieu-locussol/MachuBot/actions/workflows/main.yml)
+# MachuBot [![Deploy](https://github.com/matthieu-locussol/MachuBot/actions/workflows/ci.yml/badge.svg)](https://github.com/matthieu-locussol/MachuBot/actions/workflows/ci.yml)
 
 MachuBot is an open-source and modular discord bot written in TypeScript.
 
 ## Getting started
 
-1. First, follow
-   **[`node-canvas compiling instructions`](https://github.com/Automattic/node-canvas#compiling)**
-   and install the required dependencies to be able to generate graphs using the canvas API.
-
-2. Clone the repository
+1. Clone the repository
 
    ```bash
    git clone https://github.com/matthieu-locussol/MachuBot.git
    ```
 
-3. Install dependencies
+2. Install dependencies
 
    ```bash
-   npm install
-   # OR
-   yarn install
+   pnpm install
    ```
 
 **Set up your environment variables**
