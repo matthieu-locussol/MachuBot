@@ -1,5 +1,4 @@
 import Keyv from 'keyv';
-import { accessEnvironmentVariable } from './environment';
 
 export interface Survey {
    authorId: string;
@@ -38,9 +37,7 @@ export interface GuildDatabaseMutator extends GuildDatabase {
 }
 
 const loadDatabase = (): Keyv<GuildDatabase> => {
-   const keyv = new Keyv<GuildDatabase>(
-      accessEnvironmentVariable('MYSQL_URL_DEVELOPMENT', 'MYSQL_URL_PRODUCTION'),
-   );
+   const keyv = new Keyv<GuildDatabase>('sqlite://database.sqlite');
    return keyv;
 };
 

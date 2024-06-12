@@ -38,6 +38,8 @@ export const playButtonHandler: ButtonComponentHandler = async (interaction, bot
    _assert(queue);
 
    const queuePlayerNode = new GuildQueuePlayerNode(queue);
+   queuePlayerNode.setVolume(database.music.volume);
+
    const url = extractYoutubeLink(interaction.message.content);
 
    if (queue.connection?.state.status === VoiceConnectionStatus.Ready) {
