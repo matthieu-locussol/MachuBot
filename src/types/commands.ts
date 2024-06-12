@@ -1,9 +1,10 @@
 import type {
+   CommandInteraction,
    ContextMenuCommandBuilder,
+   ContextMenuCommandInteraction,
    SlashCommandBuilder,
    SlashCommandSubcommandsOnlyBuilder,
-} from '@discordjs/builders';
-import type { CommandInteraction, ContextMenuCommandInteraction } from 'discord.js';
+} from 'discord.js';
 import type { Bot } from '../bot';
 
 export type ChatInputCommand = {
