@@ -1,26 +1,36 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See
+[standard-version](https://github.com/conventional-changelog/standard-version) for commit
+guidelines.
 
 ## [1.2.0](https://github.com/matthieu-locussol/MachuBot/compare/v1.1.1...v1.2.0) (2024-06-12)
 
-
 ### Features
 
-* added diego song ([e56b863](https://github.com/matthieu-locussol/MachuBot/commit/e56b86375876ead254025653753e9c2b93bcbabb))
-* added Hugo to prompt ([99463c4](https://github.com/matthieu-locussol/MachuBot/commit/99463c4a2950f7d2b67a26f86c35a7bdad141031))
-* added Natsuki ([52744e4](https://github.com/matthieu-locussol/MachuBot/commit/52744e4d3bbda4d410b52b7cd88b02f1289718fb))
-* added new diego sounds ([bf56d82](https://github.com/matthieu-locussol/MachuBot/commit/bf56d82563001fd5e2baa586e0b606e090f56b2b))
-
+-  added diego song
+   ([e56b863](https://github.com/matthieu-locussol/MachuBot/commit/e56b86375876ead254025653753e9c2b93bcbabb))
+-  added Hugo to prompt
+   ([99463c4](https://github.com/matthieu-locussol/MachuBot/commit/99463c4a2950f7d2b67a26f86c35a7bdad141031))
+-  added Natsuki
+   ([52744e4](https://github.com/matthieu-locussol/MachuBot/commit/52744e4d3bbda4d410b52b7cd88b02f1289718fb))
+-  added new diego sounds
+   ([bf56d82](https://github.com/matthieu-locussol/MachuBot/commit/bf56d82563001fd5e2baa586e0b606e090f56b2b))
 
 ### Bug Fixes
 
-* added soundcloud extractor ([07055aa](https://github.com/matthieu-locussol/MachuBot/commit/07055aa6f5d86395b92c5acc13c2c702d034896b))
-* entrance mp3 songs ([eeb6c97](https://github.com/matthieu-locussol/MachuBot/commit/eeb6c97214d73eee7cfb63b15b37c23ea54b58df))
-* MachuBot leaves after 5s alone ([253f3d5](https://github.com/matthieu-locussol/MachuBot/commit/253f3d56ff540412b8fdac9e4eadccb38b64c0b8))
-* removed openAI stuff ([4b2540c](https://github.com/matthieu-locussol/MachuBot/commit/4b2540c1271d343b7270b07346b3878403c78328))
-* removed soulInsane for joseph ([6eebb11](https://github.com/matthieu-locussol/MachuBot/commit/6eebb11198ede440335b86629768f950e1c63b6f))
-* removed yarn.lock from git ([819e7df](https://github.com/matthieu-locussol/MachuBot/commit/819e7df87f7341ffe074d3e779c383a97b83502e))
+-  added soundcloud extractor
+   ([07055aa](https://github.com/matthieu-locussol/MachuBot/commit/07055aa6f5d86395b92c5acc13c2c702d034896b))
+-  entrance mp3 songs
+   ([eeb6c97](https://github.com/matthieu-locussol/MachuBot/commit/eeb6c97214d73eee7cfb63b15b37c23ea54b58df))
+-  MachuBot leaves after 5s alone
+   ([253f3d5](https://github.com/matthieu-locussol/MachuBot/commit/253f3d56ff540412b8fdac9e4eadccb38b64c0b8))
+-  removed openAI stuff
+   ([4b2540c](https://github.com/matthieu-locussol/MachuBot/commit/4b2540c1271d343b7270b07346b3878403c78328))
+-  removed soulInsane for joseph
+   ([6eebb11](https://github.com/matthieu-locussol/MachuBot/commit/6eebb11198ede440335b86629768f950e1c63b6f))
+-  removed yarn.lock from git
+   ([819e7df](https://github.com/matthieu-locussol/MachuBot/commit/819e7df87f7341ffe074d3e779c383a97b83502e))
 
 ### [1.1.1](https://github.com/matthieu-locussol/MachuBot/compare/v1.1.0...v1.1.1) (2024-01-24)
 
