@@ -10,5 +10,3 @@ logs/
 *.sqlite
 
 src/modules/osu/cache/*.osu
-
-yarn.lock
