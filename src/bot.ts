@@ -83,8 +83,6 @@ export class Bot {
 
       this.modules = modules;
 
-      this.client.setMaxListeners(200);
-
       this.initializeModules();
       this.initializeComponents();
       this.initializeCommands();
@@ -96,15 +94,22 @@ export class Bot {
             highWaterMark: 1 << 30,
          },
       });
-      this.musicPlayer.extractors.register(AttachmentExtractor, {}).then(() => {
-         logger.info('AttachmentExtractor is ready!');
-      });
+
       this.musicPlayer.extractors.register(YoutubeExtractor, {}).then(() => {
          logger.info('YoutubeExtractor is ready!');
       });
+
+      this.musicPlayer.extractors.register(AttachmentExtractor, {}).then(() => {
+         logger.info('AttachmentExtractor is ready!');
+      });
+
       this.musicPlayer.extractors.register(SoundCloudExtractor, {}).then(() => {
          logger.info('SoundCloudExtractor is ready!');
       });
+
+      this.musicPlayer.extractors.loadDefault(
+         (ext) => !['YouTubeExtractor', 'SpotifyExtractor', 'AttachmentExtractor'].includes(ext),
+      );
    }
 
    public start = async (): Promise<void> => {
