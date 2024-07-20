@@ -1,8 +1,15 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See
-[standard-version](https://github.com/conventional-changelog/standard-version) for commit
-guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.2.1](https://github.com/matthieu-locussol/MachuBot/compare/v1.2.0...v1.2.1) (2024-07-20)
+
+
+### Bug Fixes
+
+* removed codeql badge ([06c3580](https://github.com/matthieu-locussol/MachuBot/commit/06c358022a8bd67765bbb5e20f8dcab568285dac))
+* typescript errors ([9e7fd64](https://github.com/matthieu-locussol/MachuBot/commit/9e7fd64b1bba5127ddb90a0d0625f3134f264211))
+* youtube musics ([a2d529f](https://github.com/matthieu-locussol/MachuBot/commit/a2d529ff5962108ca6937f47f27c746ce02a7050))
 
 ## [1.2.0](https://github.com/matthieu-locussol/MachuBot/compare/v1.1.1...v1.2.0) (2024-06-12)
 
