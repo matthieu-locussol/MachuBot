@@ -93,7 +93,7 @@ export class Bot {
       });
 
       this.musicPlayer.extractors.register(YoutubeiExtractor, {}).then(() => {
-         logger.info('YoutubeExtractor is ready!');
+         logger.info('YoutubeiExtractor is ready!');
       });
 
       this.musicPlayer.extractors.register(AttachmentExtractor, {}).then(() => {
@@ -105,7 +105,13 @@ export class Bot {
       });
 
       this.musicPlayer.extractors.loadDefault(
-         (ext) => !['YouTubeExtractor', 'SpotifyExtractor', 'AttachmentExtractor'].includes(ext),
+         (ext) =>
+            ![
+               'YouTubeExtractor',
+               'YouTubeiExtractor',
+               'SpotifyExtractor',
+               'AttachmentExtractor',
+            ].includes(ext),
       );
    }
 
