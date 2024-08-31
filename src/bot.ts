@@ -1,6 +1,5 @@
 import { AttachmentExtractor, SoundCloudExtractor } from '@discord-player/extractor';
 import { GuildQueuePlayerNode, Player } from 'discord-player';
-import { YoutubeiExtractor } from 'discord-player-youtubei';
 import {
    Client,
    ComponentType,
@@ -92,10 +91,6 @@ export class Bot {
          },
       });
 
-      this.musicPlayer.extractors.register(YoutubeiExtractor, {}).then(() => {
-         logger.info('YoutubeiExtractor is ready!');
-      });
-
       this.musicPlayer.extractors.register(AttachmentExtractor, {}).then(() => {
          logger.info('AttachmentExtractor is ready!');
       });
@@ -105,13 +100,7 @@ export class Bot {
       });
 
       this.musicPlayer.extractors.loadDefault(
-         (ext) =>
-            ![
-               'YouTubeExtractor',
-               'YouTubeiExtractor',
-               'SpotifyExtractor',
-               'AttachmentExtractor',
-            ].includes(ext),
+         (ext) => !['SpotifyExtractor', 'AttachmentExtractor'].includes(ext),
       );
    }
 
