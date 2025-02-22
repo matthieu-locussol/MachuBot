@@ -1,5 +1,3 @@
-import { AttachmentExtractor, SoundCloudExtractor } from '@discord-player/extractor';
-import { GuildQueuePlayerNode, Player } from 'discord-player';
 import {
    Client,
    ComponentType,
@@ -17,7 +15,6 @@ import { answerSelectHandler } from './modules/surveys/components/handlers/answe
 import { Component } from './types/components';
 import type { Module } from './types/modules';
 import { _assert } from './utils/_assert';
-import { pickRandom } from './utils/array';
 import { accessEnvironmentVariable } from './utils/environment';
 import { shouldPersistPayload } from './utils/file';
 import {
@@ -46,8 +43,6 @@ export class Bot {
    private components: Component[] = [];
 
    private commands: SerializableInteraction[] = [];
-
-   private musicPlayer: Player;
 
    constructor(modules: Module[]) {
       this.token = accessEnvironmentVariable(
@@ -82,26 +77,6 @@ export class Bot {
       this.initializeModules();
       this.initializeComponents();
       this.initializeCommands();
-
-      this.musicPlayer = new Player(this.client, {
-         ytdlOptions: {
-            quality: 'highestaudio',
-            filter: 'audioonly',
-            highWaterMark: 1 << 30,
-         },
-      });
-
-      this.musicPlayer.extractors.register(AttachmentExtractor, {}).then(() => {
-         logger.info('AttachmentExtractor is ready!');
-      });
-
-      this.musicPlayer.extractors.register(SoundCloudExtractor, {}).then(() => {
-         logger.info('SoundCloudExtractor is ready!');
-      });
-
-      this.musicPlayer.extractors.loadDefault(
-         (ext) => !['SpotifyExtractor', 'AttachmentExtractor'].includes(ext),
-      );
    }
 
    public start = async (): Promise<void> => {
@@ -243,8 +218,6 @@ export class Bot {
          _assert(this.client.user);
          logger.info(`Development bot started as ${this.client.user.tag}`);
       });
-
-      this.initializeJoinSounds();
    };
 
    private initializeProduction = async (): Promise<void> => {
@@ -261,83 +234,5 @@ export class Bot {
          _assert(this.client.user);
          logger.info(`Production bot started as ${this.client.user.tag}`);
       });
-
-      this.initializeJoinSounds();
    };
-
-   private initializeJoinSounds = (): void => {
-      this.client.on('voiceStateUpdate', async (oldState, newState) => {
-         const usersSongs = [
-            {
-               userId: '228887768699371522', // Pila
-               channelId: '750445173506310196',
-               songsUrl: ['https://soundcloud.com/matthieu-locussol/fbi'],
-            },
-            {
-               userId: '300712645302943744', // Joseph
-               channelId: '750445173506310196',
-               songsUrl: [
-                  // 'https://soundcloud.com/matthieu-locussol/soulnsane',
-                  'https://soundcloud.com/matthieu-locussol/mephisto-youre-too-late-hahahahahahaha',
-                  'https://soundcloud.com/matthieu-locussol/the-sanctity-of-this-place-has-been-fouled',
-               ],
-            },
-            {
-               userId: '230726394621984768', // Matthieu
-               channelId: '750445173506310196',
-               songsUrl: [
-                  'https://soundcloud.com/matthieu-locussol/parle-de-moi-1',
-                  'https://soundcloud.com/matthieu-locussol/parle-de-moi-2',
-                  'https://soundcloud.com/matthieu-locussol/parle-de-moi-3',
-               ],
-            },
-            {
-               userId: '196946198567845898', // Diego
-               channelId: '750445173506310196',
-               songsUrl: [
-                  'https://soundcloud.com/matthieu-locussol/rodrigo',
-                  'https://soundcloud.com/matthieu-locussol/sabalero',
-                  'https://soundcloud.com/matthieu-locussol/ole-ole-diego',
-                  'https://soundcloud.com/matthieu-locussol/maradona-guy2bez',
-               ],
-            },
-         ];
-
-         for (const { userId, channelId, songsUrl } of usersSongs) {
-            const shouldPlaySongAnyway = newState.member?.id === userId && channelId === '-1';
-
-            if (
-               (newState.member?.id === userId &&
-                  newState.channelId === channelId &&
-                  oldState.channelId !== channelId) ||
-               shouldPlaySongAnyway
-            ) {
-               const queue = this.musicPlayer.queues.has(newState.guild.id)
-                  ? this.musicPlayer.queues.get(newState.guild.id)
-                  : undefined;
-               const queuePlayerNode = queue ? new GuildQueuePlayerNode(queue) : undefined;
-
-               if (queuePlayerNode === undefined || queuePlayerNode.isIdle()) {
-                  // eslint-disable-next-line @typescript-eslint/no-loop-func
-                  setTimeout(() => {
-                     if (newState.channelId !== null) {
-                        this.musicPlayer.play(newState.channelId, pickRandom(songsUrl), {
-                           nodeOptions: {
-                              leaveOnEnd: false,
-                              leaveOnEmpty: true,
-                              leaveOnEmptyCooldown: 5000,
-                              leaveOnStop: false,
-                           },
-                        });
-                     }
-                  }, 1500);
-               }
-            }
-         }
-      });
-   };
-
-   getMusicPlayer(): Player {
-      return this.musicPlayer;
-   }
 }
