@@ -1,13 +1,17 @@
 import {
+   AttachmentBuilder,
    Client,
+   Colors,
    ComponentType,
    ContextMenuCommandBuilder,
+   EmbedBuilder,
    GatewayIntentBits,
    REST,
    RESTPostAPIApplicationCommandsJSONBody,
    Routes,
    SlashCommandBuilder,
 } from 'discord.js';
+import cron from 'node-cron';
 import { resolve } from 'path';
 import { version } from '../package.json';
 import { logger } from './logger';
@@ -15,6 +19,8 @@ import { answerSelectHandler } from './modules/surveys/components/handlers/answe
 import { Component } from './types/components';
 import type { Module } from './types/modules';
 import { _assert } from './utils/_assert';
+import { getDailyQuestion } from './utils/consultationCitoyenne';
+import { formatDateTime } from './utils/date';
 import { accessEnvironmentVariable } from './utils/environment';
 import { shouldPersistPayload } from './utils/file';
 import {
@@ -28,6 +34,13 @@ import {
 type SerializableInteraction =
    | Pick<SlashCommandBuilder, 'toJSON'>
    | Pick<ContextMenuCommandBuilder, 'toJSON'>;
+
+interface ConsultationCitoyenneProps {
+   serverId: string;
+   channelId: string;
+   threadId: string;
+   cronExpression: string;
+}
 
 export class Bot {
    private token: string;
@@ -214,6 +227,14 @@ export class Bot {
          },
       );
 
+      // Emoji Server
+      this.initializeConsultationCitoyenne({
+         serverId: '850789853658611742',
+         channelId: '1342876364801310770',
+         threadId: '1342876409370116158',
+         cronExpression: '* * * * *', // Every minute
+      });
+
       this.client.on('ready', async () => {
          _assert(this.client.user);
          logger.info(`Development bot started as ${this.client.user.tag}`);
@@ -230,9 +251,72 @@ export class Bot {
          },
       );
 
+      // The High Community
+      this.initializeConsultationCitoyenne({
+         serverId: '228479029357969409',
+         channelId: '1314967988088209500',
+         threadId: '1324750804430753894',
+         cronExpression: '0 16 * * *', // Every day at 16:00
+      });
+
       this.client.on('ready', () => {
          _assert(this.client.user);
          logger.info(`Production bot started as ${this.client.user.tag}`);
       });
    };
+
+   private initializeConsultationCitoyenne({
+      serverId,
+      channelId,
+      threadId,
+      cronExpression,
+   }: ConsultationCitoyenneProps) {
+      logger.info('[CRON] Starting Consultation Citoyenne cron...');
+
+      cron.schedule(cronExpression, async () => {
+         logger.info('[CRON] Attempting to send Consultation Citoyenne...');
+
+         try {
+            const guild = await this.client.guilds.fetch(serverId);
+            const thread = await guild.channels.fetch(threadId);
+
+            if (!thread?.isThread()) {
+               logger.error('[CRON] Thread not found or not a thread.');
+               return;
+            }
+
+            if (thread.parentId !== channelId) {
+               logger.error('[CRON] Thread is not in the specified channel.');
+               return;
+            }
+
+            const attachment = new AttachmentBuilder('assets/Avatar.png', { name: 'Avatar.png' });
+
+            await thread.send({
+               embeds: [
+                  new EmbedBuilder()
+                     .setTitle('Consultation Citoyenne')
+                     .setURL('https://www.matthieu-locussol.com')
+                     .setColor(Colors.Green)
+                     .setThumbnail('attachment://Avatar.png')
+                     .setFooter({
+                        text: `${formatDateTime(new Date().toISOString())} - MachuBot`,
+                        iconURL: 'attachment://Avatar.png',
+                     })
+                     .setFields({
+                        name: '**Question du jour**',
+                        value: getDailyQuestion(),
+                     }),
+               ],
+               files: [attachment],
+            });
+
+            logger.info('[CRON] Consultation Citoyenne sent successfully.');
+         } catch (error) {
+            logger.error('[CRON] Error sending Consultation Citoyenne:', error);
+         }
+      });
+
+      logger.info('[CRON] Consultation Citoyenne cron started!');
+   }
 }
