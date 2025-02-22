@@ -256,7 +256,7 @@ export class Bot {
          serverId: '228479029357969409',
          channelId: '1314967988088209500',
          threadId: '1324750804430753894',
-         cronExpression: '30 16 * * *', // Every day at 16:30
+         cronExpression: '0 12 * * *', // Every day at 12:00
       });
 
       this.client.on('ready', () => {
