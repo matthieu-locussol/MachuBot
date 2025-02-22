@@ -1,8 +1,19 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See
-[standard-version](https://github.com/conventional-changelog/standard-version) for commit
-guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.3.0](https://github.com/matthieu-locussol/MachuBot/compare/v1.2.1...v1.3.0) (2025-02-22)
+
+
+### Features
+
+* added consultation citoyenne ([0799947](https://github.com/matthieu-locussol/MachuBot/commit/0799947fcba9c778674e392291a9c3958f361a2c))
+
+
+### Bug Fixes
+
+* removed youtube extractors ([53bf385](https://github.com/matthieu-locussol/MachuBot/commit/53bf385e80ba64891f6b17e60eb015f6b90e61e4))
+* youtubei ([0f91fab](https://github.com/matthieu-locussol/MachuBot/commit/0f91fab0fa89d78dcb44bcec903164ec53945ded))
 
 ### [1.2.1](https://github.com/matthieu-locussol/MachuBot/compare/v1.2.0...v1.2.1) (2024-07-20)
 
