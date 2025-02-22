@@ -1,8 +1,13 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See
-[standard-version](https://github.com/conventional-changelog/standard-version) for commit
-guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.3.2](https://github.com/matthieu-locussol/MachuBot/compare/v1.3.1...v1.3.2) (2025-02-22)
+
+
+### Bug Fixes
+
+* updated cron time ([40f4c11](https://github.com/matthieu-locussol/MachuBot/commit/40f4c116b95bd7fd632649c4ad5459899f3eb5cf))
 
 ### [1.3.1](https://github.com/matthieu-locussol/MachuBot/compare/v1.3.0...v1.3.1) (2025-02-22)
 
