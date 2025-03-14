@@ -1,0 +1,9 @@
+theme: jekyll-theme-cayman
+version: 1.0.0
+name: MachuBot
+description: MachuBot is a multipurpose Discord bot written using Typescript.
+url: https://matthieu-locussol.github.io/MachuBot
+repository: https://github.com/matthieu-locussol/MachuBot
+show_downloads: true
+github:
+   invite_link: https://discord.com/api/oauth2/authorize?client_id=904661905711456276&permissions=8&scope=bot%20applications.commands
