@@ -1,14 +1,17 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See
+[standard-version](https://github.com/conventional-changelog/standard-version) for commit
+guidelines.
 
 ## [1.4.0](https://github.com/matthieu-locussol/MachuBot/compare/v1.3.2...v1.4.0) (2025-04-03)
 
-
 ### Features
 
-* added github pages files ([754e906](https://github.com/matthieu-locussol/MachuBot/commit/754e906a486c126c4fe319816b1afddcca195830))
-* edited consultation citoyenne questions & added optional survey feature ([d569ad9](https://github.com/matthieu-locussol/MachuBot/commit/d569ad917a7c896fb6911b92aa8cdd6e3f6413b8))
+-  added github pages files
+   ([754e906](https://github.com/matthieu-locussol/MachuBot/commit/754e906a486c126c4fe319816b1afddcca195830))
+-  edited consultation citoyenne questions & added optional survey feature
+   ([d569ad9](https://github.com/matthieu-locussol/MachuBot/commit/d569ad917a7c896fb6911b92aa8cdd6e3f6413b8))
 
 ### [1.3.2](https://github.com/matthieu-locussol/MachuBot/compare/v1.3.1...v1.3.2) (2025-02-22)
 
