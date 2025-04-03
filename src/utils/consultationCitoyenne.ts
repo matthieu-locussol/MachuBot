@@ -1,371 +1,331 @@
-const QUESTIONS = [
-   'Quel est ton artiste préféré ?',
-   'Quel livre t’a le plus marqué ?',
-   'Le cinéma est-il un art majeur ?',
-   'La musique influence-t-elle notre humeur ?',
-   'Faut-il séparer l’œuvre de l’artiste ?',
-   'Quel tableau célèbre aimerais-tu voir en vrai ?',
-   'Les films sont-ils meilleurs que les livres ?',
-   'Les jeux vidéo sont-ils une forme d’art ?',
-   'Faut-il protéger les œuvres d’art contre les interprétations modernes ?',
-   'La démocratie est-elle le meilleur système politique ?',
-   'Faut-il légaliser toutes les drogues ?',
-   'L’argent fait-il le bonheur ?',
-   'Doit-on toujours dire la vérité ?',
-   'Le travail est-il une valeur essentielle ?',
-   'Peut-on rire de tout ?',
-   'L’éducation doit-elle être totalement gratuite ?',
-   'Les réseaux sociaux nuisent-ils aux relations humaines ?',
-   'Faut-il interdire la publicité pour des raisons éthiques ?',
-   'La justice est-elle réellement équitable ?',
-   'Qu’est-ce que le bonheur ?',
-   'L’Homme est-il fondamentalement bon ou mauvais ?',
-   'Peut-on être libre dans une société ?',
-   'L’existence a-t-elle un sens ?',
-   'Le destin existe-t-il ?',
-   'A-t-on besoin des autres pour être heureux ?',
-   'L’intelligence est-elle innée ou acquise ?',
-   'Faut-il apprendre à pardonner tout ?',
-   'Le passé définit-il qui nous sommes ?',
-   'La peur est-elle une force ou une faiblesse ?',
-   'Les avancées technologiques sont-elles toujours bénéfiques ?',
-   'L’intelligence artificielle remplacera-t-elle les humains ?',
-   'Faut-il avoir peur du transhumanisme ?',
-   'La conquête spatiale est-elle essentielle ?',
-   'La science peut-elle tout expliquer ?',
-   'Faut-il limiter la recherche sur l’ADN humain ?',
-   'La technologie rapproche-t-elle ou isole-t-elle les gens ?',
-   'Peut-on vivre sans smartphone aujourd’hui ?',
-   'L’Homme pourra-t-il un jour devenir immortel ?',
-   'L’écologie doit-elle primer sur le progrès technologique ?',
-   'L’histoire est-elle objective ?',
-   'Pourquoi l’Homme répète-t-il toujours les mêmes erreurs ?',
-   'La colonisation a-t-elle encore des impacts aujourd’hui ?',
-   'Peut-on juger le passé avec les valeurs du présent ?',
-   'La guerre est-elle parfois justifiable ?',
-   'L’utopie politique est-elle possible ?',
-   'La mondialisation est-elle une bonne chose ?',
-   'Un monde sans frontières est-il envisageable ?',
-   'Doit-on encore honorer les héros du passé ?',
-   'La neutralité est-elle possible en politique ?',
-   'La famille est-elle plus importante que les amis ?',
-   'Peut-on être heureux seul ?',
-   'Faut-il toujours faire des compromis en amour ?',
-   'Est-il plus important d’être respecté ou aimé ?',
-   'L’amitié homme-femme est-elle possible ?',
-   'Faut-il toujours écouter son instinct ?',
-   'La jalousie est-elle une preuve d’amour ?',
-   'La politesse est-elle essentielle dans la société ?',
-   'Peut-on être trop gentil ?',
-   'L’amour dure-t-il vraiment toujours ?',
-   'Faut-il aimer son travail pour être heureux ?',
-   'La réussite se mesure-t-elle à l’argent gagné ?',
-   'Est-il possible de réussir seul ?',
-   'Le travail d’équipe est-il toujours efficace ?',
-   'Les diplômes sont-ils nécessaires pour réussir ?',
-   'Faut-il prendre des risques pour réussir ?',
-   'L’échec est-il une étape obligatoire vers le succès ?',
-   'La méritocratie existe-t-elle vraiment ?',
-   'Faut-il faire un travail qui a du sens ou qui rapporte de l’argent ?',
-   'Travailler moins rend-il plus heureux ?',
-   'L’Homme est-il responsable du changement climatique ?',
-   'Peut-on concilier progrès économique et écologie ?',
-   'Faut-il interdire la viande pour sauver la planète ?',
-   'L’énergie nucléaire est-elle une solution écologique ?',
-   'Les petits gestes individuels ont-ils un réel impact sur l’environnement ?',
-   'Faut-il bannir complètement le plastique ?',
-   'La décroissance est-elle une solution viable ?',
-   'La nature appartient-elle à l’Homme ou l’inverse ?',
-   'Les zoos sont-ils une bonne ou une mauvaise chose ?',
-   'Les catastrophes naturelles sont-elles une punition de la nature ?',
-   'Faut-il revoir entièrement le système éducatif ?',
-   'L’école doit-elle apprendre à penser ou à obéir ?',
-   'Les notes sont-elles une bonne méthode d’évaluation ?',
-   'L’éducation à la maison est-elle une meilleure alternative ?',
-   'L’apprentissage par l’expérience est-il plus efficace que la théorie ?',
-   'Faut-il enseigner la philosophie dès le plus jeune âge ?',
-   'L’éducation devrait-elle être la même pour tous ?',
-   'Les diplômes sont-ils un gage d’intelligence ?',
-   'L’école prépare-t-elle réellement à la vie ?',
-   'Faut-il apprendre plusieurs langues dès l’enfance ?',
-   'Un enfant a-t-il besoin de deux parents pour bien grandir ?',
-   'Faut-il être ami avec ses enfants ?',
-   'La famille est-elle une obligation ou un choix ?',
-   'Les parents doivent-ils imposer des valeurs à leurs enfants ?',
-   'Éduquer un enfant est-il plus difficile aujourd’hui qu’avant ?',
-   'La fessée est-elle une méthode d’éducation acceptable ?',
-   'Un enfant peut-il être autonome dès son plus jeune âge ?',
-   'Avoir des enfants est-il nécessaire pour être accompli ?',
-   'Faut-il protéger les enfants de toutes formes de frustration ?',
-   'Les rôles père/mère doivent-ils être interchangeables ?',
-   'Un jour, vivrons-nous sur Mars ?',
-   'Les robots remplaceront-ils les humains dans tous les métiers ?',
-   'Peut-on un jour télécharger sa conscience dans un ordinateur ?',
-   'La téléportation sera-t-elle une réalité ?',
-   'Les extraterrestres existent-ils ?',
-   'Si on trouvait une autre planète habitable, faudrait-il y aller ?',
-   'Le voyage dans le temps sera-t-il possible ?',
-   'Les clones humains devraient-ils avoir des droits ?',
-   'L’humanité doit-elle chercher à vivre éternellement ?',
-   'Le futur sera-t-il meilleur ou pire que le présent ?',
-   'Peut-on être heureux sans faire le bien ?',
-   'Faire une bonne action par intérêt, est-ce toujours moral ?',
-   'L’Homme est-il fondamentalement égoïste ?',
-   'Doit-on toujours respecter les lois, même injustes ?',
-   'La fin justifie-t-elle les moyens ?',
-   'Existe-t-il un bien et un mal absolus ?',
-   'Aider les autres est-il un devoir moral ?',
-   'La vengeance est-elle légitime dans certains cas ?',
-   'Faut-il privilégier le bien du plus grand nombre ou l’individu ?',
-   'Le pardon est-il une preuve de faiblesse ou de force ?',
-   'L’alcool devrait-il être interdit comme d’autres drogues ?',
-   'La médecine alternative est-elle efficace ?',
-   'Faut-il limiter le temps passé sur les écrans pour sa santé mentale ?',
-   'Le sport est-il obligatoire pour être en bonne santé ?',
-   'Peut-on être heureux sans être en bonne santé ?',
-   'Le bien-être mental est-il plus important que la santé physique ?',
-   'La chirurgie esthétique est-elle une bonne ou une mauvaise chose ?',
-   'Vieillir est-il une maladie à combattre ?',
-   'Manger bio est-il vraiment meilleur pour la santé ?',
-   'Les avancées médicales doivent-elles être accessibles à tous, quel que soit le coût ?',
-   'Peut-on être spirituel sans être religieux ?',
-   'Les religions ont-elles encore leur place dans la société moderne ?',
-   'Faut-il croire en quelque chose pour donner un sens à sa vie ?',
-   'Les miracles existent-ils vraiment ?',
-   'La religion divise-t-elle plus qu’elle ne rassemble ?',
-   'La prière a-t-elle un réel pouvoir ?',
-   'L’athéisme est-il aussi une croyance ?',
-   'Peut-on prouver l’existence de Dieu ?',
-   'Toutes les religions se valent-elles ?',
-   'La science finira-t-elle par remplacer la foi ?',
-   'Le temps est-il une illusion ?',
-   'Pourquoi avons-nous l’impression que le temps passe plus vite en vieillissant ?',
-   'Peut-on vraiment vivre dans le présent ?',
-   'Le passé influence-t-il trop notre présent ?',
-   'L’avenir est-il déjà écrit ?',
-   'Revivre un moment de son passé, est-ce une bonne idée ?',
-   'Nos souvenirs sont-ils fiables ?',
-   'Pourquoi avons-nous peur de l’avenir ?',
-   'Vieillir, est-ce forcément décliner ?',
-   'L’ennui est-il une perte de temps ou un moment nécessaire ?',
-   'L’amour est-il rationnel ou purement instinctif ?',
-   'Un couple doit-il tout se dire ?',
-   'La jalousie est-elle une preuve d’amour ou un manque de confiance ?',
-   'Faut-il croire en l’amour éternel ?',
-   'Les opposés s’attirent-ils vraiment ?',
-   'Peut-on aimer plusieurs personnes en même temps ?',
-   'L’amitié peut-elle se transformer en amour ?',
-   'Faut-il toujours essayer de sauver un couple en crise ?',
-   'Le mariage est-il encore une institution utile ?',
-   'Un couple peut-il durer sans désir physique ?',
-   'La peine de mort est-elle justifiable dans certains cas ?',
-   'La prison permet-elle vraiment de réhabiliter les criminels ?',
-   'La justice est-elle trop influencée par l’opinion publique ?',
-   'Vaut-il mieux libérer un coupable ou condamner un innocent ?',
-   'La loi doit-elle évoluer en fonction des mœurs ou rester immuable ?',
-   'Peut-on dire que la loi est forcément juste ?',
-   'Faut-il protéger la liberté d’expression à tout prix ?',
-   'La légitime défense est-elle un argument valable en justice ?',
-   'Les criminels ont-ils droit à une seconde chance ?',
-   'La corruption est-elle inévitable dans un système judiciaire ?',
-   'Peut-on vraiment réussir sans piston ni privilèges ?',
-   'Faut-il instaurer un revenu universel ?',
-   'Le travail est-il une valeur essentielle dans une société moderne ?',
-   'L’argent corrompt-il forcément ?',
-   'Est-il moral de gagner de l’argent sans travailler ?',
-   'L’auto-entrepreneuriat est-il l’avenir du travail ?',
-   'Travailler moins signifie-t-il être moins productif ?',
-   'Peut-on être riche et éthique à la fois ?',
-   'Faut-il taxer davantage les grandes fortunes ?',
-   'La mondialisation est-elle une menace ou une opportunité économique ?',
-   'Pourquoi avons-nous peur du regard des autres ?',
-   'La routine est-elle ennemie du bonheur ?',
-   'Peut-on vraiment changer de personnalité ?',
-   'La générosité est-elle toujours désintéressée ?',
-   'L’ennui est-il nécessaire pour la créativité ?',
-   'Pourquoi l’être humain a-t-il besoin de rituels ?',
-   'Peut-on vivre heureux sans prendre de risques ?',
-   'La solitude choisie est-elle une liberté ou une fuite ?',
-   'Est-on toujours responsable de nos émotions ?',
-   'Peut-on réellement contrôler ses pensées ?',
-   'L’intelligence émotionnelle est-elle plus importante que l’intelligence académique ?',
-   'L’apprentissage devrait-il être personnalisé pour chaque élève ?',
-   'Faut-il enseigner l’échec à l’école ?',
-   'Les compétences pratiques sont-elles sous-estimées dans l’éducation ?',
-   'L’école devrait-elle enseigner la gestion de l’argent et des émotions ?',
-   'Apprend-on mieux en autodidacte qu’avec un professeur ?',
-   'L’éducation doit-elle avant tout former des travailleurs ou des citoyens ?',
-   'Les élèves devraient-ils avoir plus de liberté dans leur apprentissage ?',
-   'La compétition à l’école est-elle bénéfique ou nuisible ?',
-   'Le système scolaire actuel est-il obsolète ?',
-   'Peut-on être un bon parent sans modèle familial solide ?',
-   'Les enfants doivent-ils avoir des limites strictes ou être libres d’explorer ?',
-   'L’éducation traditionnelle est-elle dépassée ?',
-   'Peut-on vraiment éviter de reproduire l’éducation que l’on a reçue ?',
-   'Les parents doivent-ils être des modèles parfaits ?',
-   'La technologie facilite-t-elle ou complique-t-elle l’éducation des enfants ?',
-   'Un enfant peut-il être épanoui sans fratrie ?',
-   'Le rôle des grands-parents est-il aussi important que celui des parents ?',
-   'Faut-il être sévère pour être respecté par ses enfants ?',
-   'Les enfants doivent-ils apprendre à gérer l’échec dès le plus jeune âge ?',
-   'Le libre arbitre existe-t-il vraiment ?',
-   'Peut-on être soi-même sans être influencé par les autres ?',
-   'Le bonheur est-il une quête ou un état d’esprit ?',
-   'Nos choix sont-ils dictés par la raison ou par nos émotions ?',
-   'La peur est-elle le moteur de l’action ou son frein ?',
-   'Est-il préférable d’être optimiste ou réaliste ?',
-   'L’identité d’une personne change-t-elle au fil du temps ?',
-   'Peut-on atteindre la sagesse sans souffrance ?',
-   'Sommes-nous les seuls responsables de notre destin ?',
-   'La vérité est-elle toujours préférable au mensonge ?',
-   'L’intelligence artificielle aura-t-elle un jour une conscience ?',
-   'La robotisation va-t-elle détruire plus d’emplois qu’elle n’en crée ?',
-   'Faut-il craindre la surveillance généralisée ?',
-   'La conquête spatiale justifie-t-elle son coût ?',
-   'Le progrès scientifique doit-il être limité par l’éthique ?',
-   'La technologie nous rend-elle plus intelligents ou plus dépendants ?',
-   'Devrait-on interdire certaines technologies avant même qu’elles existent ?',
-   'La science peut-elle réellement tout expliquer ?',
-   'Le transhumanisme est-il une évolution naturelle de l’humanité ?',
-   'Peut-on vivre dans un monde 100 % numérique ?',
-   'L’écologie est-elle un luxe de pays riches ?',
-   'Le réchauffement climatique est-il irréversible ?',
-   'Faut-il interdire les voyages en avion pour sauver la planète ?',
-   'Les actions individuelles suffisent-elles à changer le monde ?',
-   'La nature a-t-elle des droits ?',
-   'Devrait-on limiter le nombre d’enfants pour préserver la planète ?',
-   'Faut-il interdire les fast-foods pour des raisons écologiques ?',
-   'L’éco-anxiété est-elle justifiée ?',
-   'Peut-on concilier urbanisation et respect de l’environnement ?',
-   'La décroissance est-elle viable sur le long terme ?',
-   'Peut-on choisir d’être heureux ?',
-   'L’intuition est-elle plus fiable que la logique ?',
-   'Le stress est-il toujours négatif ?',
-   'Nos souvenirs sont-ils une version fidèle du passé ?',
-   'Peut-on contrôler ses émotions ou seulement les gérer ?',
-   'La peur est-elle notre plus grand ennemi ?',
-   'Pourquoi avons-nous besoin de reconnaissance ?',
-   'Les introvertis sont-ils désavantagés dans la société ?',
-   'L’intelligence émotionnelle est-elle plus importante que le QI ?',
-   'Peut-on être heureux sans jamais ressentir de tristesse ?',
-   'Pourquoi avons-nous besoin de nous comparer aux autres ?',
-   'Le silence en dit-il plus que les mots ?',
-   'La première impression est-elle toujours la bonne ?',
-   'Les réseaux sociaux renforcent-ils ou affaiblissent-ils nos liens sociaux ?',
-   'Peut-on vraiment comprendre quelqu’un d’autre ?',
-   'Faut-il toujours répondre aux provocations ?',
-   'Peut-on convaincre quelqu’un de changer d’avis ?',
-   'Faut-il toujours écouter les conseils des autres ?',
-   'Pourquoi est-il parfois difficile de demander pardon ?',
-   'La communication non verbale est-elle plus puissante que les mots ?',
-   'L’intelligence artificielle surpassera-t-elle l’humanité ?',
-   'Faut-il avoir peur des avancées en biotechnologie ?',
-   'Les voitures volantes deviendront-elles une réalité ?',
-   'Les machines pourront-elles un jour ressentir des émotions ?',
-   'Le métavers remplacera-t-il le monde réel ?',
-   'Faut-il craindre une guerre homme-machine ?',
-   'L’exploration spatiale doit-elle être une priorité ?',
-   'Peut-on imaginer une société entièrement automatisée ?',
-   'Le clonage humain est-il une évolution naturelle de la science ?',
-   'Les humains du futur seront-ils génétiquement modifiés ?',
-   'Une langue influence-t-elle notre façon de penser ?',
-   'L’anglais doit-il devenir la langue universelle ?',
-   'La traduction peut-elle vraiment transmettre toutes les nuances d’une langue ?',
-   'Faut-il préserver les langues en voie de disparition ?',
-   'Apprendre une langue change-t-il notre personnalité ?',
-   'La diversité culturelle est-elle en danger ?',
-   'Peut-on comprendre une culture sans parler sa langue ?',
-   'Faut-il enseigner plus d’une langue dès la maternelle ?',
-   'L’accent influe-t-il sur l’image que l’on donne aux autres ?',
-   'Les langues évoluent-elles toujours vers le mieux ?',
-   'Les loisirs sont-ils une perte de temps ou une nécessité ?',
-   'Lire est-il meilleur que regarder des films ?',
-   'Peut-on devenir accro au travail comme à un loisir ?',
-   'La passion peut-elle devenir une obsession ?',
-   'Les vacances sont-elles essentielles pour le bien-être ?',
-   'Les jeux de société sont-ils plus enrichissants que les jeux vidéo ?',
-   'Peut-on être heureux sans avoir de passion ?',
-   'Le sport est-il un loisir ou une discipline ?',
-   'La télévision a-t-elle encore un avenir face aux plateformes de streaming ?',
-   'Faut-il limiter le temps passé sur les écrans ?',
-   'Internet nous rend-il plus intelligents ou plus dépendants ?',
-   'L’anonymat en ligne est-il une bonne ou une mauvaise chose ?',
-   'Le télétravail est-il l’avenir du travail ?',
-   'Les influenceurs ont-ils trop d’impact sur la société ?',
-   'La surinformation nous empêche-t-elle de réfléchir ?',
-   'La vie privée existe-t-elle encore à l’ère numérique ?',
-   'Peut-on un jour vivre sans argent grâce aux technologies ?',
-   'Les algorithmes dirigent-ils nos vies ?',
-   'L’IA peut-elle remplacer les artistes ?',
-   'Les deepfakes sont-ils un danger pour la vérité ?',
-   'Pourquoi l’Histoire est-elle toujours écrite par les vainqueurs ?',
-   'Devrait-on enseigner toutes les erreurs du passé, même les plus sombres ?',
-   'L’Histoire se répète-t-elle inévitablement ?',
-   'Les commémorations sont-elles essentielles ou inutiles ?',
-   'Peut-on vraiment comprendre une époque sans l’avoir vécue ?',
-   'Effacer un personnage historique controversé de l’Histoire est-il justifiable ?',
-   'Les légendes historiques sont-elles plus puissantes que les faits ?',
-   'L’Histoire nous apprend-elle vraiment des leçons ?',
-   'Les musées doivent-ils restituer les œuvres volées ?',
-   'L’Histoire est-elle un outil de manipulation politique ?',
-   'La liberté a-t-elle des limites ?',
-   'Faut-il sacrifier une partie de sa liberté pour plus de sécurité ?',
-   'Peut-on être libre dans une société où tout est réglementé ?',
-   'Le contrôle des masses est-il inévitable ?',
-   'La censure est-elle parfois nécessaire ?',
-   'La surveillance gouvernementale peut-elle être justifiée ?',
-   'L’autocensure est-elle une forme de soumission ?',
-   'Sommes-nous plus libres aujourd’hui qu’il y a 100 ans ?',
-   'La propagande existe-t-elle encore aujourd’hui ?',
-   'La peur est-elle un outil de contrôle social ?',
-   'Un monde sans argent est-il possible ?',
-   'Une société sans crime pourrait-elle exister ?',
-   'L’égalité parfaite est-elle un idéal ou un mythe ?',
-   'Le bonheur pour tous est-il possible ?',
-   'Peut-on créer une société sans conflits ?',
-   'Une intelligence artificielle pourrait-elle gouverner un pays ?',
-   'La fin des inégalités est-elle réalisable ?',
-   'Les dystopies de la science-fiction peuvent-elles devenir réelles ?',
-   'La paix mondiale est-elle un objectif atteignable ?',
-   'L’homme peut-il un jour dépasser sa propre nature ?',
-   'Pourquoi certaines personnes croient-elles aux théories du complot ?',
-   'Les fake news sont-elles une menace pour la démocratie ?',
-   'Peut-on prouver que la Terre est ronde à quelqu’un qui refuse d’y croire ?',
-   'Faut-il interdire la diffusion de fausses informations ?',
-   'L’esprit critique s’apprend-il ?',
-   'Les gouvernements nous cachent-ils la vérité ?',
-   'Pourquoi aimons-nous les mystères et l’inexpliqué ?',
-   'Y a-t-il une limite entre scepticisme et paranoïa ?',
-   'Le paranormal est-il une réalité ou une illusion ?',
-   'L’ésotérisme est-il un refuge face à un monde rationnel ?',
-   'Peut-on vraiment se connaître soi-même ?',
-   'Nos échecs nous définissent-ils plus que nos réussites ?',
-   'La gratitude change-t-elle notre perception du monde ?',
-   'L’instant présent est-il le seul qui compte ?',
-   'Pourquoi avons-nous parfois peur d’être seuls avec nos pensées ?',
-   'Les regrets sont-ils inévitables ?',
-   'Le voyage change-t-il réellement une personne ?',
-   'Nos rêves ont-ils un sens caché ?',
-   'Faut-il suivre son cœur ou sa raison ?',
-   'La souffrance rend-elle plus fort ?',
-   'La vie est-elle un hasard ou a-t-elle un but ?',
-   'L’égoïsme est-il toujours négatif ?',
-   'Le monde va-t-il mieux ou pire qu’avant ?',
-   'La curiosité est-elle toujours une qualité ?',
-   'L’être humain est-il capable de sagesse collective ?',
-   'Faut-il toujours tout remettre en question ?',
-   'L’ennui peut-il être créatif ?',
-   'La compétition nous rend-elle meilleurs ?',
-   'Pourquoi avons-nous besoin de raconter des histoires ?',
-   'Un monde sans mensonge serait-il vivable ?',
-   'Le hasard existe-t-il vraiment ?',
-   'L’optimisme est-il une forme d’aveuglement ?',
-   'Pourquoi cherchons-nous toujours à donner un sens à tout ?',
-   'Peut-on être heureux sans aucun objectif dans la vie ?',
-   'L’amour est-il la réponse à tout ?',
-];
+const QUESTIONS = {
+   'Vaut-il mieux libérer un coupable ou condamner un innocent ?': [],
+   'Une langue influence-t-elle notre façon de penser ?': [],
+   'Un enfant a-t-il besoin de deux parents pour bien grandir ?': [],
+   'Une intelligence artificielle pourrait-elle gouverner un pays ?': [],
+   'Pourquoi l’être humain a-t-il besoin de rituels ?': [],
+   "Des scientifiques te proposent de sauver l'humanité d'un astéroïde MAIS pour ça, ils doivent étudier les effets de la sodomie extrême. Tu dois choisir : Te faire enculer à sec par un gorille mutant en rut pendant 24h non-stop OU laisser l'humanité crever mais tu peux garder ton cul intact (et vierge, avoue-le) ?":
+      [
+         "Vaseline? Ah non merde. Pour l'humanité!", // Shortened
+         'Que la planète brûle, mon cul est une zone interdite', // Shortened
+         'Négocie: gorille ou Plus Belle la Vie? (Prends gorille)', // Shortened
+         "Va t'faire enculer par le gorille, sale chien", // Shortened
+         'Je demande si le gorille est bien membré avant', // Shortened
+      ],
+   'Peut-on être heureux sans faire le bien ?': [],
+   'L’Histoire nous apprend-elle vraiment des leçons ?': [],
+   'Peut-on rire de tout ?': [],
+   'Le transhumanisme est-il une évolution naturelle de l’humanité ?': [],
+   'La musique influence-t-elle notre humeur ?': [],
+   'La décroissance est-elle une solution viable ?': [],
+   'Peut-on comprendre une culture sans parler sa langue ?': [],
+   'Un couple doit-il tout se dire ?': [],
+   'Sommes-nous plus libres aujourd’hui qu’il y a 100 ans ?': [],
+   'Peut-on convaincre quelqu’un de changer d’avis ?': [],
+   'La science peut-elle tout expliquer ?': [],
+   'La méritocratie existe-t-elle vraiment ?': [],
+   'A-t-on besoin des autres pour être heureux ?': [],
+   'Le travail d’équipe est-il toujours efficace ?': [],
+   'Pourquoi est-il parfois difficile de demander pardon ?': [],
+   'Les avancées médicales doivent-elles être accessibles à tous, quel que soit le coût ?': [],
+   'Le temps est-il une illusion ?': [],
+   'Les petits gestes individuels ont-ils un réel impact sur l’environnement ?': [],
+   "Tu préfères ne plus JAMAIS avoir accès à internet (ni porno, ni jeux, ni JVC, ni RIEN, retour à l'âge de pierre numérique) OU devoir lécher l'anus d'un cadavre en décomposition une fois par semaine pendant un an, devant ta famille ?":
+      [
+         'Adieu Internet, bonjour le trou de balle froid', // OK
+         'Je lèche le cul du mort, famille ou pas OSEF', // Shortened
+         'Je le fais discretos, ptet que personne verra', // Shortened
+         'Va crever, toi et ton sondage de merde', // OK
+         'Pirate wifi voisin + enculer cadavre en douce', // Shortened
+      ],
+   'La vengeance est-elle légitime dans certains cas ?': [],
+   'Doit-on toujours dire la vérité ?': [],
+   'Faut-il interdire la publicité pour des raisons éthiques ?': [],
+   'La science peut-elle réellement tout expliquer ?': [],
+   'Aider les autres est-il un devoir moral ?': [],
+   'Les actions individuelles suffisent-elles à changer le monde ?': [],
+   "Si chaque fois qu'une féministe wesh-wesh sur TikTok ouvre sa gueule pour se plaindre d'un truc bidon, un de tes poils de cul tombait, préférerais-tu qu'elles continuent à chialer jusqu'à ce que t'aies le cul lisse comme un bébé phoque OU qu'elles la ferment mais que ta bite rétrécisse d'1cm par jour jusqu'à disparition ?":
+      [
+         "Vive le cul glabre, qu'elles gueulent ces truies !", // OK
+         'Fermez-la, salopes, je tiens à mes 3cm !', // OK
+         "Osef, j'ai déjà une micro-bite ET le cul épilé", // OK
+         "Ta question pue comme les aisselles d'une écolo", // Shortened
+         'Deviens féministe pour contrôler le game des poils', // Shortened
+      ],
+   "Combat à mort : Toi, à poil et armé d'une seule chaussette sale pleine de sperme séché, contre 50 chihuahuas enragés et séropositifs OU contre une armée de 1000 étrons de clochard qui ont pris vie et qui veulent te bouffer le cul ?":
+      [
+         'Je meurs sous les morsures de clébard sidaiques', // OK
+         'Je me fais dévorer par la merde puante', // OK
+         'Je fuis en chialant et glissant sur ma propre pisse', // Shortened
+         'Enculé de modo avec tes questions de fdp', // OK
+         "J'utilise chaussette comme gourdin ET masque à gaz", // Shortened
+      ],
+   'La compétition nous rend-elle meilleurs ?': [],
+   'Peut-on être soi-même sans être influencé par les autres ?': [],
+   'L’existence a-t-elle un sens ?': [],
+   'Les films sont-ils meilleurs que les livres ?': [],
+   'Faut-il enseigner plus d’une langue dès la maternelle ?': [],
+   'Les jeux de société sont-ils plus enrichissants que les jeux vidéo ?': [],
+   'Doit-on toujours respecter les lois, même injustes ?': [],
+   'Les commémorations sont-elles essentielles ou inutiles ?': [],
+   'L’athéisme est-il aussi une croyance ?': [],
+   "Tu apprends que ton gosse de 5 ans n'est pas de toi mais du facteur nain et bossu du quartier. Que fais-tu ? Tu l'élèves comme ton fils en lui apprenant à détester les facteurs OU tu l'abandonnes sur une aire d'autoroute avec un mot \"Retour à l'envoyeur\" ?":
+      [
+         'Mon fils, et ensemble on crève les pneus du facteur !', // Shortened
+         "Bye bye le nabot, direction l'A7 !", // OK
+         'Je le garde MAIS il portera une fausse bosse (vengé)', // Shortened
+         'Ta mère la naine bossue, connard', // OK
+         'Je vais voir le facteur pour une pension alimentaire', // Shortened
+      ],
+   'Faut-il craindre la surveillance généralisée ?': [],
+   'Devrait-on interdire certaines technologies avant même qu’elles existent ?': [],
+   "Qu'est-ce qui a le moins de valeur intrinsèque et devrait être éradiqué en premier pour le bien de l'univers : Les mouches à merde qui se posent sur ton kebab OU les influenceurs qui font des placements de produit pour des gaines amincissantes de merde ?":
+      [
+         'Mort aux mouches, mon kebab est sacré !', // OK
+         'Exterminez les influenceurs, ces sous-merdes !', // OK
+         'Les deux, et on donne les influenceurs aux mouches', // Shortened
+         'Ta question a moins de valeur que mon dernier étron', // OK
+         'Deviens influenceur anti-mouches (le beurre & argent)', // Shortened
+      ],
+   "Tu es coincé sur une île déserte avec seulement deux options pour survivre : Manger les crottes de nez séchées de ton pire ennemi (qui est aussi sur l'île et qui en produit des tonnes) OU boire l'eau croupie dans laquelle baignent les pieds lépreux d'un vieux pêcheur échoué ?":
+      [
+         'Donnez ces crottes de nez, connu pire à la cantine', // Shortened
+         'Je sirote le jus de pied lépreux, YOLO !', // OK
+         'Je crève de faim et de soif, putain de merde', // OK
+         "L'auteur, t'es le 1er truc que je bouffe sur l'île", // Shortened
+         'Je tente un filtre avec les poils de cul du pêcheur', // Shortened
+      ],
+   'Faut-il toujours faire des compromis en amour ?': [],
+   'Les fake news sont-elles une menace pour la démocratie ?': [],
+   "Tu dois choisir une nouvelle \"fonctionnalité\" pour ton corps : Soit tu peux éjaculer de l'acide sulfurique (pratique pour dissoudre les emmerdeurs, mais adieu le sexe), SOIT tes pets deviennent des gaz neurotoxiques mortels mais totalement silencieux et inodores (discret mais risque d'auto-génocide si t'as la chiasse).":
+      [
+         'Acide dans les couilles, la paix avant tout !', // OK
+         "Pet ninja mortel, j'ai une liste de gens à endormir", // Shortened
+         'Je garde mon corps de merde actuel, merci bien', // OK
+         "T'as pas sniffé l'acide toi-même avant de pondre ça ?", // Shortened
+         'Je prends les pets, mais avec une couche en kevlar', // Shortened
+      ],
+   'Le destin existe-t-il ?': [],
+   'Vieillir, est-ce forcément décliner ?': [],
+   'Un jour, vivrons-nous sur Mars ?': [],
+   'L’Histoire se répète-t-elle inévitablement ?': [],
+   'Devrait-on limiter le nombre d’enfants pour préserver la planète ?': [],
+   'Faut-il limiter la recherche sur l’ADN humain ?': [],
+   'La compétition à l’école est-elle bénéfique ou nuisible ?': [],
+   'Faut-il interdire la diffusion de fausses informations ?': [],
+   'Faut-il taxer davantage les grandes fortunes ?': [],
+   'Peut-on être libre dans une société ?': [],
+   'Faut-il apprendre plusieurs langues dès l’enfance ?': [],
+   'L’apprentissage par l’expérience est-il plus efficace que la théorie ?': [],
+   'L’éducation doit-elle être totalement gratuite ?': [],
+   'Les enfants doivent-ils apprendre à gérer l’échec dès le plus jeune âge ?': [],
+   'Peut-on concilier progrès économique et écologie ?': [],
+   'Pourquoi certaines personnes croient-elles aux théories du complot ?': [],
+   'Peut-on prouver que la Terre est ronde à quelqu’un qui refuse d’y croire ?': [],
+   'L’écologie est-elle un luxe de pays riches ?': [],
+   'L’ennui est-il une perte de temps ou un moment nécessaire ?': [],
+   'La démocratie est-elle le meilleur système politique ?': [],
+   'Les influenceurs ont-ils trop d’impact sur la société ?': [],
+   'Si on trouvait une autre planète habitable, faudrait-il y aller ?': [],
+   'Si demain, la "merde d\'artiste" de Manzoni devient la seule monnaie mondiale, préférerais-tu passer ta vie à chier dans des boîtes pour devenir riche OU rester pauvre mais pouvoir continuer à torcher ton cul avec du PQ triple épaisseur parfumé à la lavande ?':
+      [
+         "À moi la fortune ! Je chie des lingots d'or (brun)", // Shortened
+         'Je garde mon PQ soyeux, la dignité avant tout (lol)', // OK
+         'Vendre merde des autres pour être riche (mains propres)', // Shortened
+         'Va chier dans une boîte, toi et tes idées de merde', // OK
+         "J'investis dans laxatifs de luxe pour optimiser prod", // Shortened
+      ],
+   'L’intelligence artificielle aura-t-elle un jour une conscience ?': [],
+   'Les deepfakes sont-ils un danger pour la vérité ?': [],
+   'La peine de mort est-elle justifiable dans certains cas ?': [],
+   'Éduquer un enfant est-il plus difficile aujourd’hui qu’avant ?': [],
+   'L’ennui est-il nécessaire pour la créativité ?': [],
+   'L’égoïsme est-il toujours négatif ?': [],
+   'Nos souvenirs sont-ils une version fidèle du passé ?': [],
+   'Effacer un personnage historique controversé de l’Histoire est-il justifiable ?': [],
+   'Apprendre une langue change-t-il notre personnalité ?': [],
+   'Les jeux vidéo sont-ils une forme d’art ?': [],
+   "T'es obligé de boire un litre de ta propre chiasse liquéfiée et chaude OU de mettre une énorme patate dans la gueule de ta grand-mère grabataire juste après qu'elle t'ait dit \"je t'aime\". Tu fais quoi, sale déchet ?":
+      [
+         "Avale la merde, Mamie d'abord", // OK
+         'Je défonce Mamie, OSEF du gâteau', // OK
+         "Les deux, j'ai la dalle ET la haine", // OK
+         'Ta mère la pute avec tes questions', // OK
+         'Je me suicide avant, plus simple', // OK
+      ],
+   "Tu découvres que t'es le fruit d'un viol incestueux entre ton père et ta sœur handicapée mentale trisomique. Pour laver l'honneur familial (lol), tu dois : Égorger toute ta famille restante avec une cuillère rouillée OU te faire greffer une tête de chien sur le corps et aboyer pour le reste de ta vie quand tu veux parler ?":
+      [
+         'Sortez la cuillère, le sang va couler !', // OK
+         'Wouf Wouf ! (Passe le collier à clous)', // OK
+         'Je fuis au Mexique et change nom en "Juan Con Pito"', // Shortened
+         "L'auteur, 1er que j'égorge avec cuillère, fdp", // Shortened
+         'Osef, ça explique pourquoi je suis sur ce Discord', // OK
+      ],
+   'La première impression est-elle toujours la bonne ?': [],
+   'La technologie facilite-t-elle ou complique-t-elle l’éducation des enfants ?': [],
+   'La conquête spatiale est-elle essentielle ?': [],
+   'La vérité est-elle toujours préférable au mensonge ?': [],
+   'L’échec est-il une étape obligatoire vers le succès ?': [],
+   'Faut-il enseigner la philosophie dès le plus jeune âge ?': [],
+   'Les miracles existent-ils vraiment ?': [],
+   'Dans un futur dystopique où les ressources manquent, on décide de recycler les cadavres. Tu préfères que ton corps après ta mort soit transformé en : Croquettes pour chiens bas de gamme (destinées aux clébards de SDF), OU en lubrifiant sexuel pour maisons closes spécialisées dans le géronto-fétichisme ?':
+      [
+         'Croquettes chien, au moins je sers à nourrir', // Shortened
+         'Lubrifiant pour vieux dégueu, ça me ressemble plus', // OK
+         'Incinération et dispersion dans les chiottes publiques', // Shortened
+         "Tes idées si noires, la lumière n'ose plus approcher", // Shortened
+         "Naturalisé pour finir dans un musée d'horreurs", // Shortened
+      ],
+   'La passion peut-elle devenir une obsession ?': [],
+   'Les algorithmes dirigent-ils nos vies ?': [],
+   'La paix mondiale est-elle un objectif atteignable ?': [],
+   'Tu dois choisir : soit tu te brosses les dents tous les matins pour le restant de tes jours avec la brosse à chiottes familiale (la vieille, celle qui a des traces marrons), SOIT tu dois appeler ta mère "grosse pute" à chaque fois que tu lui parles au téléphone.':
+      [
+         "Passe la brosse à chiottes, j'ai l'estomac solide", // OK
+         'Allo Maman Grosse Pute ? Pas le choix désolé', // OK
+         "Brosse plus jamais dents ET j'appelle plus ma mère", // Shortened
+         "Ta race l'auteur, t'es possédé", // OK
+         "Je deviens muet et j'utilise que du bain de bouche", // OK
+      ],
+   'Faut-il protéger la liberté d’expression à tout prix ?': [],
+   'Vieillir est-il une maladie à combattre ?': [],
+   'Faut-il bannir complètement le plastique ?': [],
+   'Qu\'est-ce qui a le plus de potentiel pour "contribuer positivement" à la société : Un enfant trisomique qui sourit tout le temps mais ne fera jamais rien de "productif", OU un trader de Wall Street cocaïné qui ruine des vies mais fait "tourner l\'économie" (et sniffe sur les putes) ?':
+      [
+         'Le triso, au moins il nuit pas (vs FDP de trader)', // Shortened
+         "Le trader, l'argent c'est la vie, nique les sentiments", // Shortened
+         'Les deux aussi inutiles (raisons différentes)', // Shortened
+         "Question si puante qu'elle tuerait le trader (cf Q14)", // Shortened
+         'Kidnappe trader et donne son fric au gosse triso', // Shortened
+      ],
+   'Peut-on vraiment changer de personnalité ?': [],
+   'La communication non verbale est-elle plus puissante que les mots ?': [],
+   'Peut-on devenir accro au travail comme à un loisir ?': [],
+   'L’énergie nucléaire est-elle une solution écologique ?': [],
+   'Est-il plus important d’être respecté ou aimé ?': [],
+   'L’IA peut-elle remplacer les artistes ?': [],
+   'Pourquoi avons-nous besoin de reconnaissance ?': [],
+   'Le libre arbitre existe-t-il vraiment ?': [],
+   'Faut-il apprendre à pardonner tout ?': [],
+   'Travailler moins rend-il plus heureux ?': [],
+   'Peut-on vraiment éviter de reproduire l’éducation que l’on a reçue ?': [],
+   'Faut-il instaurer un revenu universel ?': [],
+   'La chirurgie esthétique est-elle une bonne ou une mauvaise chose ?': [],
+   'Les élèves devraient-ils avoir plus de liberté dans leur apprentissage ?': [],
+   'Pourquoi avons-nous peur du regard des autres ?': [],
+   'Faut-il préserver les langues en voie de disparition ?': [],
+   'Faut-il revoir entièrement le système éducatif ?': [],
+   'Le mariage est-il encore une institution utile ?': [],
+   'La diversité culturelle est-elle en danger ?': [],
+   'Faut-il légaliser toutes les drogues ?': [],
+   'Faut-il craindre une guerre homme-machine ?': [],
+   "Pour l'éternité en Enfer, tu préfères être condamné à trier des montagnes de cotons-tiges usagés et pleins de cérumen avec tes dents OU à devoir renifler bruyamment et en faisant semblant d'aimer ça, les pets de tous les gros beaufs qui sortent des chiottes publics après une gastro ?":
+      [
+         "Team Coton-tige dégueu, au moins y'a pas l'odeur", // OK
+         "Team Renifleur de Fions publics, on s'habitue ptet?", // Shortened
+         "Enfer classique avec Satan, c'est moins pire putain", // Shortened
+         'Fils de pute intergalactique', // OK
+         'Négocie avec Dieu pour récurer les chiottes du Paradis', // Shortened
+      ],
+   'Peut-on être libre dans une société où tout est réglementé ?': [],
+   'Un couple peut-il durer sans désir physique ?': [],
+   "Combat dans la boue : Une horde de militants vegans extrémistes armés de tofu moisi VS une bande de chasseurs beaufs bourrés armés de saucissons secs périmés. Qui mérite le plus de gagner cette bataille de l'inutilité crasse ?":
+      [
+         'Les vegans, marre des beaufs qui puent la vinasse', // OK
+         'Les chasseurs, faut bien réguler ces nuisibles vegans', // Shortened
+         "Qu'ils s'entretuent tous, on sera tranquilles", // OK
+         'Ta question pue: tofu moisi ET saucisson périmé', // Shortened
+         'Je parie sur la boue, elle va tous les engloutir', // OK
+      ],
+   'Faut-il sacrifier une partie de sa liberté pour plus de sécurité ?': [],
+   'L’humanité doit-elle chercher à vivre éternellement ?': [],
+   'La surveillance gouvernementale peut-elle être justifiée ?': [],
+   'Nos souvenirs sont-ils fiables ?': [],
+   'Les compétences pratiques sont-elles sous-estimées dans l’éducation ?': [],
+   'La censure est-elle parfois nécessaire ?': [],
+   'La famille est-elle plus importante que les amis ?': [],
+   'Quel est ton artiste préféré ?': [],
+   'Pourquoi avons-nous l’impression que le temps passe plus vite en vieillissant ?': [],
+   'Faut-il faire un travail qui a du sens ou qui rapporte de l’argent ?': [],
+   'La décroissance est-elle viable sur le long terme ?': [],
+   'L’écologie doit-elle primer sur le progrès technologique ?': [],
+   'Le cinéma est-il un art majeur ?': [],
+   'Les musées doivent-ils restituer les œuvres volées ?': [],
+   'Le progrès scientifique doit-il être limité par l’éthique ?': [],
+   'Quel tableau célèbre aimerais-tu voir en vrai ?': [],
+   'La nature a-t-elle des droits ?': [],
+   'L’anglais doit-il devenir la langue universelle ?': [],
+   'L’anonymat en ligne est-il une bonne ou une mauvaise chose ?': [],
+   'La religion divise-t-elle plus qu’elle ne rassemble ?': [],
+   'Pourquoi aimons-nous les mystères et l’inexpliqué ?': [],
+   'Pourquoi avons-nous besoin de nous comparer aux autres ?': [],
+   'La liberté a-t-elle des limites ?': [],
+   'Peut-on concilier urbanisation et respect de l’environnement ?': [],
+   'Le bonheur est-il une quête ou un état d’esprit ?': [],
+   'Les loisirs sont-ils une perte de temps ou une nécessité ?': [],
+   'L’éducation à la maison est-elle une meilleure alternative ?': [],
+   'La loi doit-elle évoluer en fonction des mœurs ou rester immuable ?': [],
+   'La légitime défense est-elle un argument valable en justice ?': [],
+   'Faut-il séparer l’œuvre de l’artiste ?': [],
+   'Les parents doivent-ils imposer des valeurs à leurs enfants ?': [],
+   'Faut-il interdire la viande pour sauver la planète ?': [],
+   'Les robots remplaceront-ils les humains dans tous les métiers ?': [],
+   'La surinformation nous empêche-t-elle de réfléchir ?': [],
+   'La routine est-elle ennemie du bonheur ?': [],
+   'Doit-on encore honorer les héros du passé ?': [],
+   'Faut-il toujours essayer de sauver un couple en crise ?': [],
+   'L’alcool devrait-il être interdit comme d’autres drogues ?': [],
+   'Les introvertis sont-ils désavantagés dans la société ?': [],
+   'Les avancées technologiques sont-elles toujours bénéfiques ?': [],
+   'Faut-il toujours répondre aux provocations ?': [],
+   'Les criminels ont-ils droit à une seconde chance ?': [],
+   'Les réseaux sociaux nuisent-ils aux relations humaines ?': [],
+   'Faire une bonne action par intérêt, est-ce toujours moral ?': [],
+   'L’éducation traditionnelle est-elle dépassée ?': [],
+   'Les religions ont-elles encore leur place dans la société moderne ?': [],
+   'Le système scolaire actuel est-il obsolète ?': [],
+   'Pour prouver ta foi absolue en Dieu (ou en Cthulhu, osef), tu dois : Manger un sandwich dont le pain est fait de croûtes de pieds de diabétiques et la garniture est un mélange de placenta humain et de pus d\'abcès, OU te laisser crucifier la tête en bas en chantant "Petit Papa Noël" pendant que des hyènes te lèchent les parties génitales ?':
+      [
+         'Passe sandwich dégueu, estomac blindé (pas mal)', // Shortened
+         'Crucifixion + hyènes, pour spectacle et blasphème !', // Shortened
+         'Je deviens athée / Je change de secte immédiatement', // OK
+         'Même les hyènes te lécheraient pas (immonde)', // Shortened
+         'Peut-on remplacer le placenta par du Nutella?', // Shortened
+      ],
+   'L’argent corrompt-il forcément ?': [],
+   'Le bien-être mental est-il plus important que la santé physique ?': [],
+   'Le contrôle des masses est-il inévitable ?': [],
+   'Faut-il protéger les enfants de toutes formes de frustration ?': [],
+   'Faut-il avoir peur du transhumanisme ?': [],
+   'La conquête spatiale justifie-t-elle son coût ?': [],
+   'La technologie rapproche-t-elle ou isole-t-elle les gens ?': [],
+   'L’Homme est-il fondamentalement égoïste ?': [],
+   'Le passé influence-t-il trop notre présent ?': [],
+   'Peut-on être heureux sans jamais ressentir de tristesse ?': [],
+   'L’école doit-elle apprendre à penser ou à obéir ?': [],
+   'La neutralité est-elle possible en politique ?': [],
+   'Les enfants doivent-ils avoir des limites strictes ou être libres d’explorer ?': [],
+   'T\'es obligé de passer une soirée "jeux de société" : soit tu joues à un "Qui est-ce ?" géant mais uniquement avec les photos des victimes de l\'Holocauste (faut deviner "Est-ce qu\'il a des rayures ?"), SOIT tu joues à un Pictionary où tu dois faire deviner des méthodes de torture médiévales en les dessinant avec ton propre sang sur le dos d\'un lépreux ?':
+      [
+         'Le "Qui est-ce?" morbide, toujours bon en déduction', // Shortened
+         "Pictionary sanglant, âme d'artiste... tortionnaire", // Shortened
+         'Je propose une partie de Uno à la place, nique la torture', // Shortened
+         "T'es si immonde que même Satan te refoulerait", // Shortened
+         'Je simule un AVC pour esquiver cette soirée de merde', // OK
+      ],
+   'Le stress est-il toujours négatif ?': [],
+   'Quel livre t’a le plus marqué ?': [],
+   'Les clones humains devraient-ils avoir des droits ?': [],
+   'Faut-il limiter le temps passé sur les écrans pour sa santé mentale ?': [],
+   'L’identité d’une personne change-t-elle au fil du temps ?': [],
+};
 
-export const getDailyQuestion = (): string => {
+interface DailyQuestion {
+   question: keyof typeof QUESTIONS;
+   surveyAnswers: string[];
+}
+
+export const getDailyQuestion = (): DailyQuestion => {
    const now = new Date();
 
    const start = new Date(now.getFullYear(), 0, 0);
@@ -373,7 +333,10 @@ export const getDailyQuestion = (): string => {
    const oneDay = 1000 * 60 * 60 * 24;
    const dayOfYear = Math.floor(diff / oneDay);
 
-   const questionIdx = (dayOfYear - 1) % QUESTIONS.length;
+   const questionIdx = (dayOfYear - 1) % Object.keys(QUESTIONS).length;
 
-   return QUESTIONS[questionIdx];
+   const question = Object.keys(QUESTIONS)[questionIdx] as keyof typeof QUESTIONS;
+   const surveyAnswers = QUESTIONS[question] as string[];
+
+   return { question, surveyAnswers };
 };

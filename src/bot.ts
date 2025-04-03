@@ -292,12 +292,14 @@ export class Bot {
 
             const attachment = new AttachmentBuilder('assets/Avatar.png', { name: 'Avatar.png' });
 
-            await thread.send({
+            const { question, surveyAnswers } = getDailyQuestion();
+
+            const message = await thread.send({
                embeds: [
                   new EmbedBuilder()
                      .setTitle('Consultation Citoyenne')
                      .setURL('https://www.matthieu-locussol.com')
-                     .setColor(Colors.Green)
+                     .setColor(Colors.Blurple)
                      .setThumbnail('attachment://Avatar.png')
                      .setFooter({
                         text: `${formatDateTime(new Date().toISOString())} - MachuBot`,
@@ -305,11 +307,22 @@ export class Bot {
                      })
                      .setFields({
                         name: '**Question du jour**',
-                        value: getDailyQuestion(),
+                        value: question,
                      }),
                ],
                files: [attachment],
             });
+
+            if (surveyAnswers.length > 0) {
+               await message.reply({
+                  poll: {
+                     question: { text: 'Choisis bien ta réponse fils de pute' },
+                     answers: surveyAnswers.map((answer) => ({ text: answer })),
+                     allowMultiselect: false,
+                     duration: 23,
+                  },
+               });
+            }
 
             logger.info('[CRON] Consultation Citoyenne sent successfully.');
          } catch (error) {
